@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 :root {
@@ -19,33 +19,78 @@
     --color-danger: hsl(0, 95%, 65%);
     --color-dark: hsl(252, 30%, var(--dark-color-lightness));
     --color-black: hsl(252, 30%, 10%);
-
-
 }
 
 body {
     background: #D5DBDB;
-
 }
 
 header {
     width: 100%;
-    position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #fcfcfc;
     z-index: 100;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
 }
 
-.Logo {
+.Logo img{
     width: 5rem;
+    transition: transform 2s ease;
 }
+
+.Logo:hover {
+    transform: scale(1.4); /* Scale up the button */
+    
+}
+
+
 
 .icons_nav {
     display: flex;
     list-style: none;
+    align-items: center;
+    margin-right: 2vh;
+}
 
+.icons_nav .Profile {
+    position: relative;
+}
+
+.icons_nav .Profile .dropdown-menu-profile {
+    display: none;
+    width:10rem;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.icons_nav .Profile:hover .dropdown-menu-profile {
+    display: block;
+}
+
+.dropdown-menu-profile li {
+    list-style: none;
+}
+
+.dropdown-menu-profile li a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu-profile li a:hover {
+    background-color: #f1f1f1;
 }
 
 .icons_nav img {
@@ -70,12 +115,17 @@ header {
     border-radius: 20px;
     display: flex;
     align-items: center;
-    padding: 0, 1rem;
+    padding: 0 1rem;
 }
 
 .search_box img {
     width: 1.5rem;
     padding-left: 5px;
+    transition: transform 0.3s;
+}
+
+.search_box img:hover {
+    transform: translateX(-10px);
 }
 
 .search_box input {
@@ -84,6 +134,10 @@ header {
     padding: 10px;
     outline: none;
     border: 0;
+}
+
+.Size {
+    font-size: 14px;
 }
 
 
@@ -95,7 +149,7 @@ header {
 
 /*-----------------------LEFT BAR--------------------------------------*/
 .left_bar_content {
-    margin-top: 10vh;
+    
     flex-basis: 20%;
     position: sticky;
     top: 70px;
@@ -106,7 +160,7 @@ header {
 
 /*------------------------------------Right BAR---------------------------------*/
 .right_bar_content {
-    margin-top: 10vh;
+    
     flex-basis: 20%;
     position: sticky;
     top: 70px;
@@ -118,7 +172,7 @@ header {
 /*------------------------------------CENTER BAR---------------------------------*/
 
 .center_bar_content {
-    margin-top: 10vh;
+    
     flex-basis: 50%;
     position: sticky;
     top: 70px;
@@ -317,4 +371,81 @@ header {
 
 .messages .message p {
     font-size: 0.8rem;
+}
+
+.form{
+    border: #1d2129 solid;
+    z-index: 100;
+}
+
+/*LOGIN REGISTER*/
+
+#login_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.login-container, .register_container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin-top: 100px; /* Ajuste de margen superior */
+}
+
+.login-container .logo img, .register_container .logo img{
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+#username, #full_name, #password, #email {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
 }
