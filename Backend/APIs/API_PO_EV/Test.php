@@ -1,7 +1,8 @@
 <?php
+/* esta hoja es de testo, se eliminara a lo largo del desarrolo */
+
 $BaseURL = 'http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php';
-$hor = date('Y-m-d H:i:s');
-DeleteEvent($BaseURL , 1);
+
 function GetPosts($BaseURL)
 {
     $ch = curl_init();
@@ -121,4 +122,4 @@ function AddMulti ($BaseURL, $num, $Id, $src){
     curl_close($ch);
 }
 
-GetMulti($BaseURL,2);
+GetMulti($BaseURL,2); // prueba de un metodo.
