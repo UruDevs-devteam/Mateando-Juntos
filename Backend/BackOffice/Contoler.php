@@ -1,5 +1,5 @@
 <?php
-require "Data_Base.php";
+require_once "Data_Base.php";
 
 function GetPosts()
 {

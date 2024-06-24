@@ -24,7 +24,6 @@ switch ($method) {
             $id = $matches[1];
             $Event = $Event_obj->GetEventByID($id);
             echo json_encode($Event);
-
         } elseif ((preg_match('/^\/Multi\/(\d+)$/', $endpoint, $matches))) {
             $id = $matches[1];
             $Event = $Post_obj->GetMulyiByID($id);
