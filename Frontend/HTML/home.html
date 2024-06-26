@@ -12,11 +12,17 @@
 
 <body>
 
+    <!---------------------------------------------HEADER------------------------------------------------------------>
+
     <header>
         <div class="left">
-            <a href="home.html" class="Logo"><img  src="../img/logo-removebg-preview.png" alt="Logo"></a>
+            <a href="home.html" class="Logo"><img src="../img/logo-removebg-preview.png" alt="Logo"></a>
         </div>
         <div class="right">
+            <ul class="icons_nav">
+                <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="mensagges"></a></li>
+                <li><a href="#" id="message"><img src="../img/rectangular-speech-bubble_32642.png" alt="comunitys"></a></li>
+            </ul>
             <div class="search_box">
                 <a href="#"><img src="../img/magnifier_64673.png" alt=""></a>
                 <input type="text" placeholder="Busqueda">
@@ -31,189 +37,198 @@
                     </ul>
                 </li>
                 <li><a href="#"><img src="../img/bell_143144.png" alt="bell_notifications"></a></li>
+
             </ul>
         </div>
     </header>
 
-    <!--------------------------------------------------------------------------------------------------------->
-    <section>
-        <div class="container">
-            <div class="left_bar_content">
-                <div class="chats">
-                    <H2>Chats</H2>
-                    <div class="messages">
-                        <div class="heading">
-                            <h4>Mensajes</h4>
 
-                        </div>
-                        <div class="search_box">
-                            <a href="#"><img src="../img/magnifier_64673.png" alt="Search"></a>
-                            <input type="search" placeholder="Buscar Chats" id="message-search">
-                        </div>
-                        <!--------------------------------------------------------------------------------------------------------->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
-                            </div>
-                            <div class="message-body">
-                                <h5>Juan</h5>
-                                <p class="text-muted">hola</p>
-                            </div>
-                        </div>
-                        <!--------------------------------------------------------------------------------------------------------->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
-                            </div>
-                            <div class="message-body">
-                                <h5>Maria</h5>
-                                <p class="text-bold">Lorem ipsum dolor si</p>
-                            </div>
-                        </div>
-                        <!--------------------------------------------------------------------------------------------------------->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
+    <!---------------------------------------------CONTENEDOR PRINCIPAL (ESTE ES EL CONTENEDOR PADRE)------------------------------------------------------------>
 
-                            </div>
-                            <div class="message-body">
-                                <h5>Pepe</h5>
-                                <p class="text-muted">Lorem ipsum dolor si</p>
-                            </div>
-                        </div>
-                        <!--------------------------------------------------------------------------------------------------------->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
-                            </div>
-                            <div class="message-body">
-                                <h5>Julieta</h5>
-                                <p class="text-muted">Lorem ipsum dolor si</p>
-                            </div>
-                        </div>
-                        <!--------------------------------------------------------------------------------------------------------->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
-                            </div>
-                            <div class="message-body">
-                                <h5>Uriel</h5>
-                                <p class="text-bold">Lorem ipsum dolor si</p>
-                            </div>
-                        </div>
-                        <!--------------------------------------------------------------------------------------------------------->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
-                            </div>
-                            <div class="message-body">
-                                <h5>Pablo<h5>
-                                        <p class="text-muted">Lorem ipsum dolor si</p>
-                            </div>
-                        </div>
+    <div class="container">
+
+        <!---------------------------------------------CONTENEDOR IZQUIERDO (EN ESTE SE MUESTRAN LOS CHATS DEL USUARIOS)------------------------------------------------------------>
+        <aside class="left_bar_content">
+            <section class="chats">
+                <H2>Chats</H2>
+                <section class="messages">
+                    <div class="heading">
+                        <h4>Mensajes</h4>
+
                     </div>
+                    <div class="search_box">
+                        <a href="#"><img src="../img/magnifier_64673.png" alt="Search"></a>
+                        <input type="search" placeholder="Buscar Chats" id="message-search">
+                    </div>
+                    <!-----------------------------------------------MENSAJE PRUEBA---------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png" alt="Avatar Juan">
+                        </div>
+                        <div class="message-body">
+                            <h5>Juan</h5>
+                            <p class="text-muted">hola</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Maria</h5>
+                            <p class="text-bold">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+
+                        </div>
+                        <div class="message-body">
+                            <h5>Pepe</h5>
+                            <p class="text-muted">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Julieta</h5>
+                            <p class="text-muted">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!-----------------------------------------------MENSAJE PRUEBA---------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Uriel</h5>
+                            <p class="text-bold">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Pablo<h5>
+                                    <p class="text-muted">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                </section>
+
+            </section>
+        </aside>
+
+        <!--------------------------------------------CONTENEDOR MAIN (EN ESTE SE MOSTRARN LOS POSTS DE LOS USUARIOS)-------------------------->
+        <main class="center_bar_content">
+            <section class="create-post">
+                <div class="profile-photo">
+                    <img src="../img/avatar_167770.png">
+                    <p>Angel Ramirez</p>
 
                 </div>
-            </div>
 
-            <!--------------------------------------------------------------------------------------------------------->
-            <div class="center_bar_content">
-                <div class="create-post">
-                    <div class="profile-photo">
-                        <img src="../img/avatar_167770.png">
-                        <p>Angel Ramirez</p>
-
-                    </div>
-
-                    <div class="text_post">
-                        <textarea name="text-post" id="text-post" rows="3" placeholder="¿Que estas pensando Angel?">
+                <div class="text_post">
+                    <textarea name="text-post" id="text-post" rows="3" placeholder="¿Que estas pensando Angel?">
                         </textarea>
-                    </div>
-                    <div class="add-post">
-                        <a href="#"><img src="../img/ubiaction.png" alt="ubiaction">Evento</a>
-                        <a href="#"><img src="../img/gallery.png" alt="gallery">Galeria</a>
-                        <a href="#"><img src="../img/post_6824121.png" alt="gallery">Publicar</a>
-
-                    </div>
                 </div>
+                <div class="add-post">
+                    <a href="#"><img src="../img/ubiaction.png" alt="ubiaction">Evento</a>
+                    <a href="#"><img src="../img/gallery.png" alt="gallery">Galeria</a>
+                    <a href="#"><img src="../img/post_6824121.png" alt="gallery">Publicar</a>
 
-                <!--------------------------------------------------------------------------------------------------------->
-                <div class="feeds">
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="../img/avatar_167770.png">
-                                </div>
-                                <div class="info">
-                                    <h3>Alexandria Riana</h3>
-                                    <small>Dubai, 1 Hour Ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="../img/feed-5.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            
-                        </div>
-
-                        <div class="caption">
-                            <p><b>Alexandria Riana</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi architecto sunt itaque, in, enim non doloremque velit unde nihil vitae impedit dolorum, distinctio ab deleniti! 
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                    </div>
                 </div>
-            </div>
+            </section>
 
-            <!--------------------------------------------------------------------------------------------------------->
-            <div class="right_bar_content">
-                <div class="chats">
-                    <H2>Comunidades</H2>
+            <!-------------------------------------------POSTS DE LOS USUARIOS----------------------------------------------------------------->
+            <section class="feeds">
+                <article class="feed">
 
-                    <div class="messages">
-                        <div class="heading">
-                            <h4>Comunidades</h4>
-
-                        </div>
-                        <div class="search_box">
-                            <a href="#"><img src="../img/magnifier_64673.png" alt="Search"></a>
-                            <input type="search" placeholder="Buscar Comunidades" id="message-search">
-                        </div>
-                        <div class="message">
+                    <div class="head">
+                        <div class="user">
                             <div class="profile-photo">
                                 <img src="../img/avatar_167770.png">
                             </div>
-                            <div class="message-body">
-                                <h5>Lago Shangrila</h5>
-                                <p class="text-muted">Pepe:hola</p>
+                            <div class="info">
+                                <h3>Alexandria Riana</h3>
+                                <small>Dubai, 1 Hour Ago</small>
                             </div>
                         </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
-                            </div>
-                            <div class="message-body">
-                                <h5>Buceo Mates</h5>
-                                <p class="text-bold">Maria:Chao</p>
-                            </div>
+                        <span class="edit">
+                            <i class="uil uil-ellipsis-h"></i>
+                        </span>
+                    </div>
+
+                    <div class="photo">
+                        <img src="../img/feed-5.jpg">
+                    </div>
+
+                    <div class="action-buttons">
+                        <div class="interaction-buttons">
+                            <span><i class="uil uil-heart"></i></span>
+                            <span><i class="uil uil-comment-dots"></i></span>
+                            <span><i class="uil uil-share-alt"></i></span>
                         </div>
 
                     </div>
-                </div>
-            </div>
-    </section>
+
+                    <div class="caption">
+                        <p><b>Alexandria Riana</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
+                            architecto sunt itaque, in, enim non doloremque velit unde nihil vitae impedit dolorum,
+                            distinctio ab deleniti!
+                            <span class="harsh-tag">#lifestyle</span>
+                        </p>
+                    </div>
+
+                </article>
+            </section>
+        </main>
+
+        <!---------------------------------------------CONTENEDOR DERECHO (EN ESTE SE MUESTRAN LOS CHATS DE LAS COMUNIDADES DEL USUARIOS)------------------------------------------------------------>
+        <aside class="right_bar_content">
+            <section class="chats">
+                <H2>Comunidades</H2>
+
+                <section class="messages">
+                    <div class="heading">
+                        <h4>Comunidades</h4>
+                    </div>
+
+                    <section class="search_box">
+                        <a href="#"><img src="../img/magnifier_64673.png" alt="Search"></a>
+                        <input type="search" placeholder="Buscar Comunidades" id="message-search">
+                    </section>
+
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Lago Shangrila</h5>
+                            <p class="text-muted">Pepe:hola</p>
+                        </div>
+                    </article>
+
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Buceo Mates</h5>
+                            <p class="text-bold">Maria:Chao</p>
+                        </div>
+                    </article>
+                </section>
+            </section>
+        </aside>
+
 
 </body>
 
