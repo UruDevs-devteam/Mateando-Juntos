@@ -2,28 +2,17 @@
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-}
-
-:root {
-    --primary-color-hue: 252;
-    --dark-color-lightness: 17%;
-    --light-color-lightness: 95%;
-    --white-color-lightness: 100%;
-
-    --color-white: hsl(252, 30%, var(--white-color-lightness));
-    --color-light: hsl(252, 30%, var(--light-color-lightness));
-    --color-grey: hsl(252, 15%, 65%);
-
-    --color-secondary: hsl(252, 100%, 90%);
-    --color-success: hsl(120, 95%, 65%);
-    --color-danger: hsl(0, 95%, 65%);
-    --color-dark: hsl(252, 30%, var(--dark-color-lightness));
-    --color-black: hsl(252, 30%, 10%);
+    box-sizing: border-box;
 }
 
 body {
     background: #D5DBDB;
+    overflow-x: hidden;
+    
+
 }
+
+/*ESTILO PARA EL HEADER*/
 
 header {
     width: 100%;
@@ -34,20 +23,18 @@ header {
     z-index: 100;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+
 }
 
-.Logo img{
+.Logo img {
     width: 5rem;
     transition: transform 2s ease;
 }
 
 .Logo:hover {
-    transform: scale(1.4); /* Scale up the button */
-    
+    transform: scale(1.4);
+
 }
-
-
 
 .icons_nav {
     display: flex;
@@ -56,19 +43,25 @@ header {
     margin-right: 2vh;
 }
 
+.icons_nav #message,#group {
+    display: none;
+}
+
 .icons_nav .Profile {
     position: relative;
+
 }
 
 .icons_nav .Profile .dropdown-menu-profile {
     display: none;
-    width:10rem;
+    width: 10rem;
     position: absolute;
     top: 100%;
     right: 0;
     background: #ffffff;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
+
     overflow: hidden;
     z-index: 1;
 }
@@ -95,7 +88,8 @@ header {
 
 .icons_nav img {
     width: 1.5rem;
-    padding: 1rem;
+    /* Ajustar el tamaño según sea necesario */
+    margin: 1rem;
     transition: transform 0.3s;
 }
 
@@ -140,47 +134,36 @@ header {
     font-size: 14px;
 }
 
-
+/*ESTILO PARA EL CONTENEDOR PADRE Y LOS TRES CONTENEDORES DENTRO DE EL*/
 .container {
     display: flex;
     justify-content: space-between;
-    padding: 15px, 5%;
-}
-
-/*-----------------------LEFT BAR--------------------------------------*/
-.left_bar_content {
-    
-    flex-basis: 20%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
-    height: max-content;
 
 }
 
-/*------------------------------------Right BAR---------------------------------*/
+
+.left_bar_content,
 .right_bar_content {
-    
-    flex-basis: 20%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
+    flex: 1 1 25%;
+    /* flex-grow: 1; flex-shrink: 1; flex-basis: 25%; */
+    position: relative;
+    /* Cambiar sticky a relative para evitar problemas de posición en pantallas pequeñas */
+    top: 0;
+    /* Ajustar la posición superior */
     height: max-content;
-
 }
-
-/*------------------------------------CENTER BAR---------------------------------*/
 
 .center_bar_content {
-    
-    flex-basis: 50%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
+    flex: 1 1 50%;
+    /* flex-grow: 1; flex-shrink: 1; flex-basis: 50%; */
+    position: relative;
+    /* Cambiar sticky a relative para evitar problemas de posición en pantallas pequeñas */
     height: max-content;
-    margin-right: 2rem;
-
 }
+
+
+
+/*ESTILO PARA LA CREACION DE POSTS Y LOS POSTS QUE SE MUESTRAN EN EL FEED*/
 
 .create-post {
     width: 100%;
@@ -213,6 +196,7 @@ header {
 .create-post .text_post {
     padding-left: 55px;
     padding-top: 20px;
+    
 }
 
 .create-post .text_post textarea {
@@ -223,13 +207,14 @@ header {
     border-bottom: 1PX solid #ccc;
     background: transparent;
     resize: none;
+
 }
 
 .add-post {
     display: flex;
     justify-content: center;
-    gap: 30px;
     padding: 10px;
+    width: max-content;
 
 }
 
@@ -237,7 +222,6 @@ header {
     display: flex;
     padding-left: 5rem;
     align-items: center;
-
     text-decoration: none;
     color: #1d2129;
     font-size: 20px;
@@ -253,6 +237,7 @@ header {
     height: 24px;
     margin-bottom: 10px;
     margin-right: 10px;
+    max-width: 100%;
 
 }
 
@@ -262,12 +247,12 @@ header {
     background: #fff;
     border-radius: 1rem;
     padding: 1rem;
-    margin: 1rem 0;
+    margin-top: 3vh;
     font-size: 0.85rem;
     line-height: 1.5;
 }
 
-.center_bar_content .feeds .feed i:hover{
+.center_bar_content .feeds .feed i:hover {
     cursor: pointer;
 }
 
@@ -282,11 +267,10 @@ header {
 }
 
 .center_bar_content .feed .photo {
-    width: max-content;
+    width: 100%;
     border-radius: 2rem;
     overflow: hidden;
-    margin: 2rem;
-    
+    margin: 2rem 0;
 }
 
 .center_bar_content .feed .action-buttons {
@@ -298,12 +282,7 @@ header {
 }
 
 
-
-
-/*------------------------------------MENSSAGES Left bar and Right bar---------------------------------*/
-
-
-
+/*ESTILO PARA LOS CHATS DE LAS COMUNIDADES Y LOS CHATS PRIVADOS DEL USUARIO*/
 .chats {
     background: white;
     border-radius: 15px;
@@ -359,6 +338,7 @@ header {
     border-radius: 50%;
     width: 3rem;
     transition: transform 0.3s;
+    max-width: 100%;
 }
 
 .profile-photo img:hover {
@@ -373,7 +353,7 @@ header {
     font-size: 0.8rem;
 }
 
-.form{
+.form {
     border: #1d2129 solid;
     z-index: 100;
 }
@@ -385,23 +365,26 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
+    height: 100%;
     margin: 0;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
 }
 
-.login-container, .register_container {
+.login-container,
+.register_container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: max-content;
     text-align: center;
-    margin-top: 100px; /* Ajuste de margen superior */
+    margin-top: 100px;
+
 }
 
-.login-container .logo img, .register_container .logo img{
+.login-container .logo img,
+.register_container .logo img {
     width: 100px;
     margin-bottom: 20px;
 }
@@ -412,7 +395,10 @@ label {
     text-align: left;
 }
 
-#username, #full_name, #password, #email {
+#username,
+#full_name,
+#password,
+#email {
     width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 15px;
@@ -448,4 +434,56 @@ button:hover {
 
 .register-link a:hover {
     text-decoration: underline;
+}
+
+/*MEDIAS QUERYS*/
+
+@media (max-width: 1550px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        flex: 1 1 10%;
+        /* flex-grow: 1; flex-shrink: 1; flex-basis: 25%; */
+        position: relative;
+        /* Cambiar sticky a relative para evitar problemas de posición en pantallas pequeñas */
+        top: 0;
+        /* Ajustar la posición superior */
+    }
+
+    .left_bar_content,
+    .right_bar_content {
+        display: none;
+    }
+
+    .center_bar_content {
+        width: 900px;
+        padding: 1rem;
+    }
+
+    .icons_nav #message,#group {
+        display: block;
+    }
+}
+
+@media (max-width: 990px) {
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    .left_bar_content,
+    .right_bar_content {
+        display: none;
+    }
+
+    .center_bar_content {
+        width: 700px;
+        padding: 1rem;
+    }
+
+    .icons_nav #message,#group {
+        display: block;
+    }
+
+
 }
