@@ -71,7 +71,7 @@ function GetMulyiByID($id)
     $stmt->close();
     return $Post;
 }
-
+//////////////////////////////////////////////////// comienzo de metodos de Evento/////////////////////////////////////////////////////
 
 function GetEvents()
 {
@@ -124,4 +124,58 @@ function AddEvent($data)
     $result = $stmt->execute();
     $stmt->close();
     return $result;
+}
+///////////////////////////////////////////////////// Comienzo de metodos de Usuario /////////////////////////////////////////////////////
+
+function GetUsers()
+{
+    global $conex;
+    $query = "SELECT * FROM User";
+    $result = mysqli_query($conex, $query); // ejecuta la consulta 
+    $Events = [];                                // crea un array
+    while ($row = mysqli_fetch_assoc($result)) { // Recorre los resultados y los añade al array
+        $Events[] = $row;
+    }
+    return $Events;                              // retorna el array
+}
+function GetUserByID($Id)
+{
+    global $conex;
+    $query = "SELECT * FROM Users WHERE ID_user = ?";
+    $stmt = $conex->prepare($query);     //prepara la consulta
+    $stmt->bind_param("i", $Id); // "i" indica que $Id es un entero
+    $stmt->execute();
+    $result = $stmt->get_result(); // Obtiene el resultado
+    $Event = $result->fetch_assoc();
+    $stmt->close();            // Cierra la consulta preparada
+    return $Event;
+}
+
+function AddUser($data)
+{
+    global $conex;
+    $hashed_password = password_hash($data['Pass'], CRYPT_BLOWFISH);    // Encripta la contraseña
+    $query = "INSERT INTO Users (Full_name, User_name, Email, Pass) VALUES (?, ?, ?, ?)";
+    $stmt = $conex->prepare($query);
+    $stmt->bind_param("ssss", $data['Full_name'], $data['Username'], $data['Email'], $hashed_password); // "ssss" indica cuatro cadenas
+    $result = $stmt->execute();
+    $stmt->close();
+    return $result;
+
+}
+
+function VerifyUser($data)
+{
+    global $conex;
+    $password = $data['password'];
+    $UserName = $data['UserName'];
+    $query = "SELECT Pass FROM Users WHERE User_name = ?";// Consulta  para obtener la contraseña encriptada 
+    $stmt = $conex->prepare($query);
+    $stmt->bind_param("s", $UserName);
+    $stmt->execute();
+    $stmt->bind_result($hashed);
+    $stmt->fetch();
+    $verify_pass = password_verify($password, $hashed);
+    $stmt->close();
+    return $verify_pass;
 }
