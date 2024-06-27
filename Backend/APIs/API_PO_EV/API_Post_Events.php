@@ -1,12 +1,12 @@
 <?php
-require_once "Config.php";
+require_once "../Config.php";
 require_once "Post.php";
 require_once "Event.php";
 $Post_obj = new Post($conex); // creamos un objeto Post y le damos la conexion a la BD
 $Event_obj = new Event($conex);// creamos un objeto Evento y le damos la conexion a la BD
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
 $endpoint = $_SERVER['PATH_INFO'];    // la URL, pero toma la parte final, lo que no sea ruta
-header('Content-Type: application/json'); // para que la pagina sepa que se esta usando json
+header('Content-Type: application/json'); // para que  la pagina sepa que se esta usando json
 
 switch ($method) {
     case 'GET': //select
@@ -94,7 +94,7 @@ switch ($method) {
         echo json_encode(['error' => 'Método HTTP no permitido']);
         break;
 }
-
+/////////////////////////////////////////////////////// metodos de validacion ///////////////////////////////////////////////////////////
 function Valid_Data_Post($data)
 {
     if (empty($data)) { // Verificar que el array de datos no esté vacío
