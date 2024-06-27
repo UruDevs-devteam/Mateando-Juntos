@@ -33,5 +33,4 @@ Email varchar(255) not null,
 Pass CHAR(60) not null,
  primary key(ID_user)
 );
-select * from Users;
-SELECT Pass FROM Users WHERE User_name = "eze";
+
