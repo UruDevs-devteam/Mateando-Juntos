@@ -28,7 +28,7 @@ if (isset($_POST["username"], $_POST["password"])) {
     } else {
         echo '
         <script>
-        alert("Sesion iniciada redirigiendo al Inicio de la pagina");
+        alert("Sesion no iniciada");
         window.location = "../../Frontend/HTML/login.html";
         </script>
            ';                                 // Verificación fallida, redirige a la página de login

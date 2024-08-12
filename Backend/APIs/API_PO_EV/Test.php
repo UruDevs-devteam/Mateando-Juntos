@@ -1,5 +1,5 @@
 <?php
-/* esta hoja es de testo, se eliminara a lo largo del desarrolo */
+/* esta hoja es de testo, se eliminara a lo largo del desarrollo */
 
 $BaseURL = 'http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php';
 

@@ -12,11 +12,11 @@ class User
     {
         $query = "SELECT * FROM Users";
         $result = mysqli_query($this->conex, $query); // ejecuta la consulta 
-        $Events = [];                                // crea un array
+        $Users = [];                                // crea un array
         while ($row = mysqli_fetch_assoc($result)) { // Recorre los resultados y los añade al array
-            $Events[] = $row;
+            $Users[] = $row;
         }
-        return $Events;                              // retorna el array
+        return $Users;                              // retorna el array
     }
 
     public function GetUserbyName($name)
@@ -55,15 +55,17 @@ class User
 
     public function AddUser($data)
     {
-        global $conex;
+
         $Full_name = $data['Full_name'];
         $User_name = $data['Username'];
         $Email = $data['Email'];
         $hashed_password = password_hash($data['Pass'], CRYPT_BLOWFISH);    // Encripta la contraseña
         $query = "INSERT INTO Users (Full_name, User_name, Email, Pass) VALUES (?, ?, ?, ?)";
-        $stmt = $conex->prepare($query);
+        $stmt = $this->conex->prepare($query);
         $stmt->bind_param("ssss", $Full_name, $User_name , $Email, $hashed_password); // "ssss" indica cuatro cadenas
-        $result = $stmt->execute();
+        $result = [];
+        $result["result"] = $stmt->execute();
+        $result["last_ID"] = $this->conex->insert_id;                // Obtener la última ID insertada
         $stmt->close();
         return $result;
     }

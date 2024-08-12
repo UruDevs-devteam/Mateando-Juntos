@@ -1,7 +1,9 @@
 <?php
 require_once "../Config.php";
 require_once "User.php";
-$User_obj = new User($conex); // creamos un objeto Post y le damos la conexion a la BD
+require_once "Perfil.php";
+$User_obj = new User($conex); // creamos un objeto Usuario y le damos la conexion a la BD
+$Perfil_obj = new Perfil($conex); // creamos un objeto Perfil y le damos conexion a la bd
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
 $endpoint = $_SERVER['PATH_INFO'];    // la URL, pero toma la parte final, lo que no sea ruta
 header('Content-Type: application/json'); // para que la pagina sepa que se esta usando json
@@ -9,8 +11,8 @@ header('Content-Type: application/json'); // para que la pagina sepa que se esta
 switch ($method) {
     case 'GET':
         if ($endpoint == '/Users') {     // si el enpdoint es "/Usuarios"
-            $usuarios = $user_obj->GetUsers();  // llama el metodo getusers y guarda los usuarios en una variable
-            echo json_encode($User);
+            $usuarios = $User_obj->GetUsers();  // llama el metodo getusers y guarda los usuarios en una variable
+            echo json_encode($usuarios);
         } elseif (preg_match('/^\/User\/(\d+)$/', $endpoint, $matches)) {  // Verifica si en endpoint termina en un numero.
             $id = $matches[1];                                              // hagara el numero
             $Usuario = $User_obj->GetUserbyID($id);                            // llama al metodo indicado
@@ -19,6 +21,13 @@ switch ($method) {
             $name = $matches[1];                                              // hagara el nombre
             $Usuario = $User_obj->GetUserbyName($name);                         // llama al metodo indicado
             echo json_encode($Usuario);
+        } elseif ($endpoint == '/Perfiles') {
+            $Perfiles = $Perfil_obj->getperfils();
+            echo json_encode($Perfiles);
+        } elseif (preg_match('/^\/Perfil\/(\d+)$/', $endpoint, $matches)) {
+            $id = $matches[1];                                              // hagara el numero
+            $Perfil = $Perfil_obj->GetPerfilByUserID($id);                            // llama al metodo indicado
+            echo json_encode($Perfil);
         } else {                                                       // si no encuentra el endpoint(esta vacio o no es uno de los anteriores), da error.
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
@@ -29,8 +38,9 @@ switch ($method) {
         $data = json_decode(file_get_contents('php://input'), true);  // manda la solitud al curl para pedirle los parametros                                   
         if ($endpoint == '/Usuario') {
             if (Validar_Data_User($data)) {
-                $Resul = $User_obj->AddUser($data);                  // llama al metodo  
-                echo json_encode(['success' => $Resul]);             // guarda true o false, depende si se logro la incercion
+                $Resul_u = $User_obj->AddUser($data);                  // llama al metodo y resultado user  
+                $Resul_p = $Perfil_obj->AddPerfil( $Resul_u["last_ID"]);  // resultado perfil
+                echo json_encode(['success' => $Resul_u["result"]]); // guarda true o false, depende si se logro la incercion
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacio o mal formado']);
@@ -46,7 +56,7 @@ switch ($method) {
 
     case 'DELETE':
         $data = json_decode(file_get_contents('php://input'), true);
-        if ($endppoint == 'User') {
+        if ($endpoint == 'User') {
             $Resul = $User_obj->DeleteUser($data);
             echo json_encode(['success' => $Resul]);
         } else {
