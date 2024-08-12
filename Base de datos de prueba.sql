@@ -33,15 +33,3 @@ Email varchar(255) not null,
 Pass CHAR(60) not null,
  primary key(ID_user)
 );
-CREATE TABLE Profiles (
-    Profile_ID INT AUTO_INCREMENT PRIMARY KEY,
-    User_ID INT NOT NULL,
-    profile_picture VARCHAR(255),
-    color VARCHAR(50),
-    bio TEXT,
-    privacy ENUM('public', 'private', 'friends') DEFAULT 'public',
-    FOREIGN KEY (User_ID) REFERENCES Users(ID_user)
-);
-select * from Users;
-select * from Profiles;
-SELECT Pass FROM Users WHERE User_name = "eze";
