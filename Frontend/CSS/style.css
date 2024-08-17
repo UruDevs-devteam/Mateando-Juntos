@@ -8,8 +8,6 @@
 body {
     background: #D5DBDB;
     overflow-x: hidden;
-    
-
 }
 
 /*ESTILO PARA EL HEADER*/
@@ -61,7 +59,6 @@ header {
     background: #ffffff;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-
     overflow: hidden;
     z-index: 1;
 }
@@ -292,9 +289,16 @@ header {
 
 }
 
-.chats H2 {
+.chats a {
     text-align: center;
+    text-decoration: none;
+    color: #000;
 }
+
+.chats a:hover {
+    color: #5f6161;
+}
+
 
 .messages {
     border-radius: 2rem;
@@ -477,7 +481,7 @@ button:hover {
     }
 
     .center_bar_content {
-        width: 700px;
+        width: 650px;
         padding: 1rem;
     }
 

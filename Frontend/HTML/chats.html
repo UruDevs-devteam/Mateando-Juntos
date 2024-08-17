@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbox</title>
+    <link rel="stylesheet" href="../CSS/settings.css">
+</head>
+
+<body>
+    <!--HEADER-->
+    <header>
+        <div class="left">
+            <a href="home.html" class="Logo"><img src="../img/logo-removebg-preview.png" alt="Logo"></a>
+        </div>
+        <div class="right">
+            <ul class="icons_nav">
+                <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="mensagges"></a></li>
+                <li><a href="#" id="message"><img src="../img/rectangular-speech-bubble_32642.png" alt="comunitys"></a>
+                </li>
+            </ul>
+            
+            <ul class="icons_nav">
+                <li class="Profile">
+                    <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
+                    <ul class="dropdown-menu-profile">
+                        <li><a class="Size" href="login.html">Iniciar sesion</a></li>
+                        <li><a class="Size" href="#">Tema</a></li>
+                        <li class="Profile">
+                            <a href="#">Ajustes</a>
+                            <ul class="dropdown-menu-profile">
+                                <li><a class="Size" href="login.html">Iniciar sesion</a></li>
+                                <li><a class="Size" href="#">Ajustes</a></li>
+                                <li><a class="Size" href="#">Tema</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#"><img src="../img/bell_143144.png" alt="bell_notifications"></a></li>
+
+            </ul>
+        </div>
+    </header>
+    <!--HEADER-->
+
+
+    <div class="chat-app">
+        <!-- Left Sidebar with Recent Chats -->
+        <div class="chat-sidebar">
+            <div class="sidebar-header">
+                <h3>Chats</h3>
+            </div>
+            <div class="chat-list">
+                <div class="chat-item active">
+                    <p>John Doe</p>
+                    <span class="last-message">I'm doing great as well!</span>
+                    <span class="chat-timestamp">10:06 AM</span>
+                </div>
+                <div class="chat-item">
+                    <p>Jane Smith</p>
+                    <span class="last-message">See you later!</span>
+                    <span class="chat-timestamp">9:45 AM</span>
+                </div>
+                <div class="chat-item">
+                    <p>Mike Johnson</p>
+                    <span class="last-message">Let's meet tomorrow</span>
+                    <span class="chat-timestamp">Yesterday</span>
+                </div>
+                <!-- Add more chat items here -->
+            </div>
+        </div>
+
+        <!-- Right Chat Area -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>John Doe</h2>
+            </div>
+            <div class="chat-messages">
+                <div class="message received">
+                    <p>Hello! How are you?</p>
+                    <span class="timestamp">10:02 AM</span>
+                </div>
+                <div class="message sent">
+                    <p>I'm good, thank you! How about you?</p>
+                    <span class="timestamp">10:05 AM</span>
+                </div>
+                <div class="message received">
+                    <p>I'm doing great as well!</p>
+                    <span class="timestamp">10:06 AM</span>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type a message...">
+                <button type="button">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
