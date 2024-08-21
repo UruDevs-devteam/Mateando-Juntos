@@ -41,7 +41,8 @@ header {
     margin-right: 2vh;
 }
 
-.icons_nav #message,#group {
+.icons_nav #message,
+#group {
     display: none;
 }
 
@@ -65,6 +66,7 @@ header {
 
 .icons_nav .Profile:hover .dropdown-menu-profile {
     display: block;
+    
 }
 
 .dropdown-menu-profile li {
@@ -78,6 +80,8 @@ header {
     color: #333;
     transition: background-color 0.2s;
 }
+
+
 
 .dropdown-menu-profile li a:hover {
     background-color: #f1f1f1;
@@ -193,7 +197,7 @@ header {
 .create-post .text_post {
     padding-left: 55px;
     padding-top: 20px;
-    
+
 }
 
 .create-post .text_post textarea {
@@ -464,7 +468,8 @@ button:hover {
         padding: 1rem;
     }
 
-    .icons_nav #message,#group {
+    .icons_nav #message,
+    #group {
         display: block;
     }
 }
@@ -485,7 +490,8 @@ button:hover {
         padding: 1rem;
     }
 
-    .icons_nav #message,#group {
+    .icons_nav #message,
+    #group {
         display: block;
     }
 
