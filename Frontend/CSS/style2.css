@@ -36,7 +36,8 @@ header {
     display: flex;
     list-style: none;
     align-items: center;
-    margin-right: 10vh;
+    margin-right: 2vh;
+    margin-left: 8px;
 }
 
 .icons_nav #message,
@@ -64,15 +65,18 @@ header {
 
 .icons_nav .Profile:hover .dropdown-menu-profile {
     display: block;
+
 }
 
 .dropdown-menu-profile li {
-    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
 }
 
 .dropdown-menu-profile li a {
     display: block;
-    padding: 10px 20px;
+    padding: 5px;
     text-decoration: none;
     color: #333;
     transition: background-color 0.2s;
@@ -80,6 +84,19 @@ header {
 
 .dropdown-menu-profile li a:hover {
     background-color: #f1f1f1;
+    width: 100%;
+}
+
+.dropdown-menu-profile li label.Size {
+    margin-right: 10px;
+    /* Espacio entre el label y el checkbox */
+}
+
+
+.dropdown-menu-profile li input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
 }
 
 .icons_nav img {
@@ -107,8 +124,6 @@ header {
 /*CHATS STYLES*/
 
 .chat-app {
-
-
     height: 100vh;
     width: 100%;
     background-color: #fff;
@@ -449,8 +464,37 @@ header {
     font-size: 16px;
 }
 
+/*DARKMODE*/
+/* Estilos generales para el modo oscuro */
 
+.dark-mode header {
+    background-color: #444;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
 
+.dark-mode .dropdown-menu-profile {
+    background: #444;
+    color: #fff;
+}
+
+.dark-mode .dropdown-menu-profile li a {
+    color: #fff;
+}
+
+.dark-mode .dropdown-menu-profile li a:hover {
+    background-color: #666;
+}
+
+.dark-mode .icons_nav .Profile .dropdown-menu-profile {
+    background: #444;
+    color: #fff;
+}
+
+.dark-mode .chat-app {
+    background: #444;
+    color: #000000;
+}
 
 
 /* Responsive Design */

@@ -11,8 +11,7 @@
 
 <body>
     <!--HEADER-->
-    <header> 
-        
+    <header>
         <div class="left">
             <a href="home.html" class="Logo"><img src="../img/logo-removebg-preview.png" alt="Logo"></a>
         </div>
@@ -28,14 +27,12 @@
                     <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
                     <ul class="dropdown-menu-profile">
                         <li><a class="Size" href="login.html">Iniciar sesion</a></li>
-                        <li><a class="Size" href="#">Tema</a></li>
+                        <li>
+                            <label for="darkmode" class="Size">Modo Oscuro</label>
+                            <input type="checkbox" name="darkmode" id="darkmode">
+                        </li>
                         <li class="Profile">
                             <a href="#">Ajustes</a>
-                            <ul class="dropdown-menu-profile">
-                                <li><a class="Size" href="login.html">Iniciar sesion</a></li>
-                                <li><a class="Size" href="#">Ajustes</a></li>
-                                <li><a class="Size" href="#">Tema</a></li>
-                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -99,5 +96,25 @@
         </div>
     </div>
 </body>
+<script>
+    document.getElementById('darkmode').addEventListener('change', function () {
+        document.body.classList.toggle('dark-mode', this.checked);
+    });
 
+    // Opción: Guardar la preferencia del usuario en localStorage
+    if (localStorage.getItem('dark-mode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkmode').checked = true;
+    }
+
+    document.getElementById('darkmode').addEventListener('change', function () {
+        if (this.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('dark-mode', 'true');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('dark-mode', 'false');
+        }
+    });
+</script>
 </html>

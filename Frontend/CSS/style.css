@@ -66,25 +66,38 @@ header {
 
 .icons_nav .Profile:hover .dropdown-menu-profile {
     display: block;
-    
+
 }
 
 .dropdown-menu-profile li {
-    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
 }
 
 .dropdown-menu-profile li a {
     display: block;
-    padding: 10px 20px;
+    padding: 5px;
     text-decoration: none;
     color: #333;
     transition: background-color 0.2s;
 }
 
-
-
 .dropdown-menu-profile li a:hover {
     background-color: #f1f1f1;
+    width: 100%;
+}
+
+.dropdown-menu-profile li label.Size {
+    margin-right: 10px;
+    /* Espacio entre el label y el checkbox */
+}
+
+
+.dropdown-menu-profile li input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
 }
 
 .icons_nav img {
@@ -139,6 +152,7 @@ header {
 .container {
     display: flex;
     justify-content: space-between;
+    height: 100vh;
 
 }
 
@@ -443,6 +457,67 @@ button:hover {
 .register-link a:hover {
     text-decoration: underline;
 }
+
+/*DARKMODE*/
+/* Estilos generales para el modo oscuro */
+
+.dark-mode header {
+    background-color: #444;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+
+.dark-mode .search_box input {
+    color: #fff;
+}
+
+.dark-mode .dropdown-menu-profile {
+    background: #444;
+    color: #fff;
+}
+
+.dark-mode .dropdown-menu-profile li a {
+    color: #fff;
+}
+
+.dark-mode .dropdown-menu-profile li a:hover {
+    background-color: #666;
+}
+
+.dark-mode .create-post {
+    background: #444;
+    color: #ddd;
+}
+
+.dark-mode .center_bar_content .feeds .feed {
+    background: #444;
+    color: #ddd;
+}
+
+.dark-mode .icons_nav .Profile .dropdown-menu-profile {
+    background: #444;
+    color: #fff;
+}
+
+.dark-mode .chats {
+    background: #444;
+    color: #fff;
+
+}
+
+.dark-mode .container{
+    background: #afafaf;
+    color: #fff;
+}
+
+.dark-mode .container{
+    background: #afafaf;
+    color: #fff;
+}
+
+/* Asegúrate de añadir cualquier otro estilo necesario para el modo oscuro */
+
 
 /*MEDIAS QUERYS*/
 
