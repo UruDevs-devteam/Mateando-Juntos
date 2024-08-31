@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbox</title>
     <link rel="stylesheet" href="../CSS/style2.css">
-    <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
+    <title>Profile Settings</title>
 </head>
 
 <body>
@@ -41,60 +40,52 @@
             </ul>
         </div>
     </header>
-    <!--HEADER-->
 
 
-    <div class="chat-app">
-        <!-- Left Sidebar with Recent Chats -->
-        <div class="chat-sidebar">
-            <div class="sidebar-header">
-                <h3>Chats</h3>
-            </div>
-            <div class="chat-list">
-                <div class="chat-item active">
-                    <p>John Doe</p>
-                    <span class="last-message">I'm doing great as well!</span>
-                    <span class="chat-timestamp">10:06 AM</span>
-                </div>
-                <div class="chat-item">
-                    <p>Jane Smith</p>
-                    <span class="last-message">See you later!</span>
-                    <span class="chat-timestamp">9:45 AM</span>
-                </div>
-                <div class="chat-item">
-                    <p>Mike Johnson</p>
-                    <span class="last-message">Let's meet tomorrow</span>
-                    <span class="chat-timestamp">Yesterday</span>
-                </div>
-                <!-- Add more chat items here -->
-            </div>
-        </div>
+    <div class="settings-container">
+        <!-- Sidebar with navigation links -->
+        <aside class="settings-menu">
+            <nav>
+                <a href="Settings_user.html">
+                    <h2>Información Personal</h2>
+                </a>
+                <a href="privacidad_sett.html">
+                    <h2>Privacidad</h2>
+                </a>
+                <a href="notification_sett.html">
+                    <h2>Notificaciones</h2>
+                </a>
+                <a href="idiom_sett.html">
+                    <h2>Idiomas</h2>
+                </a>
+            </nav>
+        </aside>
 
-        <!-- Right Chat Area -->
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>John Doe</h2>
-            </div>
-            <div class="chat-messages">
-                <div class="message received">
-                    <p>Hello! How are you?</p>
-                    <span class="timestamp">10:02 AM</span>
-                </div>
-                <div class="message sent">
-                    <p>I'm good, thank you! How about you?</p>
-                    <span class="timestamp">10:05 AM</span>
-                </div>
-                <div class="message received">
-                    <p>I'm doing great as well!</p>
-                    <span class="timestamp">10:06 AM</span>
-                </div>
-            </div>
-            <div class="chat-input">
-                <input type="text" placeholder="Type a message...">
-                <button type="button">Send</button>
-            </div>
-        </div>
+        <!-- Main content area for settings user -->
+        <main class="settings-content">
+            <form action="guardar_configuracion.php" method="POST">
+                <section id="languages">
+                    <h3>Configuración de Idioma</h3>
+
+                    <!-- Language Selection -->
+                    <div class="form-group-idiom">
+                        <label for="language-selection">Selecciona tu idioma</label>
+                        <select id="language-selection" name="language-selection">
+                            <option value="es">Español</option>
+                            <option value="en">Inglés</option>
+
+                            <!-- Puedes añadir más opciones según los idiomas soportados por tu aplicación -->
+                        </select>
+                    </div>
+
+                    <!-- Save Changes Button -->
+                    <button type="submit">Guardar Cambios</button>
+                </section>
+            </form>
+        </main>
     </div>
+
+    <script src="../JS/js.js"></script>
 </body>
 <script>
     document.getElementById('darkmode').addEventListener('change', function () {
@@ -117,4 +108,5 @@
         }
     });
 </script>
+
 </html>
