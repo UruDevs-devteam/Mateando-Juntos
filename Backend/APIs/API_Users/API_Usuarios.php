@@ -19,8 +19,8 @@ switch ($method) {
             echo json_encode($Usuario);
         } elseif (preg_match('/^\/User\/([a-zA-Z0-9_]+)$/', $endpoint, $matches)) {  // verifica si el enpoint tiene mayusculas,minusculas,numeros o "_" (el nombre de usuario)
             $name = $matches[1];                                              // hagara el nombre
-            $Usuario = $User_obj->GetUserbyName($name);                         // llama al metodo indicado
-            echo json_encode($Usuario);
+            $Usuario_n = $User_obj->GetUserbyName($name);                         // llama al metodo indicado
+            echo json_encode($Usuario_n);
         } elseif ($endpoint == '/Perfiles') {
             $Perfiles = $Perfil_obj->getperfils();
             echo json_encode($Perfiles);
