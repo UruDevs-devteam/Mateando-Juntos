@@ -63,11 +63,13 @@ class User
         $query = "INSERT INTO Users (Full_name, User_name, Email, Pass) VALUES (?, ?, ?, ?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("ssss", $Full_name, $User_name , $Email, $hashed_password); // "ssss" indica cuatro cadenas
-        $result = [];
-        $result["result"] = $stmt->execute();
-        $result["last_ID"] = $this->conex->insert_id;                // Obtener la última ID insertada
+        $result = $stmt->execute();
+        $last_ID = $this->conex->insert_id;                // Obtener la última ID insertada
         $stmt->close();
-        return $result;
+        return [
+            "result" => $result,
+            "last_ID" => $last_ID
+        ];
     }
 
     function VerifyUser($data)

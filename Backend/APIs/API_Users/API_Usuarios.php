@@ -38,9 +38,8 @@ switch ($method) {
         $data = json_decode(file_get_contents('php://input'), true);  // manda la solitud al curl para pedirle los parametros                                   
         if ($endpoint == '/Usuario') {
             if (Validar_Data_User($data)) {
-                $Resul_u = $User_obj->AddUser($data);                  // llama al metodo y resultado user  
-                $Resul_p = $Perfil_obj->AddPerfil( $Resul_u["last_ID"]);  // resultado perfil
-                echo json_encode(['success' => $Resul_u["result"]]); // guarda true o false, depende si se logro la incercion
+                $Result = $User_obj->AddUser($data);                  // llama al metodo y resultado user  
+                echo json_encode(['success' => $Result["result"]]); // guarda true o false, depende si se logro la incercion
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacio o mal formado']);
