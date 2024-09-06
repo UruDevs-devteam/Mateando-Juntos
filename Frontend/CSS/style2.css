@@ -284,12 +284,12 @@ header {
 
 .settings-container {
     display: flex;
-    height: 100%;
+    height: 110vh;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    
 }
 
 /* Sidebar Styles */
@@ -423,7 +423,6 @@ header {
     margin-bottom: 20px;
 }
 
-
 .form-group-notification label {
     display: block;
     font-weight: bold;
@@ -494,6 +493,30 @@ header {
 .dark-mode .chat-app {
     background: #444;
     color: #000000;
+}
+
+.dark-mode .settings-container {
+    background-color: #444;
+}
+
+.dark-mode .settings-content h3 {
+    color: #000000;
+}
+
+.dark-mode .form-group label{
+    color: #000000;
+}
+
+.dark-mode .chat-item p {
+    color: #fff;
+}
+
+.dark-mode .chat-header h2 {
+    color: #ffffff;
+}
+
+.dark-mode .form-group input[type="text"] {
+    background-color: #7d7c7c;
 }
 
 

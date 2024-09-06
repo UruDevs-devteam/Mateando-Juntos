@@ -467,6 +467,13 @@ button:hover {
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
+.dark-mode h2{
+    color: #fff;
+}
+
+.dark-mode .create-post .profile-photo p {
+    color: #fff;
+}
 
 .dark-mode .search_box input {
     color: #fff;
