@@ -10,7 +10,9 @@ class Post
 
     public function GetPosts()
     {
-        $query = "SELECT * FROM Post";
+        $query = "SELECT p.ID_post, p.Titulo, p.Descripcion, p.Fecha_creacion, u.Nombre_usuario
+                  FROM Post p
+                  JOIN Usuario u ON p.ID_usuario = u.ID_usuario";
         $result = mysqli_query($this->conex, $query);
         $Posts = [];
         while ($row = mysqli_fetch_assoc($result)) {
@@ -43,9 +45,9 @@ class Post
 
     public function AddPost($data)
     {
-        $query = "INSERT INTO Post (Title, Caption, Date_crea) VALUES (?, ?, ?)";
+        $query = "INSERT INTO Post (Titulo, Descripcion, ID_perfil) VALUES (?, ?, ?)";
         $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("sss", $data['Title'], $data['Caption'], $data['Date_crea']); // "sss" indica que los tres parámetros son cadenas
+        $stmt->bind_param("ssi", $data['Title'], $data['Caption'], $data['ID_perfil']); // "sss" indica que los tres parámetros son cadenas
         $result = $stmt->execute();
         $stmt->close();
         return $result;
@@ -53,21 +55,23 @@ class Post
 
     public function AddMulti($data)
     {
-        $query = "INSERT INTO multi (Num , ID_post, src) VALUES (?, ?, ?)";
+        $query = "INSERT INTO Post_multimedia (Numero_mul , Src_mul, ID_post) VALUES (?, ?, ?)";
         $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("iis", $data['num'], $data['Id'], $data['src']); // "iis" indica dos enteros y una cadena
+        $stmt->bind_param("isi", $data['num'], $data['src'], $data['Id']); // "iis" indica dos enteros y una cadena
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
-    public function GetMulyiByID($id){
-        $query = 'SELECT * FROM multi WHERE ID_post = ?';
+    public function GetMulyiByID($id)
+    {
+        $query = 'SELECT * FROM Post_multimedia WHERE ID_post = ?';
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $id); // "i" indica que $id es un entero
         $stmt->execute();
         $result = $stmt->get_result();
         $Post = $result->fetch_assoc();
         $stmt->close();
-        return $Post;      }
+        return $Post;
+    }
 }
