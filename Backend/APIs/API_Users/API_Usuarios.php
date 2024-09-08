@@ -46,7 +46,14 @@ switch ($method) {
             }
         } elseif ($endpoint == '/User/Verify') {                  // verifica si el usuario y la contraseña son correctas.
             $Resul = $User_obj->VerifyUser($data);
-            echo json_encode(['success' => $Resul]);
+            if ($Resul) {
+                $Usuario = $User_obj->GetUserbyName($data['UserName']);  // Obtiene los datos del usuario usando el nombre de usuario
+                echo json_encode([
+                    'success' => $Resul,
+                    'ID_usuario' => $Usuario['ID_usuario'] ]);   // Devuelve el ID del usuario junto con el éxito
+            } else {
+                echo json_encode(['success' => $Resul]);
+            }
         } else {                                                      // si los atributos estan mal o no existen, da error
             http_response_code(400);
             echo json_encode(['error' => 'JSON vacío o mal formado']);

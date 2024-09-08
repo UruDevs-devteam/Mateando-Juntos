@@ -45,9 +45,9 @@ class Post
 
     public function AddPost($data)
     {
-        $query = "INSERT INTO Post (Titulo, Descripcion, ID_perfil) VALUES (?, ?, ?)";
+        $query = "INSERT INTO Post (Titulo, Descripcion, ID_usuario) VALUES (?, ?, ?)";
         $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("ssi", $data['Title'], $data['Caption'], $data['ID_perfil']); // "sss" indica que los tres parámetros son cadenas
+        $stmt->bind_param("ssi", $data['Titulo'], $data['Descripcion'], $data['ID_usuario']); // "sss" indica que los tres parámetros son cadenas
         $result = $stmt->execute();
         $stmt->close();
         return $result;

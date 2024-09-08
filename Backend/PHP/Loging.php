@@ -17,7 +17,9 @@ if (isset($_POST["username"], $_POST["password"])) {
     curl_close($ch); 
     $responseData = json_decode($response, true);
     if (isset($responseData['success']) && $responseData['success']) {
-        $_SESSION['username'] = $_POST["username"];     
+        $_SESSION['username'] = $_POST["username"];
+        $_SESSION['ID_usuario'] = $responseData['ID_usuario'];  
+   
         echo '
         <script>
         alert("Sesion iniciada redirigiendo al Inicio de la pagina");
@@ -28,7 +30,7 @@ if (isset($_POST["username"], $_POST["password"])) {
     } else {
         echo '
         <script>
-        alert("Sesion no iniciada");
+        alert("Sesion no iniciada, usuario o contrasena incorrectas");
         window.location = "../../Frontend/HTML/login.html";
         </script>
            ';                                 // Verificación fallida, redirige a la página de login

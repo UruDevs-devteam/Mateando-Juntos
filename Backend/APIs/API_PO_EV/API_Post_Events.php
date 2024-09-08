@@ -100,9 +100,9 @@ function Valid_Data_Post($data)
     if (empty($data)) { // Verificar que el array de datos no esté vacío
         return false;
     } elseif (                      // verifica que cada parametro exista y no este vacio.
-        !isset($data['Title']) || empty($data['Title']) ||
-        !isset($data['Caption']) || empty($data['Caption']) ||
-        !isset($data['Date_crea']) || empty($data['Date_crea'])
+        !isset($data['Titulo']) || empty($data['Titulo']) ||
+        !isset($data['Descripcion']) || empty($data['Descripcion']) ||
+        !isset($data['ID_usuario']) || empty($data['ID_usuario'])
     ) {
         return false;
     } else {

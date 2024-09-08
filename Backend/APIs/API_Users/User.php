@@ -21,7 +21,7 @@ class User
 
     public function GetUserbyName($name)
     {
-        $query = "SELECT * FROM Usuario WHERE Nombre = ?";
+        $query = "SELECT * FROM Usuario WHERE Nombre_usuario = ?";
         $stmt = $this->conex->prepare($query);     //prepara la consulta
         $stmt->bind_param("s", $name); // "i" indica que $Id es un entero
         $stmt->execute();
