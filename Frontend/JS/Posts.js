@@ -1,4 +1,4 @@
-// actualizar el nombre de usuario en la etiqueta <p> con id 'Nombre_usuario'
+// Actualizar el nombre de usuario en la etiqueta <p> con id 'Nombre_usuario'
 function updateUserName() {
     return fetch('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php')
         .then(response => response.json())
@@ -10,7 +10,7 @@ function updateUserName() {
         .catch(error => console.error('Error al obtener el usuario de la sesión:', error));
 }
 
-// a obtener y mostrar los posts
+// Obtener y mostrar los posts
 function fetchPosts() {
     fetch('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Posts')
         .then(response => response.json())
@@ -75,16 +75,58 @@ function publishPost() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.success.result) {
                 alert('Post publicado con éxito!');
                 document.getElementById('postDescription').value = '';  // Limpiar el campo de descripción
                 fetchPosts();  // Recargar los posts
+
+                // Subir la imagen si hay una seleccionada
+                uploadImage(data.success.postId);
             } else {
                 alert('Hubo un error al publicar el post.');
             }
         })
         .catch(error => console.error('Error:', error));
 }
+
+// Subir imagen asociada al post
+function uploadImage(postId) {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    if (!file){ return true;}  // No hacer nada si no se selecciona un archivo
+
+    const reader = new FileReader();
+    reader.onloadend = function () {
+        // Obtener la imagen en Base64
+        const base64Image = reader.result.split(',')[1]; // Obtener solo la parte Base64 del resultado
+
+        // Crear el objeto de datos para enviar
+        const data = {
+            src: base64Image,
+            postId: postId
+        };
+
+        // Enviar los datos a la API
+        fetch('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Imagen subida con éxito');
+            } else {
+                console.error('Error al subir la imagen:', data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    };
+
+    reader.readAsDataURL(file); // Iniciar la conversión a Base64
+}
+
 
 // Inicializar eventos y cargar datos al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
@@ -95,4 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('publicarBtn').addEventListener('click', event => {
     event.preventDefault();
     publishPost();
+});
+
+document.getElementById('Galery').addEventListener('click', event => {
+    event.preventDefault();
+    document.getElementById('fileInput').click();
 });

@@ -130,17 +130,9 @@ function Valid_Data_Event($data)
 
 function Valid_Data_Multi($data)
 {
-    if (empty($data)) {
-        return false;
-    } elseif (
-        !isset($data['num']) || empty($data['num']) ||
-        !isset($data['Id']) || empty($data['Id']) ||
-        !isset($data['src']) || empty($data['src'])
-    ) {
-        return false;
-    } else {
+    
         return true;
-    }
+    
 }
 
 function Valid_ID($data)

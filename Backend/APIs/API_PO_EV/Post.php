@@ -49,15 +49,19 @@ class Post
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("ssi", $data['Titulo'], $data['Descripcion'], $data['ID_usuario']); // "sss" indica que los tres parámetros son cadenas
         $result = $stmt->execute();
+        $last_ID = $this->conex->insert_id;                // Obtener la última ID insertada
         $stmt->close();
-        return $result;
+        return [
+            "result" => $result,
+            "postId" => $last_ID
+        ];
     }
 
     public function AddMulti($data)
     {
-        $query = "INSERT INTO Post_multimedia (Numero_mul , Src_mul, ID_post) VALUES (?, ?, ?)";
+        $query = "INSERT INTO Post_multimedia ( Src_mul, ID_post) VALUES (?, ?)";
         $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("isi", $data['num'], $data['src'], $data['Id']); // "iis" indica dos enteros y una cadena
+        $stmt->bind_param("si", $data['src'], $data['postId']); // "is" un enteros y una cadena
         $result = $stmt->execute();
         $stmt->close();
         return $result;
