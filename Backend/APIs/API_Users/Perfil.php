@@ -11,7 +11,7 @@ public function __construct($conn)
 }
 
 public function getperfils(){
-    $query = "SELECT * FROM Profiles";
+    $query = "SELECT * FROM Perfil_usuario";
     $result = mysqli_query($this->conex, $query); // ejecuta la consulta 
     $perfiles = [];                                // crea un array
     while ($row = mysqli_fetch_assoc($result)) { // Recorre los resultados y los añade al array
@@ -20,7 +20,7 @@ public function getperfils(){
     return $perfiles;                              // retorna el array
 }
 function GetPerfilByUserID($User_ID){
-    $query = "SELECT * FROM Users WHERE User_ID = ?";// crea la consulta 
+    $query = "SELECT * FROM Perfil_usuario WHERE ID_usuario = ?";// crea la consulta 
     $stmt = $this->conex->prepare($query);     //prepara la consulta
     $stmt->bind_param("i", $User_ID); // "i" indica que $User_ID es un entero
     $stmt->execute();
@@ -31,7 +31,7 @@ function GetPerfilByUserID($User_ID){
     
 }
 function AddPerfil($User_ID){
-    $query = "INSERT INTO Profiles (User_ID) VALUES ?";
+    $query = "INSERT INTO Perfil_usuario (ID_usuario) VALUES (?)";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $User_ID); // "i" indica un entero
     $result = $stmt->execute();
@@ -39,7 +39,7 @@ function AddPerfil($User_ID){
     return $result;
 }
 function DeletPperfil($User_ID){
-    $query = "DELETE FROM Users WHERE User_ID = ?"; //crea la consulta
+    $query = "DELETE FROM Perfil_usuario WHERE ID_usuario = ?"; //crea la consulta
     $stmt = $this->conex->prepare($query);     //prepara la consulta
     $stmt->bind_param("i", $User_ID); // "i" indica que $User_ID es un entero
     $stmt->execute();
@@ -53,7 +53,7 @@ Function ModifyPerfil($data){
     $Tema = $data['Tema'];
     $Biografia = $data['Biografia'];
     $Privacidad = $data['Privacidad'];
-    $query = "UPDATE Users SET profile_picture = ?, color = ?, name = ?, age = ?, bio = ? WHERE User_ID = ?";
+    $query = "UPDATE Perfil_usuario SET Foto_perfil = ?, Tema = ?,  Privado = ?, Biografia = ? WHERE ID_usuario = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ssssi", $img, $Tema, $Biografia, $Privacidad, $User_ID);
 }

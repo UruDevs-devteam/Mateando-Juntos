@@ -67,7 +67,7 @@ class User
         $last_ID = $this->conex->insert_id;                // Obtener la última ID insertada
         $stmt->close();
         return [
-            "result" => $result,
+            "resultr" => $result,
             "last_ID" => $last_ID
         ];
     }

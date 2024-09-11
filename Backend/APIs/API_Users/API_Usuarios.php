@@ -39,7 +39,8 @@ switch ($method) {
         if ($endpoint == '/Usuario') {
             if (Validar_Data_User($data)) {
                 $Result = $User_obj->AddUser($data);                  // llama al metodo y resultado user  
-                echo json_encode(['success' => $Result["result"]]); // guarda true o false, depende si se logro la incercion
+               $Perfil_obj->AddPerfil($Result['last_ID']);
+                echo json_encode(['success' => $Result["resultr"]]); // guarda true o false, depende si se logro la incercion
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacio o mal formado']);
