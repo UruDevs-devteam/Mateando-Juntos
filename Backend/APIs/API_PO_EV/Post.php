@@ -73,13 +73,35 @@ class Post
     $stmt->bind_param("i", $id); // "i" indica que $id es un entero
     $stmt->execute();
     $result = $stmt->get_result();
-    
     $images = [];
     while ($row = $result->fetch_assoc()) {
         $images[] = $row['Src_mul']; // Solo almacenar el contenido de la imagen
     }
-    
     $stmt->close();
     return $images;
 }
+public function GetLikesbypost ($id_post){
+    $query = "SELECT * FROM Dar_megusta where ID_post = ?";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("i", $id_post);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $likes = [];
+    while ($row = $result->fetch_assoc()) {
+        $likes['ID_perfil'] = $row; // Solo almacenar el contenido de la imagen
+    }
+    $stmt->close();
+    return $likes;;
+}
+public function AddLike($data){
+    $postId = $data['ID_post'];
+    $perfilId = $data['ID_perfil'];
+    $query = "INSERT INTO Dar_megusta (ID_perfil,ID_post) VALUES (?,?)";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("ii", $postId, $perfilId);
+    $result = $stmt->execute();
+    $stmt->close();
+    return $result;
+}
+
 }

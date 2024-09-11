@@ -297,23 +297,31 @@ header {
 }
 /* Estilo para el contenedor de la imagen */
 .center_bar_content .feed .photo {
-    width: 100%; /* Asegura que el contenedor ocupe el ancho completo del artículo */
-    height: 300px; /* Ajusta la altura del contenedor a un tamaño fijo, por ejemplo 300px */
+    width: 100%; /* Ocupa todo el ancho del post */
+    height: 0;
+    padding-bottom: 100%; /* Mantiene una proporción 1:1 (cuadrada), ajusta según sea necesario */
     border-radius: 2rem;
     overflow: hidden;
     margin: 2rem 0;
-    display: flex; /* Usa flexbox para centrar la imagen */
-    align-items: center; /* Centra la imagen verticalmente */
-    justify-content: center; /* Centra la imagen horizontalmente */
-    background-color: #f0f0f0; /* Añade un color de fondo en caso de que no haya imagen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    position: relative;
 }
 
 /* Estilo para la imagen */
 .center_bar_content .feed .photo img {
-    width: 100%; /* Asegura que la imagen ocupe el ancho completo del contenedor */
-    height: 100%; /* Asegura que la imagen ocupe el alto completo del contenedor */
-    object-fit: cover; /* Asegura que la imagen cubra el área del contenedor sin deformarse */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* La imagen cubre todo el ancho del contenedor */
+    height: 100%; /* La imagen cubre toda la altura del contenedor */
+    object-fit: cover; /* La imagen cubre todo el contenedor manteniendo proporciones */
+    object-position: center; /* Centra la imagen para que el corte sea equilibrado */
+    border-radius: 2rem;
 }
+
 
 /*ESTILO PARA LOS CHATS DE LAS COMUNIDADES Y LOS CHATS PRIVADOS DEL USUARIO*/
 .chats {

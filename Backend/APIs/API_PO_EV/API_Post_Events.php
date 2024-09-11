@@ -28,6 +28,10 @@ switch ($method) {
             $id = $matches[1];
             $mul = $Post_obj->GetMulyiByID($id);
             echo json_encode($mul);
+        }elseif((preg_match('/^\/Like\/(\d+)$/', $endpoint, $matches))){
+            $id = $matches[1];
+            $likes = $Post_obj->GetLikesbypost($id);
+            echo json_encode($likes);
         } else {                                                       // si no encuentra el endpoint(esta vacio o no es uno de los anteriores), da error.
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
@@ -57,6 +61,14 @@ switch ($method) {
                 $Resul = $Event_obj->AddEvent($data);
                 echo json_encode(['success' => $Resul]);
             } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacio o mal formado']);
+            }
+        }elseif($endpoint == '/like'){
+            if(valid_like($data)){
+                $Resul = $Post_obj->AddLike($data);
+                echo json_encode(['success' => $Resul]);
+            }else {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacio o mal formado']);
             }
@@ -141,6 +153,19 @@ function Valid_ID($data)
         return false;
     } elseif (
         !isset($data['Id']) || empty($data['Id'])
+    ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function valid_like($data){
+    if (empty($data)) {
+        return false;
+    } elseif (
+        !isset($data['ID_post']) || empty($data['ID_post'])||
+        !isset($data['ID_perfil']) || empty($data['ID_perfil'])
     ) {
         return false;
     } else {
