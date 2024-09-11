@@ -26,8 +26,8 @@ switch ($method) {
             echo json_encode($Event);
         } elseif ((preg_match('/^\/Multi\/(\d+)$/', $endpoint, $matches))) {
             $id = $matches[1];
-            $Event = $Post_obj->GetMulyiByID($id);
-            echo json_encode($Event);
+            $mul = $Post_obj->GetMulyiByID($id);
+            echo json_encode($mul);
         } else {                                                       // si no encuentra el endpoint(esta vacio o no es uno de los anteriores), da error.
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);

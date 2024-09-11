@@ -66,16 +66,20 @@ class Post
         $stmt->close();
         return $result;
     }
-
     public function GetMulyiByID($id)
-    {
-        $query = 'SELECT * FROM Post_multimedia WHERE ID_post = ?';
-        $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("i", $id); // "i" indica que $id es un entero
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $Post = $result->fetch_assoc();
-        $stmt->close();
-        return $Post;
+{
+    $query = 'SELECT Src_mul FROM Post_multimedia WHERE ID_post = ?';
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("i", $id); // "i" indica que $id es un entero
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $images = [];
+    while ($row = $result->fetch_assoc()) {
+        $images[] = $row['Src_mul']; // Solo almacenar el contenido de la imagen
     }
+    
+    $stmt->close();
+    return $images;
+}
 }

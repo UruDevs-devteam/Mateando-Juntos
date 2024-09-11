@@ -36,19 +36,43 @@ function fetchPosts() {
                             </div>
                             <span class="edit"><i class="uil uil-ellipsis-h"></i></span>
                         </div>
-                        <div class="photo">
+                        <div class="photo" id="post-${post.ID_post}-photo">
                             <img src="../img/default-image.jpg" alt="Post Image">
                         </div>
                         <div class="caption">
-                            <p> ${post.Descripcion || 'Descripción no disponible'}</p>
+                            <p>${post.Descripcion || 'Descripción no disponible'}</p>
                         </div>
                     </article>
                 `;
 
                 feedsSection.insertAdjacentHTML('beforeend', article);  // Insertar artículo
+
+                // Cargar imágenes relacionadas con el post
+                fetchImages(post.ID_post);
             });
         })
         .catch(error => console.error('Error al obtener los posts:', error));
+}
+
+// Obtener y mostrar imágenes de un post específico
+function fetchImages(postId) {
+    fetch(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi/${postId}`)
+        .then(response => response.json())
+        .then(images => {
+            const photoContainer = document.getElementById(`post-${postId}-photo`);
+
+            if (Array.isArray(images) && images.length > 0) {
+                // Limpiar la imagen predeterminada
+                photoContainer.innerHTML = '';
+
+                images.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `data:image/jpeg;base64,${image}`; // Mostrar imagen en formato Base64
+                    photoContainer.appendChild(imgElement);
+                });
+            }
+        })
+        .catch(error => console.error('Error al obtener las imágenes:', error));
 }
 
 // Publicar nuevo post
@@ -94,7 +118,7 @@ function uploadImage(postId) {
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
 
-    if (!file){ return true;}  // No hacer nada si no se selecciona un archivo
+    if (!file) return true;  // No hacer nada si no se selecciona un archivo
 
     const reader = new FileReader();
     reader.onloadend = function () {
@@ -126,7 +150,6 @@ function uploadImage(postId) {
 
     reader.readAsDataURL(file); // Iniciar la conversión a Base64
 }
-
 
 // Inicializar eventos y cargar datos al cargar la página
 document.addEventListener('DOMContentLoaded', () => {

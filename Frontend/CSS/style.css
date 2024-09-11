@@ -295,7 +295,25 @@ header {
     font-size: 1.4rem;
     margin: 0.6rem 0;
 }
+/* Estilo para el contenedor de la imagen */
+.center_bar_content .feed .photo {
+    width: 100%; /* Asegura que el contenedor ocupe el ancho completo del artículo */
+    height: 300px; /* Ajusta la altura del contenedor a un tamaño fijo, por ejemplo 300px */
+    border-radius: 2rem;
+    overflow: hidden;
+    margin: 2rem 0;
+    display: flex; /* Usa flexbox para centrar la imagen */
+    align-items: center; /* Centra la imagen verticalmente */
+    justify-content: center; /* Centra la imagen horizontalmente */
+    background-color: #f0f0f0; /* Añade un color de fondo en caso de que no haya imagen */
+}
 
+/* Estilo para la imagen */
+.center_bar_content .feed .photo img {
+    width: 100%; /* Asegura que la imagen ocupe el ancho completo del contenedor */
+    height: 100%; /* Asegura que la imagen ocupe el alto completo del contenedor */
+    object-fit: cover; /* Asegura que la imagen cubra el área del contenedor sin deformarse */
+}
 
 /*ESTILO PARA LOS CHATS DE LAS COMUNIDADES Y LOS CHATS PRIVADOS DEL USUARIO*/
 .chats {
