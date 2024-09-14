@@ -32,7 +32,12 @@ switch ($method) {
             $id = $matches[1];
             $likes = $Post_obj->GetLikesbypost($id);
             echo json_encode($likes);
-        } else {                                                       // si no encuentra el endpoint(esta vacio o no es uno de los anteriores), da error.
+        } elseif (preg_match('/^\/CheckLike\/(\d+)\/(\d+)$/', $endpoint, $matches)) { // Nuevo endpoint para verificar el like de un usuario en un post
+            $id_user = $matches[1];
+            $id_post = $matches[2];
+            $hasLiked = $Post_obj->GetkUserLike($id_user, $id_post); // Llama al método que verifica si existe el like
+            echo json_encode(['hasLiked' => $hasLiked]); // Devuelve si el usuario ha dado like o no
+        } else {                                                    
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
         }
@@ -96,6 +101,10 @@ switch ($method) {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacío o mal formado']);
             }
+        } else if ($endpoint == '/like') { // Para eliminar el like
+                $Resul = $Post_obj->DeleteLike($data);
+                echo json_encode(['success' => $Resul]);
+            
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
@@ -161,15 +170,8 @@ function Valid_ID($data)
 }
 
 function valid_like($data){
-    if (empty($data)) {
-        return false;
-    } elseif (
-        !isset($data['ID_post']) || empty($data['ID_post'])||
-        !isset($data['ID_perfil']) || empty($data['ID_perfil'])
-    ) {
-        return false;
-    } else {
+    
         return true;
-    }
+    
 }
 

@@ -80,28 +80,53 @@ class Post
     $stmt->close();
     return $images;
 }
-public function GetLikesbypost ($id_post){
-    $query = "SELECT * FROM Dar_megusta where ID_post = ?";
+public function GetLikesbypost($id_post) {
+    $query = "SELECT COUNT(*) as like_count FROM Dar_megusta WHERE ID_post = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $id_post);
     $stmt->execute();
     $result = $stmt->get_result();
-    $likes = [];
-    while ($row = $result->fetch_assoc()) {
-        $likes['ID_perfil'] = $row; // Solo almacenar el contenido de la imagen
-    }
+    $like_count = $result->fetch_assoc();
     $stmt->close();
-    return $likes;;
+    return $like_count['like_count']; // Devuelve el conteo de likes
+}
+public function GetkUserLike($id_user, $id_post) {
+    $query = "SELECT * FROM Dar_megusta WHERE ID_usuario = ? AND ID_post = ?";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("ii", $id_user, $id_post);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $hasLiked = $result->num_rows > 0;
+    $stmt->close();
+    return $hasLiked;  // Devuelve true si existe el like, false si no
 }
 public function AddLike($data){
-    $postId = $data['ID_post'];
-    $perfilId = $data['ID_perfil'];
-    $query = "INSERT INTO Dar_megusta (ID_perfil,ID_post) VALUES (?,?)";
+    // Asegúrate de que los datos sean enteros
+    $postId = (int)$data['ID_post'];
+    $ID_usuario = (int)$data['ID_usuario'];
+    $query = "INSERT INTO Dar_megusta (ID_usuario, ID_post) VALUES (?, ?)";
     $stmt = $this->conex->prepare($query);
-    $stmt->bind_param("ii", $postId, $perfilId);
+    if ($stmt === false) {
+        error_log("Error en prepare: " . $this->conex->error);
+        return false;
+    }
+    $stmt->bind_param("ii", $ID_usuario, $postId);
     $result = $stmt->execute();
     $stmt->close();
     return $result;
 }
+
+public function DeleteLike($data){
+    $postId = (int)$data['ID_post'];
+    $ID_usuario = (int)$data['ID_usuario'];
+    $query = "DELETE FROM Dar_megusta WHERE  ID_usuario = ? AND ID_post = ?";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("ii", $ID_usuario, $postId);
+    $result = $stmt->execute();
+    $stmt->close();
+    return $result;
+}
+
+
 
 }

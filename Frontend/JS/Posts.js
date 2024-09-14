@@ -1,9 +1,8 @@
-// Función para realizar una solicitud de red genérica
+// 
 async function fetchData(url, options = {}) {
     try {
         const response = await fetch(url, options);
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
         console.error('Error en la solicitud de red:', error);
         throw error;
@@ -21,6 +20,42 @@ async function updateUserName() {
         console.error('Error al obtener el usuario de la sesión:', error);
     }
 }
+//traer cantidad likes
+async function getLikeCount(postId) {
+    try {
+        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postId}`);
+         console.log('Respuesta obtenida de la API para el post likes', postId, ':', response);
+        return parseInt(response, 10) || 0; // Devuelve 0 si likeCount no es un número válido
+    } catch (error) {
+        console.error('Error al obtener el contador de likes:', error);
+        return 0;
+    }
+}
+
+//traer si likeo o no
+async function getLikeIconClass(postId) {
+    try {
+        const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
+        if (data.ID_usuario) {
+            userId = data.ID_usuario;
+        }
+    } catch (error) {
+        console.error('Error al obtener el usuario de la sesión:', error);
+    }
+    try {
+        // Llama a la API para verificar si el usuario ha dado like al post
+        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/CheckLike/${userId}/${postId}`);
+        // Verifica si el usuario ha dado like y devuelve la clase
+        if (response.hasLiked) {
+            return 'fa fa-heart';
+        } else {
+            return 'uil uil-heart';
+        }
+    } catch (error) {
+        console.error('Error al obtener el estado de like:', error);
+        return 'uil-heart'; // Clase por defecto en caso de error
+    }
+}
 
 // Obtener y mostrar los posts
 async function fetchPosts() {
@@ -28,11 +63,11 @@ async function fetchPosts() {
         const posts = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Posts');
         const feedsSection = document.querySelector('.feeds');
         feedsSection.innerHTML = '';  // Limpiar contenido existente
-
-        posts.forEach(post => {
+        for (const post of posts) {
             const postDate = new Date(post.Fecha_creacion);
             const formattedDate = `${postDate.toLocaleDateString()} ${postDate.toLocaleTimeString()}`;
-
+            const likeCount = await getLikeCount(Number(post.ID_post));
+            const likeclass = await getLikeIconClass(Number(post.ID_post));
             const article = `
                 <article class="feed">
                     <div class="head">
@@ -52,22 +87,26 @@ async function fetchPosts() {
 
                     <div class="action-buttons">
                         <div class="interaction-buttons">
-                            <span><i class="uil uil-heart"></i></span>
-                            <span><i class="uil uil-comment-dots"></i></span>
-                            <span><i class="uil uil-share-alt"></i></span>
+                            <button class="button-icon like-button" data-post-id="${post.ID_post}">
+                                <i class="${likeclass}" id="likeButton-${post.ID_post}"></i>
+                            </button>
+                            <text id="counter">${likeCount}</text>
+                            <button class="button-icon"><i class="uil uil-comment-dots"></i></button>
+                            <button class="button-icon"><i class="uil uil-share-alt"></i></button>
                         </div>
                     </div>
 
                     <div class="caption">
-                        <p><b>${post.Nombre_usuario || 'Nombre no disponible'}</b> ${post.Descripcion || 'Descripción no disponible'}</p>
+                        <p> ${post.Descripcion || 'Descripción no disponible'}</p>
                     </div>
                 </article>
             `;
+
             feedsSection.insertAdjacentHTML('beforeend', article);
 
             // Cargar imágenes relacionadas con el post
-            fetchImages(post.ID_post);
-        });
+            await fetchImages(post.ID_post);
+        }
     } catch (error) {
         console.error('Error al obtener los posts:', error);
     }
@@ -117,10 +156,8 @@ async function publishPost() {
         if (postResponse.success.result) {
             alert('Post publicado con éxito!');
             document.getElementById('postDescription').value = '';
-
-            // Subir la imagen si hay una seleccionada y luego recargar los posts
-            await uploadImage(postResponse.success.postId);
-            fetchPosts();  // Recargar los posts inmediatamente después
+            await uploadImage(postResponse.success.postId);  // Subir imagen si existe
+            await fetchPosts();  // Recargar los posts después de subir la imagen
         } else {
             alert('Hubo un error al publicar el post.');
         }
@@ -137,32 +174,35 @@ async function uploadImage(postId) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onloadend = async function () {
-        const base64Image = reader.result.split(',')[1];
+    return new Promise((resolve, reject) => {
+        reader.onloadend = async function () {
+            try {
+                const base64Image = reader.result.split(',')[1];
+                const data = {
+                    src: base64Image,
+                    postId: postId
+                };
 
-        const data = {
-            src: base64Image,
-            postId: postId
-        };
+                const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
 
-        try {
-            const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            if (response.success) {
-                console.log('Imagen subida con éxito');
-            } else {
-                console.error('Error al subir la imagen:', response.error);
+                if (response.success) {
+                    console.log('Imagen subida con éxito');
+                    resolve();
+                } else {
+                    console.error('Error al subir la imagen:', response.error);
+                    reject(new Error('Error al subir la imagen'));
+                }
+            } catch (error) {
+                console.error('Error al subir la imagen:', error);
+                reject(error);
             }
-        } catch (error) {
-            console.error('Error al subir la imagen:', error);
-        }
-    };
-
-    reader.readAsDataURL(file);
+        };
+        reader.readAsDataURL(file);
+    });
 }
 
 // Inicializar eventos y cargar datos al cargar la página
@@ -180,3 +220,10 @@ document.getElementById('Galery').addEventListener('click', event => {
     event.preventDefault();
     document.getElementById('fileInput').click();
 });
+
+
+
+
+
+
+

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../CSS/style.css">
     <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
     <title>MateandoJuntos</title>
@@ -33,7 +34,7 @@
                     <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
                     <ul class="dropdown-menu-profile">
 
-                        <li><a class="Size" href="#">Cerar sesion</a></li>
+                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerar sesion</a></li>
 
                         <li>
                             <label for="darkmode" class="Size">Modo Oscuro</label>
@@ -158,45 +159,7 @@
 
             <!-------------------------------------------POSTS DE LOS USUARIOS----------------------------------------------------------------->
             <section class="feeds">
-                <article class="feed">
-
-                    <div class="head">
-                        <div class="user">
-                            <div class="profile-photo">
-                                <img src="../img/avatar_167770.png">
-                            </div>
-                            <div class="info">
-                                <h3>Alexandria Riana</h3>
-                                <small>Dubai, 1 Hour Ago</small>
-                            </div>
-                        </div>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h"></i>
-                        </span>
-                    </div>
-
-                    <div class="photo">
-                        <img src="../img/feed-5.jpg">
-                    </div>
-
-                    <div class="action-buttons">
-                        <div class="interaction-buttons">
-                            <span><i class="uil uil-heart"></i></span>
-                            <span><i class="uil uil-comment-dots"></i></span>
-                            <span><i class="uil uil-share-alt"></i></span>
-                        </div>
-
-                    </div>
-
-                    <div class="caption">
-                        <p><b>Alexandria Riana</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                            architecto sunt itaque, in, enim non doloremque velit unde nihil vitae impedit dolorum,
-                            distinctio ab deleniti!
-                            <span class="harsh-tag">#lifestyle</span>
-                        </p>
-                    </div>
-
-                </article>
+               
             </section>
         </main>
 
@@ -242,6 +205,7 @@
 
 </body>
 <script src="../JS/Posts.js" ></script>
+<script src="../JS/like.js" ></script>
 <script>
     document.getElementById('darkmode').addEventListener('change', function () {
         document.body.classList.toggle('dark-mode', this.checked);

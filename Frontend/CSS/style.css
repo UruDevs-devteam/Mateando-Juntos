@@ -288,13 +288,39 @@ header {
     margin: 2rem 0;
 }
 
-.center_bar_content .feed .action-buttons {
+.action-buttons, .interaction-buttons {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: 1.4rem;
-    margin: 0.6rem 0;
 }
+
+.action-buttons {
+    justify-content: space-between;
+    margin: 0.6rem 0;
+    font-size: 1.4rem;
+}
+
+.interaction-buttons {
+    gap: 1rem;
+}
+
+.button-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}
+
+.button-icon i {
+    font-size: 1.4rem;
+    color: #000;
+}
+
+.button-icon:hover, .button-icon:hover i {
+    background: none;
+    color: #000;
+}
+
 /* Estilo para el contenedor de la imagen */
 .center_bar_content .feed .photo {
     width: 100%; /* Ocupa todo el ancho del post */
