@@ -59,7 +59,7 @@ async function getLikeIconClass(postId) {
 //imagen de perfil
 async function getProfileImage(userId) {
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/29`);
+        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Foto_perfil) {
             // La imagen puede estar en formato base64
             return `data:image/jpeg;base64,${response.Foto_perfil}`;

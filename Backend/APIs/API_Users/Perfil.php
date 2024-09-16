@@ -19,17 +19,21 @@ public function getperfils(){
     }
     return $perfiles;                              // retorna el array
 }
-function GetPerfilByUserID($User_ID){
-    $query = "SELECT * FROM Perfil_usuario WHERE ID_usuario = ?";// crea la consulta 
-    $stmt = $this->conex->prepare($query);     //prepara la consulta
+function GetPerfilByUserID($User_ID) {
+    $query = "SELECT * FROM Perfil_usuario WHERE ID_usuario = ?"; // crea la consulta
+    $stmt = $this->conex->prepare($query); // prepara la consulta
     $stmt->bind_param("i", $User_ID); // "i" indica que $User_ID es un entero
     $stmt->execute();
     $result = $stmt->get_result(); // Obtiene el resultado
     $perfil = $result->fetch_assoc();
-    $stmt->close();            // Cierra la consulta preparada
+    // Verifica si hay una foto de perfil y la codifica en base64
+    if ($perfil && !empty($perfil['Foto_perfil'])) {
+        $perfil['Foto_perfil'] = base64_encode($perfil['Foto_perfil']);
+    }
+    $stmt->close(); // Cierra la consulta preparada
     return $perfil;
-    
 }
+
 function AddPerfil($User_ID){
     $query = "INSERT INTO Perfil_usuario (ID_usuario) VALUES (?)";
     $stmt = $this->conex->prepare($query);
@@ -49,15 +53,15 @@ function DeletPperfil($User_ID){
 }
 function ModifyPerfil($data) {
     $User_ID = $data['User_ID'];
-    // Lee el contenido binario de la imagen
-    $imgContent = file_get_contents($data['profile_picture']['tmp_name']); 
+    $imgContent = $data['profile_picture']; 
     $Biografia = $data['bio'];
     $query = "UPDATE Perfil_usuario SET Foto_perfil = ?, Biografia = ? WHERE ID_usuario = ?";
     $stmt = $this->conex->prepare($query);
-    $stmt->bind_param("bsi", $imgContent, $Biografia, $User_ID); 
+    $stmt->bind_param("ssi", $imgContent, $Biografia, $User_ID);
     $result = $stmt->execute();
     $stmt->close();
-    return $result;  
+    return $result;
 }
+
 
 }
