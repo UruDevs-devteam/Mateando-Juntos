@@ -47,14 +47,17 @@ function DeletPperfil($User_ID){
     $stmt->close();            // Cierra la consulta preparada
     return $result;            // retorna si la consulta fue exitosa
 }
-Function ModifyPerfil($data){
+function ModifyPerfil($data) {
     $User_ID = $data['User_ID'];
-    $img = $data['img'];
-    $Tema = $data['Tema'];
-    $Biografia = $data['Biografia'];
-    $Privacidad = $data['Privacidad'];
-    $query = "UPDATE Perfil_usuario SET Foto_perfil = ?, Tema = ?,  Privado = ?, Biografia = ? WHERE ID_usuario = ?";
+    // Lee el contenido binario de la imagen
+    $imgContent = file_get_contents($data['profile_picture']['tmp_name']); 
+    $Biografia = $data['bio'];
+    $query = "UPDATE Perfil_usuario SET Foto_perfil = ?, Biografia = ? WHERE ID_usuario = ?";
     $stmt = $this->conex->prepare($query);
-    $stmt->bind_param("ssssi", $img, $Tema, $Biografia, $Privacidad, $User_ID);
+    $stmt->bind_param("bsi", $imgContent, $Biografia, $User_ID); 
+    $result = $stmt->execute();
+    $stmt->close();
+    return $result;  
 }
+
 }

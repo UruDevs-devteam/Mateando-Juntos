@@ -56,6 +56,20 @@ async function getLikeIconClass(postId) {
         return 'uil-heart'; // Clase por defecto en caso de error
     }
 }
+//imagen de perfil
+async function getProfileImage(userId) {
+    try {
+        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/29`);
+        if (response && response.Foto_perfil) {
+            // La imagen puede estar en formato base64
+            return `data:image/jpeg;base64,${response.Foto_perfil}`;
+        }
+        return '../img/default_avatar.png'; // Imagen por defecto si no se encuentra
+    } catch (error) {
+        console.error('Error al obtener la imagen de perfil:', error);
+        return '../img/default_avatar.png'; // Imagen por defecto en caso de error
+    }
+}
 
 // Obtener y mostrar los posts
 async function fetchPosts() {
