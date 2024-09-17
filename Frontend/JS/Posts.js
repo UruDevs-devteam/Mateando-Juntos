@@ -15,10 +15,13 @@ async function updateUserName() {
         const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
         if (data.Nombre_usuario) {
             document.getElementById("Nombre_usuario").textContent = data.Nombre_usuario;
+            const img = await getProfileImage(data.ID_usuario);
+             document.getElementById('Foto_usuario').src = img;
         }
     } catch (error) {
         console.error('Error al obtener el usuario de la sesión:', error);
     }
+    
 }
 //traer cantidad likes
 async function getLikeCount(postId) {
@@ -62,12 +65,12 @@ async function getProfileImage(userId) {
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Foto_perfil) {
             // La imagen puede estar en formato base64
-            return `data:image/jpeg;base64,${response.Foto_perfil}`;
-        }
-        return '../img/default_avatar.png'; // Imagen por defecto si no se encuentra
+            return `data:image/jpeg;base64,${response.Foto_perfil}`; 
+        }else{
+        return '../img/avatar_167770.png'; }// Imagen por defecto si no se encuentra
     } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
-        return '../img/default_avatar.png'; // Imagen por defecto en caso de error
+        return '../img/avatar_167770.png'; // Imagen por defecto en caso de error
     }
 }
 
@@ -82,12 +85,13 @@ async function fetchPosts() {
             const formattedDate = `${postDate.toLocaleDateString()} ${postDate.toLocaleTimeString()}`;
             const likeCount = await getLikeCount(Number(post.ID_post));
             const likeclass = await getLikeIconClass(Number(post.ID_post));
+            const ProfileImage = await getProfileImage(post.ID_usuario);
             const article = `
                 <article class="feed">
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="../img/avatar_167770.png" alt="Profile Photo">
+                                <img src="${ProfileImage}" alt="Profile Photo">
                             </div>
                             <div class="info">
                                 <h3>${post.Nombre_usuario || 'Nombre no disponible'}</h3>
@@ -115,7 +119,7 @@ async function fetchPosts() {
                     </div>
                 </article>
             `;
-
+            console.log('Profile Image URL:', ProfileImage);
             feedsSection.insertAdjacentHTML('beforeend', article);
 
             // Cargar imágenes relacionadas con el post

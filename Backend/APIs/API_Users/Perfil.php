@@ -26,10 +26,6 @@ function GetPerfilByUserID($User_ID) {
     $stmt->execute();
     $result = $stmt->get_result(); // Obtiene el resultado
     $perfil = $result->fetch_assoc();
-    // Verifica si hay una foto de perfil y la codifica en base64
-    if ($perfil && !empty($perfil['Foto_perfil'])) {
-        $perfil['Foto_perfil'] = base64_encode($perfil['Foto_perfil']);
-    }
     $stmt->close(); // Cierra la consulta preparada
     return $perfil;
 }

@@ -255,6 +255,16 @@ header {
     max-width: 100%;
 
 }
+.create-post .profile-photo img {
+    width: 2.5rem; /* Tamaño de la imagen */
+    height: 2.5rem; /* Asegura que la imagen sea cuadrada */
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 50%; /* Hace la imagen circular */
+    object-fit: cover; /* Evita que la imagen se distorsione */
+    border: 2px solid #ddd; /* Añade un borde ligero */
+}
+
 
 /*------------------------------------FEED---------------------------------*/
 .center_bar_content .feeds .feed {
@@ -320,7 +330,14 @@ header {
     background: none;
     color: #000;
 }
-
+.feed .head .user .profile-photo img {
+    width: 3rem; /* Tamaño de la imagen */
+    height: 3rem; /* Asegura que sea cuadrada */
+    border-radius: 50%; /* Hace la imagen circular */
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+    border: 2px solid #ddd; /* Añade un borde sutil */
+    margin-right: 10px; /* Espacio entre la imagen y el nombre del usuario */
+}
 /* Estilo para el contenedor de la imagen */
 .center_bar_content .feed .photo {
     width: 100%; /* Ocupa todo el ancho del post */
