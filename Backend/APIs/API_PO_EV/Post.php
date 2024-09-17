@@ -10,7 +10,7 @@ class Post
 
     public function GetPosts()
     {
-        $query = "SELECT p.ID_post, p.Titulo, p.Descripcion, p.Fecha_creacion, u.Nombre_usuario
+        $query = "SELECT p.ID_post, p.Titulo, p.Descripcion, p.Fecha_creacion, u.Nombre_usuario, u.ID_usuario
                   FROM Post p
                   JOIN Usuario u ON p.ID_usuario = u.ID_usuario";
         $result = mysqli_query($this->conex, $query);

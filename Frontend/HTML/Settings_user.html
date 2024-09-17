@@ -63,7 +63,7 @@
 
         <!-- Main content area for settings user -->
         <main class="settings-content">
-            <form action="guardar_configuracion.php" method="POST">
+            <form action="../../Backend/PHP/UpdatePerfil.php" method="POST"  enctype="multipart/form-data">
                 <!-- Profile Customization Section -->
                 <section id="customization">
                     <h3>Personalizar Perfil</h3>
@@ -71,7 +71,7 @@
                     <!-- Modify Profile Picture -->
                     <div class="form-group">
                         <label for="profile-picture">Foto de Perfil</label>
-                        <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
                         <div id="profile-picture-preview" class="preview-container">
                             <img id="profile-picture-img" src="#" alt="Profile Picture Preview" />
                         </div>
@@ -96,8 +96,10 @@
         </main>
     </div>
 
-    <script src="../JS/js.js"></script>
+    
 </body>
+<script src="../JS/js.js"></script>
+<script src="../JS/Perfil.js"></script>
 <script>
     document.getElementById('darkmode').addEventListener('change', function () {
         document.body.classList.toggle('dark-mode', this.checked);

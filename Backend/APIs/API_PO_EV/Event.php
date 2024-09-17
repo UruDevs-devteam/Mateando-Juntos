@@ -21,7 +21,7 @@ class Event
 
     public function GetEventByID($Id)
     {
-        $query = "SELECT * FROM Evento WHERE ID_event = ?";
+        $query = "SELECT * FROM Evento WHERE ID_evento = ?";
         $stmt = $this->conex->prepare($query);     //prepara la consulta
         $stmt->bind_param("i", $Id); // "i" indica que $Id es un entero
         $stmt->execute();           
@@ -33,7 +33,7 @@ class Event
 
     public function DeleteEvent($data)
     {
-        $query = "DELETE FROM Evento WHERE ID_event = ?";
+        $query = "DELETE FROM Evento WHERE ID_evento = ?";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $data['Id']); // "i" indica que $id es un entero
         $result = $stmt->execute();

@@ -55,7 +55,15 @@ switch ($method) {
             } else {
                 echo json_encode(['success' => $Resul]);
             }
-        } else {                                                      // si los atributos estan mal o no existen, da error
+        }elseif ($endpoint == '/Perfil') {
+            if (Validar_Data_Perfil($data)) {
+                $Result = $Perfil_obj->ModifyPerfil($data);               
+                echo json_encode(['success' => $Result]);     
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacio o mal formado']);
+            }
+        }  else {                                                                 // si los atributos estan mal o no existen, da error
             http_response_code(400);
             echo json_encode(['error' => 'JSON vacío o mal formado']);
         }
@@ -94,6 +102,21 @@ function Validar_Data_User($data)
     } else {
         return true;
     }
+}
+
+function Validar_Data_Perfil ($data){
+ if (empty($data)) {
+    return false;
+} elseif (
+    !isset($data['User_ID']) || empty($data['User_ID']) ||  
+    !isset($data['profile_picture']) || empty($data['profile_picture']) ||  
+    !isset($data['bio']) || empty($data['bio'])  
+) {
+    return false;
+} else {
+    return true;
+}
+
 }
 
 
