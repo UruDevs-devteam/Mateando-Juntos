@@ -434,8 +434,6 @@ header {
     width: 94%; height: 150px;
 }
 /*ESTILO PARA LOS EVENTOS*/
-/* Estilos para el artículo de eventos */
-
 .eventos h2 {
     text-align: center;
     font-size: 24px;
@@ -443,31 +441,18 @@ header {
     margin-bottom: 15px; /* Espacio debajo del título */
 }
 
-eventos h2 {
-    text-align: center;
-    font-size: 26px; /* Aumenta el tamaño del título */
-    color: #333; /* Color más suave para el texto */
-    margin-bottom: 20px; /* Espacio debajo del título */
-    font-family: 'Arial', sans-serif; /* Fuente más moderna */
-}
+
 
 .event {
     background-color: #f9f9f9; /* Color de fondo más claro */
     border-radius: 1rem;
     padding: 1.5rem;
     margin-bottom: 2rem;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
     font-size: 0.95rem; /* Ajuste en tamaño de fuente */
     line-height: 1.5; /* Espaciado de líneas más ajustado */
-    transition: transform 0.2s, box-shadow 0.2s; /* Efecto de transición */
 }
 
-.event:hover {
-    transform: translateY(-2px); /* Levanta el evento al pasar el mouse */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa al hacer hover */
-}
 
-/* Encabezado del evento */
 .event-header {
     display: flex;
     justify-content: space-between;
@@ -483,8 +468,8 @@ eventos h2 {
 }
 
 .event-profile .profile-photo {
-    width: 3.5rem; /* Aumenta un poco el tamaño de la foto */
-    height: 3.5rem;
+    width: 3rem; /* Aumenta un poco el tamaño de la foto */
+    height: 3rem;
     border-radius: 50%;
     overflow: hidden;
     margin-right: 1rem;
@@ -497,44 +482,45 @@ eventos h2 {
     object-fit: cover;
 }
 
-.event-info h3 {
-    font-size: 1.1rem; /* Aumenta el tamaño del nombre */
-    font-weight: 700; /* Aumenta el peso de la fuente */
-    margin-bottom: 0.25rem;
-    color: #222; /* Color más oscuro para mayor contraste */
-}
 
 .event-info small {
     font-size: 0.9rem;
-    color: #777; /* Color gris para el subtítulo */
+    color: #777; 
 }
 
 /* Descripción del evento */
 .event-description {
     margin-bottom: 1rem;
+    padding: 1.5rem; 
+    border: 2px solid #ccc; 
+    border-radius: 0.5rem; 
+    background-color: #f0f0f0;
+    min-height: 100px; 
 }
 
 .event-description p {
-    font-size: 1rem; /* Ajuste en el tamaño de la descripción */
-    color: #444; /* Color más oscuro para el texto */
+    font-size: 1rem; 
+    color: #444; 
 }
 
-/* Detalles del evento */
+
+
 .event-details {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid; /* Cambia a grid para un diseño de columnas */
+    grid-template-columns: 1fr 1fr; /* Dos columnas de igual ancho */
+    gap: 1rem; /* Espacio entre columnas */
 }
 
 .event-details .detail-item {
-    font-size: 0.95rem; /* Ajuste en el tamaño de la fuente */
-    color: #555;
+    font-size: 0.95rem; 
+    color: #302f2f;
 }
 
 .event-details .detail-item strong {
     font-weight: 600;
-    color: #333; /* Color más oscuro para el texto fuerte */
+    color: #000000; 
 }
+
 
 
 /*ESTILO PARA LOS CHATS DE LAS COMUNIDADES Y LOS CHATS PRIVADOS DEL USUARIO*/

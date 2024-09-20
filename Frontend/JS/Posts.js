@@ -209,6 +209,7 @@ async function uploadImage(postId) {
 
                 if (response.success) {
                     console.log('Imagen subida con éxito');
+                    document.getElementById('fileInput').value = '';
                     resolve();
                 } else {
                     console.error('Error al subir la imagen:', response.error);

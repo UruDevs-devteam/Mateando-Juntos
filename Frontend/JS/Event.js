@@ -45,40 +45,42 @@ async function fetchEvents() {
             const eventDate = new Date(event.Fecha_creacion);
             const formattedDate = `${eventDate.toLocaleDateString()} ${eventDate.toLocaleTimeString()}`;
             const ProfileImage = await getProfileImage(event.ID_usuario);
-            const article = `
-                <article class="event">
-                    <div class="event-header">
-                        <div class="event-profile">
-                            <div class="profile-photo">
-                                <img src="${ProfileImage}" alt="Profile Photo">
-                            </div>
-                            <div class="event-info">
-                                <h3>${event.Nombre_usuario}</h3>
-                                <small>${formattedDate}</small>
-                            </div>
+            const article =  `
+            <article class="event">
+                <div class="event-header">
+                    <div class="event-profile">
+                        <div class="profile-photo">
+                            <img src="${ProfileImage}" alt="Profile Photo">
+                        </div>
+                        <div class="event-info">
+                            <h3>${event.Nombre_usuario}</h3>
+                            <small>${formattedDate}</small>
                         </div>
                     </div>
-    
-                    <div class="event-description">
-                        <p>${event.Descripcion || 'Descripción no disponible'}</p>
+                </div>
+
+                <h1 class="event-title">${event.Titulo || 'Título no disponible'}</h1> <!-- Título destacado -->
+
+                <div class="event-description">
+                    <p>${event.Descripcion || 'Descripción no disponible'}</p>
+                </div>
+
+                <div class="event-details">
+                    <div class="detail-item">
+                        <strong>Lugar:</strong> ${event.Lugar || 'Lugar no disponible'}
                     </div>
-    
-                    <div class="event-details">
-                        <div class="detail-item">
-                            <strong>Lugar:</strong> ${event.Lugar || 'Lugar no disponible'}
-                        </div>
-                        <div class="detail-item">
-                            <strong>Fecha del encuentro:</strong> ${event.Fecha_encuentro || 'Fecha no disponible'}
-                        </div>
-                        <div class="detail-item">
-                            <strong>Hora de inicio:</strong> ${event.Hora_inicio || 'Hora no disponible'}
-                        </div>
-                        <div class="detail-item">
-                            <strong>Hora de fin:</strong> ${event.Hora_fin || 'Hora no disponible'}
-                        </div>
+                    <div class="detail-item">
+                        <strong>Fecha del encuentro:</strong> ${event.Fecha_encuentro || 'Fecha no disponible'}
                     </div>
-                </article>
-            `;
+                    <div class="detail-item">
+                        <strong>Hora de inicio:</strong> ${event.Hora_inicio || 'Hora no disponible'}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Hora de fin:</strong> ${event.Hora_fin || 'Hora no disponible'}
+                    </div>
+                </div>
+            </article>
+        `;
             eventsSection.insertAdjacentHTML('beforeend', article);
         }
     } catch (error) {
