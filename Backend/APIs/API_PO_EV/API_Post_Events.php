@@ -64,7 +64,7 @@ switch ($method) {
         } elseif ($endpoint == '/Event') {                           // es para add eventos
             if (Valid_Data_Event($data)) {
                 $Resul = $Event_obj->AddEvent($data);
-                echo json_encode(['success' => $Resul]);
+                echo json_encode( $Resul);
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacio o mal formado']);
@@ -133,20 +133,8 @@ function Valid_Data_Post($data)
 function Valid_Data_Event($data)
 {
 
-    if (empty($data)) {
-        return false;
-    } elseif (
-        !isset($data['ID_post']) || empty($data['ID_post']) ||
-        !isset($data['Loc_x']) || empty($data['Loc_x']) ||
-        !isset($data['Loc_y']) || empty($data['Loc_y']) ||
-        !isset($data['Fecha']) || empty($data['Fecha']) ||
-        !isset($data['Start']) || empty($data['Start']) ||
-        !isset($data['Fin']) || empty($data['Fin'])
-    ) {
-        return false;
-    } else {
-        return true;
-    }
+    return true;
+    
 }
 
 function Valid_Data_Multi($data)

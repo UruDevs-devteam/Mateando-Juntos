@@ -10,14 +10,19 @@ class Event
 
     public function GetEvents()
     {
-        $query = "SELECT * FROM Evento";             
-        $result = mysqli_query($this->conex, $query); // ejecuta la consulta 
-        $Events = [];                                // crea un array
-        while ($row = mysqli_fetch_assoc($result)) { // Recorre los resultados y los añade al array
+        $query = " SELECT e.*, 
+                u.Nombre_usuario FROM Evento e JOIN 
+                Usuario u ON 
+                e.ID_usuario = u.ID_usuario
+        ";             
+        $result = mysqli_query($this->conex, $query);
+        $Events = [];                                
+        while ($row = mysqli_fetch_assoc($result)) {
             $Events[] = $row;
         }
-        return $Events;                              // retorna el array
+        return $Events;
     }
+    
 
     public function GetEventByID($Id)
     {
@@ -43,17 +48,20 @@ class Event
 
     public function AddEvent($data)
     {
-        $ID_post = $data['ID_post'];
-        $Loc_x = $data['Loc_x'];
-        $Loc_y = $data['Loc_y'];
-        $fecha_c = $data['Fecha'];
-        $Start = $data['Start'];
-        $Fin = $data['Fin'];
-        $query = "INSERT INTO Evento (ID_post, Loc_x, Loc_y, Date_crea, Date_eve, Date_end) VALUES (?, ?, ?, ?, ?, ?)";
+        $ID_usuario = $data['ID_usuario'];
+        $Titulo = $data['Titulo'];
+        $Descripcion = $data['Descripcion'];
+        $Fecha_encuentro = $data['Fecha_encuentro']; 
+        $Hora_inicio = $data['Hora_inicio']; 
+        $Hora_fin = $data['Hora_fin']; 
+        $Lugar = $data['Lugar'];
+
+        $query = "INSERT INTO Evento (ID_usuario, Titulo, Descripcion, Fecha_encuentro, Hora_inicio, Hora_fin, Lugar) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("iiisss", $ID_post, $Loc_x, $Loc_y, $fecha_c, $Start, $Fin); // "iiisss" indica dos enteros y tres cadenas
+        $stmt->bind_param("issssss", $ID_usuario, $Titulo, $Descripcion, $Fecha_encuentro, $Hora_inicio, $Hora_fin, $Lugar); // "issssss" indica las columnas
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
+    
 }
