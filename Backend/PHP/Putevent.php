@@ -32,8 +32,19 @@ if (isset($_POST["Titulo"], $_POST["Descripcion"], $_POST["Lugar"], $_POST["Fech
         exit();
     } else {
       
+        echo '
+        <script>
+        alert("error al subir evento");
+        window.location = "../../Frontend/HTML/home.html";
+        </script>
+           ';   
     }
 } else {
-    header("Location: ../../Frontend/HTML/index.html");
+    echo '
+    <script>
+    alert("Datos incorrectos, inserte nuevamente");
+    window.location = "../../Frontend/HTML/home.html";
+    </script>
+       ';
     exit();
 }
