@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
     <title>MateandoJuntos</title>
 </head>
@@ -162,42 +163,49 @@
 
             </section>
 
-              <!---------------------------------------------eventos usuarios(EN ESTE SE MUESTRAN eventos de los usuarios DEL USUARIOS)------------------------------------------------------------>
-        <section class="eventos">
-            <h2>Eventos</h2>
-            <div class="evento-item">
-                <!-- Aquí se mostrará cada evento -->
-            </div>
-        </section>
+            <!---------------------------------------------eventos usuarios(EN ESTE SE MUESTRAN eventos de los usuarios DEL USUARIOS)------------------------------------------------------------>
+            <section class="eventos">
+                <h2>Eventos</h2>
+                <div class="evento-item">
+                    <!-- Aquí se mostrará cada evento -->
+                </div>
+            </section>
         </main>
         <!---------------------------------------------ventana de evento  (EN ESTE SE MUESTRAun formulario para eventos)------------------------------------------------------------>
         <div id="modalEvento" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Crear Evento</h2>
+                <div class="header">
+                    <h2>Crear Evento</h2>
+                    <span class="close">&times;</span>
+                </div>
                 <form id="crearEventoForm" action="../../Backend/PHP/Putevent.php" method="POST">
-
-                    <label for="Titulo">Título:</label>
-                    <input type="text" name="Titulo" id="Titulo" required>
-                    <label for="Descripcion">Descripción:</label>
-                    <textarea name="Descripcion" id="Descripcion" required></textarea>
-                    <!-- <label for="Loc_x">Ubicación X:</label>
-                    <input type="number" name="Loc_x" id="Loc_x" required>
-                    <label for="Loc_y">Ubicación Y:</label>
-                    <input type="number" name="Loc_y" id="Loc_y" required> -->
-                    <label for="Fecha">Fecha:</label>
-                    <input type="date" name="Fecha" id="Fecha" required>
-                    <label for="Fecha">Lugar</label>
-                    <input type="text" name="Lugar" id="Lugar" required>
-                    <label for="Start">Hora de inicio:</label>
-                    <input type="time" name="Start" id="Start" required>
-                    <label for="Fin">Hora de finalización:</label>
-                    <input type="time" name="Fin" id="Fin" required>
+                    <div class="form-container">
+                        <div class="form-left">
+                            <label for="Titulo">Título:</label>
+                            <input type="text" name="Titulo" id="Titulo" required>
+                            
+                            <label for="Descripcion">Descripción:</label>
+                            <textarea name="Descripcion" id="Descripcion" required></textarea>
+                        </div>
+                        <div class="form-right">
+                            <label for="Fecha">Fecha:</label>
+                            <input type="date" name="Fecha" id="Fecha" required>
+                            <label for="Lugar">Lugar:</label>
+                            <input type="text" name="Lugar" id="Lugar" required>   
+                            <label for="Start">Hora de inicio:</label>
+                            <input type="time" name="Start" id="Start" required>
+                            <label for="Fin">Hora de finalización:</label>
+                            <input type="time" name="Fin" id="Fin" required>
+                        </div>
+                    </div>
+                    <div class="map" id="map"></div>
+                    <input type="hidden" name="Latitud" id="Latitud" required>
+                    <input type="hidden" name="Longitud" id="Longitud" required>
                     <button type="submit">Crear Evento</button>
                 </form>
             </div>
         </div>
-      
+
 
         <!---------------------------------------------CONTENEDOR DERECHO (EN ESTE SE MUESTRAN LOS CHATS DE LAS COMUNIDADES DEL USUARIOS)------------------------------------------------------------>
         <aside class="right_bar_content">
@@ -240,6 +248,7 @@
         </aside>
 
 </body>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="../JS/Posts.js"></script>
 <script src="../JS/like.js"></script>
 <script src="../JS/Event.js"></script>

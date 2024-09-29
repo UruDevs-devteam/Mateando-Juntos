@@ -55,10 +55,12 @@ class Event
         $Hora_inicio = $data['Hora_inicio']; 
         $Hora_fin = $data['Hora_fin']; 
         $Lugar = $data['Lugar'];
+        $Latitud = $data['Latitud'];
+        $Longitud =$data['Longitud'];
 
-        $query = "INSERT INTO Evento (ID_usuario, Titulo, Descripcion, Fecha_encuentro, Hora_inicio, Hora_fin, Lugar) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO Evento (ID_usuario, Titulo, Descripcion, Fecha_encuentro, Hora_inicio, Hora_fin, Latitud, Longitud, Lugar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("issssss", $ID_usuario, $Titulo, $Descripcion, $Fecha_encuentro, $Hora_inicio, $Hora_fin, $Lugar); // "issssss" indica las columnas
+        $stmt->bind_param("isssssdds", $ID_usuario, $Titulo, $Descripcion, $Fecha_encuentro, $Hora_inicio, $Hora_fin, $Latitud, $Longitud, $Lugar); // "issssss" indica las columnas
         $result = $stmt->execute();
         $stmt->close();
         return $result;

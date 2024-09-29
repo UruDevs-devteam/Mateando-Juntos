@@ -119,7 +119,6 @@ async function fetchPosts() {
                     </div>
                 </article>
             `;
-            console.log('Profile Image URL:', ProfileImage);
             feedsSection.insertAdjacentHTML('beforeend', article);
 
             // Cargar imágenes relacionadas con el post

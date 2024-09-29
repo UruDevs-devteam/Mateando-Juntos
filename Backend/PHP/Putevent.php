@@ -3,7 +3,9 @@
 $BaseURL = 'http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php';
 session_start();
 
-if (isset($_POST["Titulo"], $_POST["Descripcion"], $_POST["Lugar"], $_POST["Start"], $_POST["Fin"])) {
+if (isset($_POST["Titulo"], $_POST["Descripcion"], $_POST["Lugar"], $_POST["Fecha"], $_POST["Start"], $_POST["Fin"], $_POST["Latitud"], $_POST["Longitud"]) &&
+    !empty($_POST["Titulo"]) && !empty($_POST["Descripcion"]) && !empty($_POST["Lugar"]) && !empty($_POST["Fecha"]) && 
+    !empty($_POST["Start"]) && !empty($_POST["Fin"]) && !empty($_POST["Latitud"]) && !empty($_POST["Longitud"])) {
     $data = array(
 
         'ID_usuario' => $_SESSION['ID_usuario'],
@@ -11,8 +13,10 @@ if (isset($_POST["Titulo"], $_POST["Descripcion"], $_POST["Lugar"], $_POST["Star
         'Descripcion' => $_POST["Descripcion"],
         'Lugar' => $_POST["Lugar"],
         'Fecha_encuentro' => $_POST["Fecha"],
-        'Hora_inicio' => $_POST["Start"]. ':00',
-        'Hora_fin' => $_POST["Fin"].':00'
+        'Hora_inicio' => $_POST["Start"],
+        'Hora_fin' => $_POST["Fin"],
+        'Latitud' => $_POST["Latitud"],
+        'Longitud' => $_POST["Longitud"]
     );
     $jsondata = json_encode($data);                                                    // codifica el array en JSON
     $ch = curl_init($BaseURL . '/Event');
@@ -30,6 +34,6 @@ if (isset($_POST["Titulo"], $_POST["Descripcion"], $_POST["Lugar"], $_POST["Star
       
     }
 } else {
-    header("Location: ../../Frontend/HTML/home.html");
+    header("Location: ../../Frontend/HTML/index.html");
     exit();
 }
