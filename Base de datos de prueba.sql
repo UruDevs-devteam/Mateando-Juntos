@@ -9,7 +9,7 @@ CREATE TABLE Usuario (
     Email VARCHAR(100) NOT NULL,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-select * from usuario;
+
 
 CREATE TABLE Administrador (
     ID_admin INT PRIMARY KEY AUTO_INCREMENT,
@@ -19,20 +19,20 @@ CREATE TABLE Administrador (
 CREATE TABLE Perfil_usuario (
     ID_perfil INT PRIMARY KEY AUTO_INCREMENT,
     Tema boolean DEFAULT TRUE,
-    Foto_perfil VARCHAR(255),
+    Foto_perfil longblob,
     Biografia TEXT,
     Privado BOOLEAN DEFAULT FALSE,
     ID_usuario INT,
     FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario)
     ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 CREATE TABLE Comunidad (
     ID_comunidad INT PRIMARY KEY AUTO_INCREMENT,
     Nombre_comunidad VARCHAR(100)  NOT NULL,
     Descripcion TEXT,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ID_perfil INT NOT NULL,
+    Url_fotocomunidad varchar(255),
     FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil)
 );
 
@@ -45,9 +45,11 @@ CREATE TABLE Mensaje (
     ID_mensaje INT PRIMARY KEY AUTO_INCREMENT,
     Contenido TEXT,
     Fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ID_perfil INT,
-    FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil)
-); -- no creada
+    ID_perfil_envia INT,
+    ID_perfil_recibe INT,
+    FOREIGN KEY (ID_perfil_envia) REFERENCES Perfil_usuario(ID_perfil),
+     FOREIGN KEY (ID_perfil_recibe) REFERENCES Perfil_usuario(ID_perfil)
+); 
 
 CREATE TABLE Pertenece (
     ID_perfil INT,
@@ -59,15 +61,18 @@ CREATE TABLE Pertenece (
 
 CREATE TABLE Evento (
     ID_evento INT PRIMARY KEY AUTO_INCREMENT,
+    ID_usuario INT, 
+    Titulo varchar(255),
+    Descripcion text,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Fechayhora_encuentro DATETIME,
-    Latitud DECIMAL(10, 8),
-    Longitud DECIMAL(11, 8),
-    ID_perfil INT,
-    ID_comunidad INT,
-    FOREIGN KEY (ID_perfil) REFERENCES Pertenece(ID_perfil),
-    FOREIGN KEY (ID_comunidad) REFERENCES Pertenece(ID_comunidad)
-);-- NO creada
+    Fecha_encuentro date,
+    Hora_inicio time,
+    Hora_fin time,
+    Latitud DECIMAL(10, 8) ,
+    Longitud DECIMAL(11, 8) ,
+    Lugar VARCHAR(255) NOT NULL,
+    FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 CREATE TABLE Post (
     ID_post INT PRIMARY KEY AUTO_INCREMENT,
@@ -91,7 +96,7 @@ CREATE TABLE Comentarios (
     ID_comentario INT PRIMARY KEY AUTO_INCREMENT,
     ID_perfil INT,
     FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil)
-);-- No creada
+);
 
 CREATE TABLE Modifica (
     ID_perfil INT,
@@ -99,7 +104,7 @@ CREATE TABLE Modifica (
     PRIMARY KEY (ID_perfil, ID_idioma),
     FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil),
     FOREIGN KEY (ID_idioma) REFERENCES Idioma(ID_idioma)
-); -- No creada
+);
 
 CREATE TABLE Seguir (
     Perfil_usuario_Seguido INT,
@@ -107,15 +112,15 @@ CREATE TABLE Seguir (
     PRIMARY KEY (Perfil_usuario_Seguido, Perfil_usuario_Seguidor),
     FOREIGN KEY (Perfil_usuario_Seguido) REFERENCES Perfil_usuario(ID_perfil),
     FOREIGN KEY (Perfil_usuario_Seguidor) REFERENCES Perfil_usuario(ID_perfil)
-); -- NO creada
+);
 
 CREATE TABLE Dar_megusta (
-    ID_perfil INT,
+    ID_usuario INT,
     ID_post INT,
-    PRIMARY KEY (ID_perfil, ID_post),
-    FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil),
+    PRIMARY KEY (ID_usuario, ID_post),
+    FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario),
     FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
-); -- no creada
+); 
 
 CREATE TABLE Ev_Contiene (
     ID_evento INT,
@@ -123,7 +128,7 @@ CREATE TABLE Ev_Contiene (
     PRIMARY KEY (ID_evento, ID_post),
     FOREIGN KEY (ID_evento) REFERENCES Evento(ID_evento) on update cascade on delete cascade,
     FOREIGN KEY (ID_post) REFERENCES Post(ID_post)  on update cascade on delete cascade
-);-- No creada
+);
 
 CREATE TABLE Admin_elimina_post (
     ID_post INT,
@@ -157,4 +162,8 @@ CREATE TABLE TieneComentarios (
     PRIMARY KEY (ID_comentario, ID_post),
     FOREIGN KEY (ID_comentario) REFERENCES Comentarios(ID_comentario),
     FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
-);-- no creada
+);
+ALTER TABLE Post_multimedia MODIFY COLUMN Src_mul LONGBLOB;
+
+
+
