@@ -364,7 +364,8 @@ header {
     object-position: center; /* Centra la imagen para que el corte sea equilibrado */
     border-radius: 2rem;
 }
-/*ESTILO PARA EL MODAL DE EVENTOS*/
+
+/*----------------------ESTILO PARA EL MODAL DE EVENTOS------------------------------------*/
 .modal {
     display: none; /* Oculto por defecto */
     position: fixed;
@@ -379,13 +380,17 @@ header {
 }
 
 .modal-content {
+    display: flex; /* Usar flexbox para el diseño horizontal */
+    flex-direction: column; /* Cambia a columna para el contenido */
     background-color: #fff; /* Fondo blanco */
     border-radius: 10px;
     padding: 20px;
     width: 90%; /* Ancho ajustable */
-    max-width: 400px; /* Ancho máximo */
+    max-width: 800px; /* Ancho máximo */
+    max-height: 90%;
     position: relative; /* Para posicionar el botón de cerrar */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para mayor profundidad */
+    overflow: auto; /* Permite el desplazamiento si el contenido es demasiado grande */
 }
 
 .close {
@@ -403,17 +408,48 @@ header {
     color: #333; /* Color de título y etiquetas */
 }
 
+.modal .header {
+    display: flex; /* Encabezado en fila */
+    justify-content: space-between; /* Espacio entre el título y el botón de cerrar */
+    align-items: center; /* Centrar verticalmente */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+.modal .form-container {
+    display: flex; /* Usar flexbox para el formulario */
+    flex-direction: row; /* Elementos en fila */
+    justify-content: space-between; /* Espacio entre los elementos */
+    margin-bottom: 20px; /* Espacio inferior para separar del mapa */
+}
+
+.modal .form-left {
+    display: flex; /* Mantener los elementos verticales */
+    flex-direction: column; /* Colocar en columna */
+    width: 45%; /* Ancho para la parte izquierda */
+}
+
+.modal .form-right {
+    display: flex; /* Mantener los elementos verticales */
+    flex-direction: column; /* Colocar en columna */
+    width: 45%; /* Ancho para la parte derecha */
+    margin-left: 20px; /* Espacio entre columnas */
+}
+
 .modal label {
-    display: block;
     margin: 10px 0 5px;
 }
 
-.modal input {
-    width: calc(100% - 20px); /* Resta el padding */
+.modal input, .modal textarea {
+    width: 100%; /* Ocupar todo el ancho disponible */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 10px;
+}
+
+.modal textarea {
+    resize: none; /* Desactiva el redimensionamiento */
+    height: 100%; /* Altura ajustada para ocupar el espacio */
 }
 
 .modal button {
@@ -429,11 +465,14 @@ header {
 .modal button:hover {
     background-color: #555; /* Color al pasar el mouse */
 }
-.modal textarea {
-    resize: none; /* Desactiva el redimensionamiento */
-    width: 94%; height: 150px;
+
+.map {
+    height: 300px; /* Altura ajustada para el mapa */
+    width: 100%; /* Ancho del mapa */
+    border: 1px solid #ccc; /* Borde opcional */
+    border-radius: 4px; /* Bordes redondeados */
 }
-/*ESTILO PARA LOS EVENTOS*/
+/*----------------------------------ESTILO PARA LOS EVENTOS---------------------------------------------------------------------*/
 .eventos h2 {
     text-align: center;
     font-size: 24px;
@@ -523,7 +562,7 @@ header {
 
 
 
-/*ESTILO PARA LOS CHATS DE LAS COMUNIDADES Y LOS CHATS PRIVADOS DEL USUARIO*/
+/*--------ESTILO PARA LOS CHATS DE LAS COMUNIDADES Y LOS CHATS PRIVADOS DEL USUARIO-------------------*/
 .chats {
     background: white;
     border-radius: 15px;

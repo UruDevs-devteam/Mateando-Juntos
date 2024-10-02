@@ -1,4 +1,4 @@
-// Función para realizar una solicitud de red genérica
+
 async function fetchData(url, options = {}) {
     try {
         const response = await fetch(url, options);
@@ -12,13 +12,10 @@ async function fetchData(url, options = {}) {
 // Función para manejar el envío del like
 async function sendLike(postID, userID) {
     try {
-        console.log(`Enviando like: postID = ${postID}, userID = ${userID}`); // Debugging line
-
         const likedata = {
             ID_post: postID,
             ID_usuario: userID
         };
-        console.log('Datos del like:', likedata); // Debugging line
 
         const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/like', {
             method: 'POST',
@@ -64,7 +61,6 @@ document.addEventListener('click', async function(event) {
 
         try {
             const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
-            console.log('Datos del usuario:', data); // Debugging line
             
             if (data.ID_usuario) {
                 await sendLike(postID, data.ID_usuario);
