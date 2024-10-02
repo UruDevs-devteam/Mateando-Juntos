@@ -1,16 +1,15 @@
-// 
+
 async function fetchData(url, options = {}) {
     try {
         const response = await fetch(url, options);
         return await response.json();
     } catch (error) {
-        console.error('Error en la solicitud de red:', error);
+        console.error('Error en la solicitud:', error);
         throw error;
     }
 }
 
-// Actualizar el nombre de usuario en la etiqueta <p> con id 'Nombre_usuario'
-async function updateUserName() {
+async function updateUserName() { // Actualizar el nombre de usuario en la etiqueta
     try {
         const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
         if (data.Nombre_usuario) {
@@ -28,7 +27,7 @@ async function getLikeCount(postId) {
     try {
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postId}`);
          console.log('Respuesta obtenida de la API para el post likes', postId, ':', response);
-        return parseInt(response, 10) || 0; // Devuelve 0 si likeCount no es un número válido
+        return parseInt(response, 10) || 0; // Devuelve 0 si no hay likes o no es un numero
     } catch (error) {
         console.error('Error al obtener el contador de likes:', error);
         return 0;
@@ -48,8 +47,8 @@ async function getLikeIconClass(postId) {
     try {
         // Llama a la API para verificar si el usuario ha dado like al post
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/CheckLike/${userId}/${postId}`);
-        // Verifica si el usuario ha dado like y devuelve la clase
         if (response.hasLiked) {
+            // devuelve una clase si dio like, y si no otra
             return 'fa fa-heart';
         } else {
             return 'uil uil-heart';
@@ -189,7 +188,6 @@ async function uploadImage(postId) {
     const file = fileInput.files[0];
 
     if (!file) return;
-
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
         reader.onloadend = async function () {
@@ -223,17 +221,17 @@ async function uploadImage(postId) {
     });
 }
 
-// Inicializar eventos y cargar datos al cargar la página
+// Inicializar  y cargar datos al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     updateUserName();
     fetchPosts();
 });
-
+//escuchar el boton de publicar 
 document.getElementById('publicarBtn').addEventListener('click', event => {
     event.preventDefault();
     publishPost();
 });
-
+//escuchar el boton para las imagenes
 document.getElementById('Galery').addEventListener('click', event => {
     event.preventDefault();
     document.getElementById('fileInput').click();

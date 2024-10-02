@@ -2,6 +2,16 @@
 let map;    // mapa
 let marker; // Marcador
 
+async function fetchData(url, options = {}) {
+    try {
+        const response = await fetch(url, options);
+        return await response.json();
+    } catch (error) {
+        console.error('Error en la solicitud de red:', error);
+        throw error; // Lanza error para manejo externo
+    }
+}
+
 // Inicializar el mapa
 function initMap() {
     const latitud = -34.899307040589754;  // Coordenadas de Montevideo
@@ -31,10 +41,7 @@ function initMap() {
             marker = L.marker([lat, lng]).addTo(map); // Crear nuevo marcador
         }
 
-        // Mostrar valores en consola
-        console.log('Input de Latitud:', lat);
-        console.log('Input de Longitud:', lng);
-        console.log('Nombre del Lugar:', lugarNombre);
+
     });
 }
 
@@ -68,16 +75,6 @@ function setupModalEventHandlers() {
     });
 }
 
-// Función para realizar solicitudes de red
-async function fetchData(url, options = {}) {
-    try {
-        const response = await fetch(url, options);
-        return await response.json();
-    } catch (error) {
-        console.error('Error en la solicitud de red:', error);
-        throw error; // Lanza error para manejo externo
-    }
-}
 
 // Obtener imagen de perfil
 async function getProfileImage(userId) {

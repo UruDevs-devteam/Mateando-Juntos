@@ -12,7 +12,7 @@ document.getElementById('profile-picture').addEventListener('change', function (
 });
 
 
-/*-------------------------------------------------------------*/
+/*-----------------------------modo oscuro --------------------------------*/
 
 
     document.getElementById('darkmode').addEventListener('change', function () {
