@@ -523,7 +523,70 @@ header {
 .dark-mode .form-group input[type="text"] {
     background-color: #7d7c7c;
 }
+/*-----------------------------------------------------------------------------------Perfil de usuario----------------------------------------------------------------------------------------*/
+.perfil-container {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 20px;
+    gap: 20px; /* Espacio entre las columnas */
+}
 
+.left-column {
+    flex: 1;
+    height: 100vh;
+    width: 40%;
+    padding-right: 10px; /* Un pequeño padding para evitar que el contenido toque el borde derecho */
+}
+
+/* Asegúrate de que la columna derecha sea fija */
+.right-column {
+   width: 60%;
+    position: sticky;
+    top: 0;
+    align-self: flex-start; /* Esto asegura que se alinee al principio */
+    height: 100vh;
+    overflow-y: auto; /* Esto es opcional si también quieres scroll en el contenido derecho si es necesario */
+    padding-left: 10px; /* Un pequeño padding para evitar que el contenido toque el borde izquierdo */
+}
+
+/* Estilo para las secciones dentro de las columnas */
+.profile-header, .profile-follow {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info h2 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    
+}
+
+.profile-info p {
+    color: #777;
+    font-size: 1rem;
+}
+
+/* Sección de los posts del usuario */
+.center_bar_content h3 {
+  
+    font-size: 1.3rem;
+    color: #333;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -548,3 +611,13 @@ header {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
