@@ -22,16 +22,20 @@ class Post
     }
 
     public function GetPostByID($id)
-    {
-        $query = "SELECT * FROM Post WHERE ID_post = ?";
-        $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("i", $id); // "i" indica que $id es un entero
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $Post = $result->fetch_assoc();
-        $stmt->close();
-        return $Post;
+{
+    $query = "SELECT * FROM Post WHERE ID_usuario = ?";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("i", $id); // "i" indica que $id es un entero
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $Posts = [];
+    while ($row = $result->fetch_assoc()) {
+        $Posts[] = $row;
     }
+    $stmt->close();
+    return $Posts; // Devolver el array con todos los posts
+}
+
 
     public function DeletePost($id)
     {

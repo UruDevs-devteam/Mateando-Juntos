@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
+    <title>Perfil | MateandoJuntos</title>
+</head>
+
+<body>
+    <!---------------------------------------------HEADER------------------------------------------------------------>
+    <header>
+        <div class="left">
+            <a href="home.html" class="Logo"><img src="../img/logo-removebg-preview.png" alt="Logo"></a>
+        </div>
+        <div class="right">
+            <ul class="icons_nav">
+                <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="mensagges"></a></li>
+                <li><a href="chats.html" id="message"><img src="../img/rectangular-speech-bubble_32642.png"
+                            alt="comunitys"></a></li>
+            </ul>
+            <div class="search_box">
+                <a href="#"><img src="../img/magnifier_64673.png" alt=""></a>
+                <input type="text" placeholder="Busqueda">
+            </div>
+            <ul class="icons_nav">
+                <li class="Profile">
+                    <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
+                    <ul class="dropdown-menu-profile">
+
+                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerrar sesión</a></li>
+
+                        <li>
+                            <label for="darkmode" class="Size">Modo Oscuro</label>
+                            <input type="checkbox" name="darkmode" id="darkmode">
+                        </li>
+
+                        <li><a class="Size" href="Settings_user.html">Ajustes</a></li>
+
+                        <li><a class="Size" href="Perfil.html">Perfil</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><img src="../img/bell_143144.png" alt="bell_notifications"></a></li>
+            </ul>
+        </div>
+    </header>
+
+  <!---------------------------------------------CONTENEDOR PRINCIPAL------------------------------------------------------------>
+  <div class="perfil-container">
+    <div class="left-column">
+        <!-- Sección de Información del Usuario -->
+        <section class="profile-header">
+            <div class="profile-photo">
+                <img src="../img/avatar_167770.png" alt="Foto de perfil" id="FotoPerfil">
+            </div>
+            <div class="profile-info">
+                <h2 id="Nombre-Usuario">Nombre usuario</h2>
+                <p id="Biografia">"Bio"</p>
+            </div>
+        </section>
+        <!-- Sección de Seguidores y Seguidos -->
+        <section class="profile-follow">
+            <h3>Seguidores y Seguidos</h3>
+            <div class="follow-info">
+                <p><strong>Seguidores:</strong> 0</p>
+                <p><strong>Seguidos:</strong> 0</p>
+            </div>
+        </section>
+
+        
+    </div>
+
+    <div class="right-column">
+        <!-- Sección de Posts del Usuario -->
+        <section class="center_bar_content ">
+            <h3>Tus Posts</h3>
+            <div class="feeds">
+                <!-- Los posts del usuario se mostrarán aquí dinámicamente -->
+            </div>
+        </section>
+    </div>
+  </div>
+
+    <script src="../JS/Perfil.js"></script>
+</body>
+
+</html>
