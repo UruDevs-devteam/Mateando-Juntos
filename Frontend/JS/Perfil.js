@@ -1,17 +1,15 @@
-
-
-// Llama a la función para inicializar el perfil al cargar la página
+// Importar funciones compartidas
+import { fetchData, getLikeCount, getLikeIconClass, fetchImages, GetSession } from './shared_function.js';
 document.addEventListener('DOMContentLoaded', initProfile);
-// --------------------------------Selecciona el input de archivo y la imagen de vista previa en comfig usuario--------------------------------
+// --------------------------------Selecciona el input de archivo y la imagen de vista previa en config usuario--------------------------------
 const profileInput = document.getElementById('profile_picture');
 const profilePreview = document.getElementById('profile-picture-img');
-
 // Escucha cuando el usuario selecciona una imagen
 profileInput.addEventListener('change', function(event) {
     const file = event.target.files[0];  // Toma el primer archivo seleccionado
     if (file) {
         const reader = new FileReader();  // Crea un FileReader para leer el archivo
-        
+
         reader.onload = function(e) {
             profilePreview.src = e.target.result;  // Establece la fuente de la imagen como la lectura del archivo
         }
@@ -20,64 +18,9 @@ profileInput.addEventListener('change', function(event) {
     }
 });
 
-
 //-------------------------------Perfil de usuario----------------------------------------------------------------------
 
-async function fetchData(url, options = {}) { // para hacer llamados la API
-    try {
-        const response = await fetch(url, options);
-        return await response.json();
-    } catch (error) {
-        console.error('Error en la solicitud de red:', error);
-        throw error; // Lanza error para manejo externo
-    }
-}
 
-async function GetSession(){
-    try {
-        const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
-       return data;
-    } catch (error) {
-        console.error('Error al obtener el usuario de la sesión:', error);
-        return;
-    }
-}
-
-async function getLikeCount(postId) {
-    try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postId}`);
-         console.log('Respuesta obtenida de la API para el post likes', postId, ':', response);
-        return parseInt(response, 10) || 0; // Devuelve 0 si no hay likes o no es un numero
-    } catch (error) {
-        console.error('Error al obtener el contador de likes:', error);
-        return 0;
-    }
-}
-
-//traer si likeo o no
-async function getLikeIconClass(postId) {
-    try {
-        const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
-        if (data.ID_usuario) {
-            userId = data.ID_usuario;
-        }
-    } catch (error) {
-        console.error('Error al obtener el usuario de la sesión:', error);
-    }
-    try {
-        // Llama a la API para verificar si el usuario ha dado like al post
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/CheckLike/${userId}/${postId}`);
-        if (response.hasLiked) {
-            // devuelve una clase si dio like, y si no otra
-            return 'fa fa-heart';
-        } else {
-            return 'uil uil-heart';
-        }
-    } catch (error) {
-        console.error('Error al obtener el estado de like:', error);
-        return 'uil-heart'; // Clase por defecto en caso de error
-    }
-}
 
 async function GetPerfilPhoto(UserID) {
     try {
@@ -97,35 +40,19 @@ async function GetPerfilPhoto(UserID) {
     }
 }
 
-async function fetchImages(postId) {
-    try {
-        const images = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi/${postId}`);
-        const photoContainer = document.getElementById(`post-${postId}-photo`);
-
-        if (Array.isArray(images) && images.length > 0) {
-            images.forEach(image => {
-                const imgElement = document.createElement('img');
-                imgElement.src = `data:image/jpeg;base64,${image}`;
-                photoContainer.appendChild(imgElement);
-            });
-        } else {
-            photoContainer.style.display = 'none';
-        }
-    } catch (error) {
-        console.error('Error al obtener las imágenes:', error);
-    }
-}
 async function fetchPostsPerfil(UsuarioID, Nombreuser) {
     try {
-     const posts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Post/${UsuarioID}`);
+        const posts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Post/${UsuarioID}`);
         const feedsSection = document.querySelector('.feeds');
         feedsSection.innerHTML = '';  // Limpiar contenido existente
+
         for (const post of posts) {
             const postDate = new Date(post.Fecha_creacion);
             const formattedDate = `${postDate.toLocaleDateString()} ${postDate.toLocaleTimeString()}`;
             const likeCount = await getLikeCount(Number(post.ID_post));
             const likeclass = await getLikeIconClass(Number(post.ID_post));
             const ProfileImage = await GetPerfilPhoto(post.ID_usuario);
+
             const article = `
                 <article class="feed">
                     <div class="head">
@@ -163,7 +90,6 @@ async function fetchPostsPerfil(UsuarioID, Nombreuser) {
 
             // Cargar imágenes relacionadas con el post
             await fetchImages(post.ID_post);
-            console.log('si');
         }
     } catch (error) {
         console.error('Error al obtener los posts:', error);
@@ -174,12 +100,10 @@ async function initProfile() {
     const sessionData = await GetSession();
     if (sessionData && sessionData.ID_usuario) {
         const userId = sessionData.ID_usuario;
-        console.log(sessionData.ID_usuario);
         const profilePhoto = await GetPerfilPhoto(userId);
-        document.getElementById('FotoPerfil').src  = profilePhoto.profilePhoto;
-        document.getElementById('Nombre-Usuario').innerText  = sessionData.Nombre_usuario;
-        document.getElementById('Biografia').innerHTML = profilePhoto.biografia
-        fetchPostsPerfil(userId,sessionData.Nombre_usuario );
-         }
+        document.getElementById('FotoPerfil').src = profilePhoto.profilePhoto;
+        document.getElementById('Nombre-Usuario').innerText = sessionData.Nombre_usuario;
+        document.getElementById('Biografia').innerHTML = profilePhoto.biografia;
+        fetchPostsPerfil(userId, sessionData.Nombre_usuario);
+    }
 }
-
