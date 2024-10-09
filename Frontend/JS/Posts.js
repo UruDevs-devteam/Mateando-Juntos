@@ -1,17 +1,9 @@
+import { fetchData, getLikeCount, getLikeIconClass, fetchImages,GetSession } from './shared_function.js';
 
-async function fetchData(url, options = {}) {
-    try {
-        const response = await fetch(url, options);
-        return await response.json();
-    } catch (error) {
-        console.error('Error en la solicitud:', error);
-        throw error;
-    }
-}
 
 async function updateUserName() { // Actualizar el nombre de usuario en la etiqueta
     try {
-        const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
+        const data = await GetSession();
         if (data.Nombre_usuario) {
             document.getElementById("Nombre_usuario").textContent = data.Nombre_usuario;
             const img = await getProfileImage(data.ID_usuario);
@@ -22,42 +14,7 @@ async function updateUserName() { // Actualizar el nombre de usuario en la etiqu
     }
     
 }
-//traer cantidad likes
-async function getLikeCount(postId) {
-    try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postId}`);
-         console.log('Respuesta obtenida de la API para el post likes', postId, ':', response);
-        return parseInt(response, 10) || 0; // Devuelve 0 si no hay likes o no es un numero
-    } catch (error) {
-        console.error('Error al obtener el contador de likes:', error);
-        return 0;
-    }
-}
 
-//traer si likeo o no
-async function getLikeIconClass(postId) {
-    try {
-        const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
-        if (data.ID_usuario) {
-            userId = data.ID_usuario;
-        }
-    } catch (error) {
-        console.error('Error al obtener el usuario de la sesión:', error);
-    }
-    try {
-        // Llama a la API para verificar si el usuario ha dado like al post
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/CheckLike/${userId}/${postId}`);
-        if (response.hasLiked) {
-            // devuelve una clase si dio like, y si no otra
-            return 'fa fa-heart';
-        } else {
-            return 'uil uil-heart';
-        }
-    } catch (error) {
-        console.error('Error al obtener el estado de like:', error);
-        return 'uil-heart'; // Clase por defecto en caso de error
-    }
-}
 //imagen de perfil
 async function getProfileImage(userId) {
     try {
@@ -128,33 +85,13 @@ async function fetchPosts() {
     }
 }
 
-// Obtener y mostrar imágenes de un post específico
-async function fetchImages(postId) {
-    try {
-        const images = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi/${postId}`);
-        const photoContainer = document.getElementById(`post-${postId}-photo`);
-
-        if (Array.isArray(images) && images.length > 0) {
-            images.forEach(image => {
-                const imgElement = document.createElement('img');
-                imgElement.src = `data:image/jpeg;base64,${image}`;
-                photoContainer.appendChild(imgElement);
-            });
-        } else {
-            photoContainer.style.display = 'none';
-        }
-    } catch (error) {
-        console.error('Error al obtener las imágenes:', error);
-    }
-}
-
 // Publicar nuevo post
 async function publishPost() {
     const descripcion = document.getElementById('postDescription').value;
     if (!descripcion) return alert("Por favor, escribe algo en la descripción.");
 
     try {
-        const userData = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
+        const userData =await GetSession();
         if (!userData.ID_usuario) return alert("No se pudo obtener el usuario logueado.");
 
         const postData = {
