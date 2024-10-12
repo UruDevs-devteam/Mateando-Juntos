@@ -50,7 +50,7 @@ async function fetchPosts() {
                                 <img src="${ProfileImage}" alt="Profile Photo">
                             </div>
                             <div class="info">
-                                <h3>${post.Nombre_usuario || 'Nombre no disponible'}</h3>
+                               <h3><a href="Perfil_Otro.html?userId=${post.ID_usuario}">${post.Nombre_usuario || 'Nombre no disponible'}</a></h3>
                                 <small>${formattedDate}</small>
                             </div>
                         </div>
