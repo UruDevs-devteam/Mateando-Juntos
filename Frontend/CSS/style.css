@@ -290,7 +290,23 @@ header {
     display: flex;
     gap: 1rem;
 }
+.center_bar_content .feed .user .info h3 {
+    color: #2c2c2c; /* Negro grisáceo */
+    font-weight: 600;
+}
 
+.center_bar_content .feed .user .info h3 a {
+    text-decoration: none;
+    color: inherit; /* Hereda el color del h3 */
+}
+
+.center_bar_content .feed .user .info h3 a:hover {
+    color: #2c2c2c; /* Mantén el mismo color al pasar el mouse */
+}
+
+.center_bar_content .feed .user .info small {
+    color: #555; /* Gris suave */
+}
 .center_bar_content .feed .photo {
     width: 100%;
     border-radius: 2rem;
