@@ -3,41 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/style3.css">
     <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <title>Register</title>
+    <title>Register y login</title>
 </head>
 
-<body id="login_body">
+<body>
+
+    <div class="container">
   
-
-    <div class="register_container">
-        <div class="logo">
-            <img src="../img/logo-removebg-preview.png" alt="Logo">
-        </div>
-
-        <form action="../../Backend/PHP/register.php" method="post">
-
-            <label for="Name">Nombre completo:</label>
-            <input type="text" id="full_name" name="full_name" required><br><br>
-
-            <label for="username">Nombre de Usuario</label>
-            <input type="text" id="username" name="username" required><br><br>
-
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email" required><br><br>
-
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required><br><br>
-
+      <div class="forms-container">
+  
+        <div class="signin-signup">
+  
+          <form action="../../Backend/PHP/Loging.php" method="post" class="sign-in-form">
+            <img src="../img/logo-removebg-preview.png" class="image" alt="" />
+            <h2 class="title">Inicio de sesión</h2>
+  
+            <div class="input-field">
+              <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required />
+            </div>
+  
+            <div class="input-field">
+              <input type="password" id="password" name="password" placeholder="Contraseña" required />
+            </div>
+  
+            <div class="g-recaptcha" data-sitekey="6Lflcv4pAAAAACtSgC7QWszRB_Niyvul3i9eFCzQ"></div>
+  
+            <button type="submit" class="btn solid">Entrar</button>
+          </form>
+  
+  
+  
+          <form action="../../Backend/PHP/register.php" method="post" class="sign-up-form">
+            <img src="../img/logo-removebg-preview.png" class="image" alt="" />
+            <h2 class="title">Resgistro</h2>
+  
+            <div class="input-field">
+              <input type="text" id="full_name" name="full_name" placeholder="Nombre Completo" required />
+            </div>
+  
+            <div class="input-field">
+              <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required />
+            </div>
+  
+            <div class="input-field">
+              <input type="email" id="email" name="email" placeholder="Email" required />
+            </div>
+  
+            <div class="input-field">
+              <input type="password" id="password" name="password" placeholder="Contraseña" required />
+            </div>
+  
             <div class="g-recaptcha" data-sitekey="6Lflcv4pAAAAACtSgC7QWszRB_Niyvul3i9eFCzQ"></div><br>
-
-            <button type="submit">Registrarse</button>
-        </form>
-        <div class="register-link">
-            ¿Ya tienes cuenta? <a href="login.html">Iniciar sesion</a>
+  
+            <button type="submit" class="btn solid">Registrarse</button>
+  
+  
+          </form>
+  
+  
         </div>
+      </div>
+  
+      <div class="panels-container">
+  
+  
+        <div class="panel left-panel">
+          <div class="content">
+  
+            <h3>Bienvenido a Mateando Juntos <br> una pagina donde puedes compartir tus ideas sobre el mate </h3>
+            <p>Si no tienes una cuenta creada puedes registrarte</p>
+            <button class="btn transparent" id="sign-up-btn">
+              Registrarse
+            </button>
+          </div>
+        </div>
+  
+  
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>Bienvenido al registro. <br> ingresa tus datos para crear tu usuario y iniciar sesión</h3>
+            <p>Si ya tinenes una cuenta creada puedes iniciar sesión</p>
+            <button class="btn transparent" id="sign-in-btn">
+              Iniciar sesión
+            </button>
+          </div>
+        </div>
+  
+  
+      </div>
+  
+  
+  
     </div>
-</body>
+  
+    <script src="../JS/app.js"></script>
+  </body>
 </html>

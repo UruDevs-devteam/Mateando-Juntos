@@ -18,13 +18,29 @@ if (isset($_POST["full_name"], $_POST["username"], $_POST["email"], $_POST["pass
     curl_close($ch);                                                                 // cierra el curl
     $response = json_decode($result, true);                                         // decodifica el resultado JSON
     if (isset($response['success']) && $response['success'] == true) {
-        header("Location: ../../Frontend/HTML/login.html");
+
+        echo '
+        <script>
+        alert("Usuario registrado exitosamente");
+        window.location = "../../Frontend/HTML/index.html";
+        </script>
+           ';   
         exit();
     } else {
-        header("Location: ../../Frontend/HTML/index.html");
+        echo '
+        <script>
+        alert("Error en registrar al usuario (error en la api)");
+        window.location = "../../Frontend/HTML/index.html";
+        </script>
+           ';                             
         exit();
     }
 } else {
-    header("Location: ../../Frontend/HTML/index.html");
+    echo '
+        <script>
+        alert("Error en registrar al usuario (error en guardar los parametros)");
+        window.location = "../../Frontend/HTML/home.html";
+        </script>
+           ';   
     exit();
 }

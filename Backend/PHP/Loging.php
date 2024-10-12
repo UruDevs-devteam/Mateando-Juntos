@@ -31,7 +31,7 @@ if (isset($_POST["username"], $_POST["password"])) {
         echo '
         <script>
         alert("Sesion no iniciada, usuario o contrasena incorrectas");
-        window.location = "../../Frontend/HTML/login.html";
+        window.location = "../../Frontend/HTML/index.html";
         </script>
            ';                                 // Verificación fallida, redirige a la página de login
         exit();
@@ -39,7 +39,7 @@ if (isset($_POST["username"], $_POST["password"])) {
 
 
 }else {
-    header("Location: ../../Frontend/HTML/login.html");
+    header("Location: ../../Frontend/HTML/index.html");
     exit();
 }
 

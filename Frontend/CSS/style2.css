@@ -292,6 +292,16 @@ header {
     
 }
 
+.settings-container-user {
+    display: flex;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}
+
 /* Sidebar Styles */
 .settings-menu {
     width: 250px;
@@ -592,6 +602,17 @@ header {
 @media (max-width: 768px) {
     .settings-container {
 
+        flex-direction: column;
+        margin: 2rem;
+    }
+
+    .preview-container{
+        width: 15rem;
+        height: 15rem;
+    }
+
+    .settings-container-user {
+        
         flex-direction: column;
         margin: 2rem;
     }
