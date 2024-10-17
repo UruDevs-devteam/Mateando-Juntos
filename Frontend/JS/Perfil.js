@@ -1,5 +1,5 @@
 // Importar funciones compartidas
-import { fetchData, getLikeCount, getLikeIconClass, fetchImages, GetSession } from './shared_function.js';
+import { fetchData, getLikeCount, getLikeIconClass, fetchImages, GetSession, SeguidosSeguidores } from './shared_function.js';
 document.addEventListener('DOMContentLoaded', initProfile);
 // --------------------------------Selecciona el input de archivo y la imagen de vista previa en config usuario--------------------------------
 const profileInput = document.getElementById('profile_picture');
@@ -105,5 +105,6 @@ async function initProfile() {
         document.getElementById('Nombre-Usuario').innerText = sessionData.Nombre_usuario;
         document.getElementById('Biografia').innerHTML = profilePhoto.biografia;
         fetchPostsPerfil(userId, sessionData.Nombre_usuario);
+        SeguidosSeguidores(sessionData.ID_usuario);
     }
 }

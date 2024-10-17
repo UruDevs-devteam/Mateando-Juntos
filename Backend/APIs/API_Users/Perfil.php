@@ -69,6 +69,58 @@ class Perfil
         $stmt->close();
         return $result;
     }
+    function AddSeguidor($data)
+    {
+        $User_ID_Seguido = $data['User_ID_Seguido'];
+        $User_ID_Seguidor = $data['User_ID_Seguidor'];
 
+        $query = "INSERT INTO Seguir (Perfil_usuario_Seguido, Perfil_usuario_Seguidor) VALUES (?, ?)";
+        $stmt = $this->conex->prepare($query);
+        $stmt->bind_param("ii", $User_ID_Seguido, $User_ID_Seguidor);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result; // Retorna el resultado de la operación
+    }
+    function DeleteSeguidor($data)
+    {
+        $User_ID_Seguido = $data['User_ID_Seguido'];
+        $User_ID_Seguidor = $data['User_ID_Seguidor'];
+
+        $query = "DELETE FROM Seguir WHERE Perfil_usuario_Seguido = ? AND Perfil_usuario_Seguidor = ?";
+        $stmt = $this->conex->prepare($query);
+        $stmt->bind_param("ii", $User_ID_Seguido, $User_ID_Seguidor);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result; // Retorna el resultado de la operación
+    }
+
+    function GetSeguidos($UserID)
+    {
+    $query = "SELECT Perfil_usuario_Seguido FROM Seguir WHERE Perfil_usuario_Seguidor = ? ";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("i", $UserID);
+    $stmt->execute();
+    $result = $stmt->get_result();  // Obtener los resultados de la ejecución
+    $seguidos = [];
+    while ($row = $result->fetch_assoc()) { // Recorre los resultados y los añade al array
+        $seguidos[] = $row;
+    }
+    $stmt->close();
+    return $seguidos;  // Retorna el array con los resultados
+    }
+    function GetSeguidores($UserID)
+    {
+    $query = "SELECT Perfil_usuario_Seguidor FROM Seguir WHERE Perfil_usuario_Seguido = ? ";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("i", $UserID);
+    $stmt->execute();
+    $result = $stmt->get_result();  // Obtener los resultados de la ejecución
+    $seguidores = [];
+    while ($row = $result->fetch_assoc()) { // Recorre los resultados y los añade al array
+        $seguidores[] = $row;
+    }
+    $stmt->close();
+    return $seguidores;  // Retorna el array con los resultados
+    }
 
 }

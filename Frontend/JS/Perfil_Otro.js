@@ -1,5 +1,5 @@
 // Importar funciones compartidas
-import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage } from './shared_function.js';
+import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage, GetSession,SeguidosSeguidores } from './shared_function.js';
 
 // Función para obtener el parámetro "userId" de la URL
 function getUserIdFromURL() {
@@ -18,7 +18,7 @@ async function initProfileOtro() {
         document.getElementById('FotoPerfil').src = profilePhoto;
         document.getElementById('Nombre-Usuario').innerText = userProfile.Nombre_usuario || 'Nombre no disponible';
         document.getElementById('Biografia').innerText = userProfile.Biografia || 'No hay biografía disponible';
-
+        SeguidosSeguidores(userId);
         // Cargar los posts del usuario
         await fetchPostsPerfil(userId, userProfile.Nombre_usuario);
     } else {
@@ -26,6 +26,59 @@ async function initProfileOtro() {
     }
 }
 
+async function addSeguidor(User_ID_Seguido, User_ID_Seguidor) {
+    const data = {
+        User_ID_Seguido: User_ID_Seguido,
+        User_ID_Seguidor: User_ID_Seguidor
+    };
+
+    try {
+        const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_Users/Api_Usuarios.php/Seguidor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (response.success) {
+            alert('Ahora sigues a este usuario.');
+            document.getElementById('seguir-button').innerText = 'Dejar de seguir';
+            const seguidoresElement = document.getElementById('seguidores-count');
+            const seguidoresCount = parseInt(seguidoresElement.innerText, 10);
+            seguidoresElement.innerText = seguidoresCount + 1; // Incrementar el contador
+        } else {
+            console.error('Error al seguir al usuario:', response.error); // Asegúrate de que 'error' exista en la respuesta
+        }
+    } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+    }
+
+}
+async function deleteSeguidor(User_ID_Seguido, User_ID_Seguidor) {
+    const data = {
+        User_ID_Seguido: User_ID_Seguido,
+        User_ID_Seguidor: User_ID_Seguidor
+    };
+
+    try {
+        const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_Users/Api_Usuarios.php/seguidor', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (response.success) {
+            alert('Has dejado de seguir a este usuario.');
+            document.getElementById('seguir-button').innerText = 'Seguir'; // Cambiar el texto del botón
+            const seguidoresElement = document.getElementById('seguidores-count');
+            const seguidoresCount = parseInt(seguidoresElement.innerText, 10);
+            seguidoresElement.innerText = seguidoresCount - 1; // Decrementar el contador
+        } else {
+            console.error('Error al dejar de seguir al usuario:', response.error);
+        }
+    } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+    }
+}
 // Función para obtener y mostrar los posts de otro usuario
 async function fetchPostsPerfil(userId, Nombreuser) {
     try {
@@ -82,6 +135,17 @@ async function fetchPostsPerfil(userId, Nombreuser) {
         console.error('Error al obtener los posts:', error);
     }
 }
+document.getElementById('seguir-button').addEventListener('click', async () => {
+    const sessionData = await GetSession();
+    const userIdSeguidor = sessionData.ID_usuario; // Este debería ser el usuario al que estás siguiendo
+    const userIdSeguido = getUserIdFromURL(); // Este debería ser el seguidor
+    const seguirButton = document.getElementById('seguir-button');
+    if (seguirButton.innerText === 'Seguir') {
+        await addSeguidor(userIdSeguido, userIdSeguidor); // Cambiado el orden de los parámetros
+    } else {
+        await deleteSeguidor(userIdSeguido, userIdSeguidor);
+    }
 
+});
 // Llamar a la función cuando se cargue la página
 document.addEventListener('DOMContentLoaded', initProfileOtro);

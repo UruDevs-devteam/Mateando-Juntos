@@ -88,3 +88,28 @@ export async function getProfileImage(userId) {
         return '../img/avatar_167770.png'; // Imagen por defecto en caso de error
     }
 }
+//actualizar seguidos y seguidores de perfiles
+export async function SeguidosSeguidores(userId) {
+    try {
+        // Obtener los usuarios que este usuario sigue (seguidos) y los que lo siguen (seguidores)
+        const seguidos = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Seguidos/${userId}`);
+        const seguidores = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Seguidores/${userId}`);
+
+        // Actualizar los contadores en el frontend
+        document.getElementById('seguidos-count').innerText = seguidos.length;
+        document.getElementById('seguidores-count').innerText = seguidores.length;
+
+        // Obtener los datos de la sesión para verificar si ya sigue a este usuario
+        const sessionData = await GetSession();
+        const currentUserId = sessionData.ID_usuario;
+        // Verificar si el usuario actual ya sigue al perfil que está viendo
+        const yaSiguiendo = seguidores.some(seg => seg.Perfil_usuario_Seguidor === currentUserId);
+        const seguirButton = document.getElementById('seguir-button');
+        if (yaSiguiendo) {
+            seguirButton.innerText = 'Dejar de seguir';
+        }
+
+    } catch (error) {
+        console.error('Error al obtener seguidos o seguidores:', error);
+    }
+}

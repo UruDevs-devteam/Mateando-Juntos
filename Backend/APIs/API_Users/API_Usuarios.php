@@ -28,7 +28,15 @@ switch ($method) {
             $id = $matches[1];                                              // hagara el numero
             $Perfil = $Perfil_obj->GetPerfilByUserID($id);                            // llama al metodo indicado
             echo json_encode($Perfil);
-        } else {                                                       // si no encuentra el endpoint(esta vacio o no es uno de los anteriores), da error.
+        }elseif (preg_match('/^\/Seguidos\/(\d+)$/', $endpoint, $matches)) {
+            $id = $matches[1];                                              // hagara el numero
+            $Seguidos = $Perfil_obj->GetSeguidos($id);                            // llama al metodo indicado
+            echo json_encode($Seguidos);
+        } elseif (preg_match('/^\/Seguidores\/(\d+)$/', $endpoint, $matches)) {
+            $id = $matches[1];                                              // hagara el numero
+            $Seguidores = $Perfil_obj->GetSeguidores($id);                            // llama al metodo indicado
+            echo json_encode($Seguidores);
+        }  else {                                                       // si no encuentra el endpoint(esta vacio o no es uno de los anteriores), da error.
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
         }
@@ -63,7 +71,10 @@ switch ($method) {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacio o mal formado']);
             }
-        }  else {                                                                 // si los atributos estan mal o no existen, da error
+        }elseif($endpoint == '/Seguidor'){
+            $Result = $Perfil_obj->AddSeguidor($data);
+            echo json_encode(['success' => $Result]);
+        }else {                                                                 // si los atributos estan mal o no existen, da error
             http_response_code(400);
             echo json_encode(['error' => 'JSON vacío o mal formado']);
         }
@@ -74,7 +85,10 @@ switch ($method) {
         if ($endpoint == 'User') {
             $Resul = $User_obj->DeleteUser($data);
             echo json_encode(['success' => $Resul]);
-        } else {
+        } elseif($endpoint == '/seguidor'){
+            $Result = $Perfil_obj->DeleteSeguidor($data);
+            echo json_encode(['success' => $Result]);
+        }else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
         }
