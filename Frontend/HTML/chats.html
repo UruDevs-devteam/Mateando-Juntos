@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbox</title>
     <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/style.css">
     <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
 </head>
 
@@ -18,103 +19,65 @@
         <div class="right">
             <ul class="icons_nav">
                 <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="mensagges"></a></li>
-                <li><a href="#" id="message"><img src="../img/rectangular-speech-bubble_32642.png" alt="comunitys"></a>
-                </li>
+                <li><a href="chats.html" id="message"><img src="../img/rectangular-speech-bubble_32642.png"
+                            alt="comunitys"></a></li>
             </ul>
-
+            <div class="search_box">
+                <a href="#"><img src="../img/magnifier_64673.png" alt=""></a>
+                <input type="text" placeholder="Busqueda">
+            </div>
             <ul class="icons_nav">
                 <li class="Profile">
                     <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
                     <ul class="dropdown-menu-profile">
-                        <li><a class="Size" href="login.html">Iniciar sesion</a></li>
+
+                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerar sesion</a></li>
+
                         <li>
                             <label for="darkmode" class="Size">Modo Oscuro</label>
                             <input type="checkbox" name="darkmode" id="darkmode">
                         </li>
-                        <li class="Profile">
-                            <a href="Settings_user.html">Ajustes</a>
-                        </li>
+
+                        <li><a class="Size" href="Settings_user.html">Ajustes</a></li>
+
+                        <li><a class="Size" href="Perfil.html">Perfil</a></li>
                     </ul>
                 </li>
-                <li><a href="notification_sett.html"><img src="../img/bell_143144.png" alt="bell_notifications"></a></li>
+                <li><a href="#"><img src="../img/bell_143144.png" alt="bell_notifications"></a></li>
 
             </ul>
         </div>
     </header>
     <!--HEADER-->
 
-
-    <div class="chat-app">
+    <div class="chat-app" id="chat-app">
         <!-- Left Sidebar with Recent Chats -->
-        <div class="chat-sidebar">
-            <div class="sidebar-header">
+        <div class="chat-sidebar" id="chat-sidebar">
+            <div class="sidebar-header" id="sidebar-header">
                 <h3>Chats</h3>
             </div>
-            <div class="chat-list">
-                <div class="chat-item active">
-                    <p>John Doe</p>
-                    <span class="last-message">I'm doing great as well!</span>
-                    <span class="chat-timestamp">10:06 AM</span>
-                </div>
-                <div class="chat-item">
-                    <p>Jane Smith</p>
-                    <span class="last-message">See you later!</span>
-                    <span class="chat-timestamp">9:45 AM</span>
-                </div>
-                <div class="chat-item">
-                    <p>Mike Johnson</p>
-                    <span class="last-message">Let's meet tomorrow</span>
-                    <span class="chat-timestamp">Yesterday</span>
-                </div>
-                <!-- Add more chat items here -->
+            <div class="chat-list" id="chat-list">
+                <!-- Aquí se llenarán dinámicamente los chats disponibles -->
             </div>
         </div>
 
         <!-- Right Chat Area -->
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>John Doe</h2>
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header" id="chat-header">
+                <img id="header-profile-photo" src="" alt="Profile Photo" class="header-profile-photo" style="display: none;">
+                <h2 id="chat-header-name">Selecciona un chat</h2>
             </div>
-            <div class="chat-messages">
-                <div class="message received">
-                    <p>Hello! How are you?</p>
-                    <span class="timestamp">10:02 AM</span>
-                </div>
-                <div class="message sent">
-                    <p>I'm good, thank you! How about you?</p>
-                    <span class="timestamp">10:05 AM</span>
-                </div>
-                <div class="message received">
-                    <p>I'm doing great as well!</p>
-                    <span class="timestamp">10:06 AM</span>
-                </div>
+            <div class="chat-messages" id="chat-messages">
+                <!-- Aquí se llenarán los mensajes del chat seleccionado -->
             </div>
-            <div class="chat-input">
-                <input type="text" placeholder="Type a message...">
-                <button type="button">Send</button>
+            <div class="chat-input" id="chat-input" style="display: none;">
+                <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+                <button type="button" id="send-button">Enviar</button>
             </div>
         </div>
     </div>
+
+    <script src="../JS/js.js"></script>
+    <script type="module" src="../JS/Mensaje.js"></script>
 </body>
-<script>
-    document.getElementById('darkmode').addEventListener('change', function () {
-        document.body.classList.toggle('dark-mode', this.checked);
-    });
-
-    // Opción: Guardar la preferencia del usuario en localStorage
-    if (localStorage.getItem('dark-mode') === 'true') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('darkmode').checked = true;
-    }
-
-    document.getElementById('darkmode').addEventListener('change', function () {
-        if (this.checked) {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('dark-mode', 'true');
-        } else {
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('dark-mode', 'false');
-        }
-    });
-</script>
 </html>

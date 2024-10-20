@@ -88,6 +88,21 @@ export async function getProfileImage(userId) {
         return '../img/avatar_167770.png'; // Imagen por defecto en caso de error
     }
 }
+// Obtener el nombre de perfil del usuario
+export async function getProfilename(userId) {
+    try {
+        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
+        if (response && response.Nombre_usuario) {
+            return response.Nombre_usuario;
+        } else {
+            return 'user name'; // Imagen por defecto si no se encuentra
+        }
+    } catch (error) {
+        console.error('Error al obtener el nombre de perfil:', error);
+        return 'user name'; // Imagen por defecto en caso de error
+    }
+}
+
 //actualizar seguidos y seguidores de perfiles
 export async function SeguidosSeguidores(userId) {
     try {

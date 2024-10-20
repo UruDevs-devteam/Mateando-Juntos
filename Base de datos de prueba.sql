@@ -45,10 +45,11 @@ CREATE TABLE Mensaje (
     ID_mensaje INT PRIMARY KEY AUTO_INCREMENT,
     Contenido TEXT,
     Fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ID_perfil_envia INT,
-    ID_perfil_recibe INT,
-    FOREIGN KEY (ID_perfil_envia) REFERENCES Perfil_usuario(ID_perfil),
-     FOREIGN KEY (ID_perfil_recibe) REFERENCES Perfil_usuario(ID_perfil)
+    ID_usuario_envia INT,
+    ID_usuario_recibe INT,
+    leeido boolean default false,
+    FOREIGN KEY (ID_usuario_envia) REFERENCES Usuario(ID_usuario),
+     FOREIGN KEY (ID_usuario_recibe) REFERENCES Usuario(ID_usuario)
 ); 
 
 CREATE TABLE Pertenece (
@@ -94,8 +95,10 @@ CREATE TABLE Post_multimedia (
 
 CREATE TABLE Comentarios (
     ID_comentario INT PRIMARY KEY AUTO_INCREMENT,
-    ID_perfil INT,
-    FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil)
+    ID_usuario INT,
+    contenido text,
+     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario)
 );
 
 CREATE TABLE Modifica (
@@ -164,6 +167,5 @@ CREATE TABLE TieneComentarios (
     FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
 );
 ALTER TABLE Post_multimedia MODIFY COLUMN Src_mul LONGBLOB;
-
 
 

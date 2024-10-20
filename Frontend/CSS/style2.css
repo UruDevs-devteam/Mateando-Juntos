@@ -153,17 +153,26 @@ header {
 .chat-list {
     flex: 1;
     overflow-y: auto;
-
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    max-height: 400px; /* Ajusta la altura según sea necesario */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Color de fondo suave */
 }
 
 .chat-item {
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente al centro */
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .chat-item:hover {
-    background-color: #f1f1f1;
+    background-color: #e0f7fa; /* Color de fondo al pasar el mouse */
 }
 
 .chat-item.active {
@@ -171,8 +180,8 @@ header {
 }
 
 .chat-item p {
-    margin: 0;
     font-weight: bold;
+    margin: 0;
     font-size: 16px;
 }
 
@@ -190,7 +199,6 @@ header {
 }
 
 .chat-container {
-
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -202,19 +210,30 @@ header {
     padding: 15px;
     background-color: #626262;
     color: white;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
 }
 
+/* Estilo para la imagen de perfil en el encabezado */
+.chat-header .header-profile-photo {
+    width: 40px; /* Tamaño de la imagen de perfil */
+    height: 40px;
+    border-radius: 50%; /* Hace que la imagen sea redonda */
+    margin-right: 10px; /* Espacio entre la imagen y el nombre */
+    display: inline; /* Se muestra solo si hay imagen */
+}
+
+/* Estilo para el nombre del chat */
+.chat-header-name {
+    font-size: 20px; /* Tamaño del texto */
+    font-weight: bold; /* Negrita */
+}
 .chat-messages {
     flex: 1;
     padding: 15px;
     overflow-y: auto;
     display: flex;
-    flex-direction: column;
-    /* Alinea los mensajes en una columna, uno debajo del otro */
+    flex-direction: column; /* Alinea los mensajes en una columna, uno debajo del otro */
 }
 
 .message {
@@ -253,15 +272,17 @@ header {
     align-items: center;
     border-top: 1px solid #ddd;
     padding: 10px;
+    background-color: #f9f9f9; /* Fondo del input */
 }
 
 .chat-input input {
     flex: 1;
     border: none;
+    width: 90%;
     padding: 10px;
     border-radius: 20px;
     margin-right: 10px;
-    background-color: #f1f1f1;
+    background-color: #e0e0e0;
     font-size: 14px;
 }
 
@@ -276,7 +297,41 @@ header {
 }
 
 .chat-input button:hover {
-    background-color: #808080;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* Estilo para la foto de perfil */
+.chat-list .profile-photo {
+    width: 50px; /* Aumentar tamaño de la foto */
+    height: 50px; /* Aumentar tamaño de la foto */
+    border-radius: 50%; /* Hace que la foto sea redonda */
+    margin-right: 10px; /* Espacio entre la foto y el texto */
+}
+
+/* Contenedor para el nombre de usuario y último mensaje */
+.chat-details {
+    display: flex;
+    flex-direction: column; /* Alineación vertical */
+    flex-grow: 1; /* Permite que este contenedor ocupe el espacio restante */
+}
+
+/* Estilo para el último mensaje */
+.last-message {
+    font-size: 0.9em; /* Texto más pequeño */
+    color: #666; /* Color de texto más suave */
+}
+
+/* Estilo para la marca de tiempo */
+.chat-timestamp {
+    font-size: 0.8em; /* Texto más pequeño */
+    color: #999; /* Color de texto más suave */
+}
+
+/* Añadir espacio para el último mensaje y timestamp */
+.chat-item .last-message,
+.chat-item .chat-timestamp {
+    margin-top: 5px; /* Espacio entre el último mensaje y la marca de tiempo */
 }
 
 
@@ -575,7 +630,12 @@ header {
     border-radius: 50%;
     object-fit: cover;
 }
-
+.FotoPerfil {
+    width: 50px; /* Aumentar tamaño de la foto */
+    height: 50px; /* Aumentar tamaño de la foto */
+    border-radius: 50%; /* Hace que la foto sea redonda */
+    margin-right: 10px; /* Espacio entre la foto y el texto */
+}
 .profile-info h2 {
     margin-top: 10px;
     font-size: 1.5rem;
@@ -597,6 +657,9 @@ header {
     padding: 20px;
     text-align: center;
 }
+/* chatsssssssssssssssssssssssssssssssssssss */
+/* Estilo general para la lista de chats */
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
