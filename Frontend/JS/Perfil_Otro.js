@@ -6,10 +6,18 @@ function getUserIdFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('userId');  // Obtiene el valor de 'userId' de la URL
 }
-
+async function verifyUser(userId) {
+    const sessionData = await GetSession();
+    if (userId == sessionData.ID_usuario) {
+        window.location.href = '../HTML/Perfil.html';
+    }else{
+    
+    }
+}
 // Función para inicializar el perfil de otro usuario
 async function initProfileOtro() {
     const userId = getUserIdFromURL();
+    await verifyUser(userId);
     if (userId) {
         // Obtener la imagen de perfil y otros datos
         const profilePhoto = await getProfileImage(userId);
@@ -146,6 +154,12 @@ document.getElementById('seguir-button').addEventListener('click', async () => {
         await deleteSeguidor(userIdSeguido, userIdSeguidor);
     }
 
+});
+document.getElementById('mensaje-button').addEventListener('click', () => {
+    const profileUserId = getUserIdFromURL();
+    
+    // Redirigir a chats.html y pasar el contactId como parámetro
+    window.location.href = `chats.html?contactId=${profileUserId}`;
 });
 // Llamar a la función cuando se cargue la página
 document.addEventListener('DOMContentLoaded', initProfileOtro);
