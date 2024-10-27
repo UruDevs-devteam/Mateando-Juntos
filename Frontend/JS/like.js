@@ -1,4 +1,3 @@
-
 async function fetchData(url, options = {}) {
     try {
         const response = await fetch(url, options);
@@ -72,4 +71,6 @@ document.addEventListener('click', async function(event) {
         }
     }
 });
+
+
 

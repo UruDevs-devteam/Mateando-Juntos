@@ -2,8 +2,12 @@
 require_once "../Config.php";
 require_once "Post.php";
 require_once "Event.php";
+require_once "Comentarios.php"; // Asegúrate de crear esta clase para manejar los comentarios
+
 $Post_obj = new Post($conex); // creamos un objeto Post y le damos la conexion a la BD
 $Event_obj = new Event($conex);// creamos un objeto Evento y le damos la conexion a la BD
+$Comentario_obj = new Comentario($conex); // Objeto para manejar comentarios
+
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
 $endpoint = $_SERVER['PATH_INFO'];    // la URL, pero toma la parte final, lo que no sea ruta
 header('Content-Type: application/json'); // para que  la pagina sepa que se esta usando json
@@ -28,7 +32,7 @@ switch ($method) {
             $id = $matches[1];
             $mul = $Post_obj->GetMulyiByID($id);
             echo json_encode($mul);
-        }elseif((preg_match('/^\/Like\/(\d+)$/', $endpoint, $matches))){
+        } elseif ((preg_match('/^\/Like\/(\d+)$/', $endpoint, $matches))) {
             $id = $matches[1];
             $likes = $Post_obj->GetLikesbypost($id);
             echo json_encode($likes);
@@ -37,55 +41,77 @@ switch ($method) {
             $id_post = $matches[2];
             $hasLiked = $Post_obj->GetkUserLike($id_user, $id_post); // Llama al método que verifica si existe el like
             echo json_encode(['hasLiked' => $hasLiked]); // Devuelve si el usuario ha dado like o no
-        } else {                                                    
-            http_response_code(404);
-            echo json_encode(['error' => 'Endpoint no valido']);
-        }
-        break;
 
-    case 'POST': // insert
-        $data = json_decode(file_get_contents('php://input'), true);  // manda la solitud al curl para pedirle los parametros
-        if ($endpoint == '/Post') {                                   // es para add posts
-            if (Valid_Data_Post($data)) {                            // llama al metodo(esta abajo), abjo se explica.
-                $Resul = $Post_obj->AddPost($data);                  // llama al metodo  
-                echo json_encode(['success' => $Resul]);             // guarda true o false, depende si se logro la incercion
-            } else {                                                 // si los parametros estan vacios o no existen, da error
-                http_response_code(400);
-                echo json_encode(['error' => 'JSON vacio o mal formado']);
-            }
-        } elseif ($endpoint == '/Multi') {                           // es para add multimedia 
-            if (Valid_Data_Multi($data)) {
-                $Resul = $Post_obj->AddMulti($data);
-                echo json_encode(['success' => $Resul]);
-            } else {
-                http_response_code(400);
-                echo json_encode(['error' => 'JSON vacio o mal formado']);
-            }
-        } elseif ($endpoint == '/Event') {                           // es para add eventos
-            if (Valid_Data_Event($data)) {
-                $Resul = $Event_obj->AddEvent($data);
-                echo json_encode( $Resul);
-            } else {
-                http_response_code(400);
-                echo json_encode(['error' => 'JSON vacio o mal formado']);
-            }
-        }elseif($endpoint == '/like'){
-            if(valid_like($data)){
-                $Resul = $Post_obj->AddLike($data);
-                echo json_encode(['success' => $Resul]);
-            }else {
-                http_response_code(400);
-                echo json_encode(['error' => 'JSON vacio o mal formado']);
-            }
+        } elseif (preg_match('/^\/Post\/(\d+)\/Comentarios$/', $endpoint, $matches)) {
+            $id_post = $matches[1];
+            $Comentarios = $Comentario_obj->GetComentariosByPost($id_post);  // Obtener comentarios por ID de post
+            echo json_encode($Comentarios);
+
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
         }
         break;
 
-    case 'DELETE':// delete
-        $data = json_decode(file_get_contents('php://input'), true);
-        if ($endpoint == '/Post') {
+    case 'POST': // insert
+        $data = json_decode(file_get_contents('php://input'), true);  // Obtiene los parámetros del cuerpo de la solicitud
+
+        if ($endpoint=="/Comentario") {
+            $id_post = $matches[1];
+            if (Valid_Data_Comentario($data)) { // Valida que el comentario tenga datos correctos
+                $Resul = $Comentario_obj->AddComentario($data);  // Llama a la función para crear el comentario
+                echo json_encode(['success' => $Resul]);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacío o mal formado']);
+            }
+
+        } elseif ($endpoint == '/Post') { // Endpoint para añadir un nuevo post
+            if (Valid_Data_Post($data)) {
+                $Resul = $Post_obj->AddPost($data);
+                echo json_encode(['success' => $Resul]);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacío o mal formado']);
+            }
+        } elseif ($endpoint == '/Multi') { // Endpoint para añadir multimedia
+            if (Valid_Data_Multi($data)) {
+                $Resul = $Post_obj->AddMulti($data);
+                echo json_encode(['success' => $Resul]);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacío o mal formado']);
+            }
+        } elseif ($endpoint == '/Event') { // Endpoint para añadir eventos
+            if (Valid_Data_Event($data)) {
+                $Resul = $Event_obj->AddEvent($data);
+                echo json_encode($Resul);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacío o mal formado']);
+            }
+        } elseif ($endpoint == '/like') { // Endpoint para añadir un like
+            if (valid_like($data)) {
+                $Resul = $Post_obj->AddLike($data);
+                echo json_encode(['success' => $Resul]);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacío o mal formado']);
+            }
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Endpoint no válido']);
+        }
+        break;
+
+    case 'DELETE': // delete
+        $data = json_decode(file_get_contents('php://input'), true); // Obtiene los parámetros del cuerpo de la solicitud
+
+        if (preg_match('/^\/Comentario\/(\d+)$/', $endpoint, $matches)) {
+            $id_comentario = $matches[1]; // Obtiene el ID del comentario desde la URL
+            $Resul = $Comentario_obj->DeleteComentario($id_comentario); // Llama a la función para eliminar el comentario
+            echo json_encode(['success' => $Resul]);
+        } elseif ($endpoint == '/Post') {
             if (Valid_ID($data)) {
                 $Resul = $Post_obj->DeletePost($data);
                 echo json_encode(['success' => $Resul]);
@@ -93,7 +119,7 @@ switch ($method) {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacío o mal formado']);
             }
-        } else if ($endpoint == '/Event') {
+        } elseif ($endpoint == '/Event') {
             if (Valid_ID($data)) {
                 $Resul = $Event_obj->DeleteEvent($data);
                 echo json_encode(['success' => $Resul]);
@@ -101,20 +127,16 @@ switch ($method) {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacío o mal formado']);
             }
-        } else if ($endpoint == '/like') { // Para eliminar el like
-                $Resul = $Post_obj->DeleteLike($data);
-                echo json_encode(['success' => $Resul]);
-            
+        } elseif ($endpoint == '/like') { // Para eliminar el like
+            $Resul = $Post_obj->DeleteLike($data);
+            echo json_encode(['success' => $Resul]);
         } else {
             http_response_code(404);
-            echo json_encode(['error' => 'Endpoint no valido']);
+            echo json_encode(['error' => 'Endpoint no válido']);
         }
         break;
-    default: // Metodo no permitido
-        http_response_code(405);
-        echo json_encode(['error' => 'Método HTTP no permitido']);
-        break;
 }
+
 /////////////////////////////////////////////////////// metodos de validacion ///////////////////////////////////////////////////////////
 function Valid_Data_Post($data)
 {
@@ -134,14 +156,14 @@ function Valid_Data_Event($data)
 {
 
     return true;
-    
+
 }
 
 function Valid_Data_Multi($data)
 {
-    
-        return true;
-    
+
+    return true;
+
 }
 
 function Valid_ID($data)
@@ -157,9 +179,24 @@ function Valid_ID($data)
     }
 }
 
-function valid_like($data){
-    
-        return true;
-    
+function valid_like($data)
+{
+
+    return true;
+
 }
 
+function Valid_Data_Comentario($data)
+{
+    if (empty($data)) {
+        return false;
+    } elseif (
+        !isset($data['ID_perfil']) || empty($data['ID_perfil']) ||
+        !isset($data['ID_post']) || empty($data['ID_post']) ||
+        !isset($data['Contenido']) || empty($data['Contenido'])
+    ) {
+        return false;
+    } else {
+        return true;
+    }
+}

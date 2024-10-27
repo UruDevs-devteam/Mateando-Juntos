@@ -35,7 +35,7 @@
                     <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
                     <ul class="dropdown-menu-profile">
 
-                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerar sesion</a></li>
+                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerrar sesion</a></li>
 
                         <li>
                             <label for="darkmode" class="Size">Modo Oscuro</label>
@@ -165,14 +165,17 @@
 
             </section>
 
+            
+
             <!---------------------------------------------eventos usuarios(EN ESTE SE MUESTRAN eventos de los usuarios DEL USUARIOS)------------------------------------------------------------>
             <section class="eventos">
-                <h2>Eventos</h2>
+                <h2 id="evento-h2">Eventos</h2>
                 <div class="evento-item">
                     <!-- Aquí se mostrará cada evento -->
                 </div>
             </section>
         </main>
+
         <!---------------------------------------------ventana de evento  (EN ESTE SE MUESTRAun formulario para eventos)------------------------------------------------------------>
         <div id="modalEvento" class="modal">
             <div class="modal-content">
@@ -185,7 +188,7 @@
                         <div class="form-left">
                             <label for="Titulo">Título:</label>
                             <input type="text" name="Titulo" id="Titulo" required>
-                            
+
                             <label for="Descripcion">Descripción:</label>
                             <textarea name="Descripcion" id="Descripcion" required></textarea>
                         </div>
@@ -193,7 +196,7 @@
                             <label for="Fecha">Fecha:</label>
                             <input type="date" name="Fecha" id="Fecha" required>
                             <label for="Lugar">Lugar:</label>
-                            <input type="text" name="Lugar" id="Lugar" required>   
+                            <input type="text" name="Lugar" id="Lugar" required>
                             <label for="Start">Hora de inicio:</label>
                             <input type="time" name="Start" id="Start" required>
                             <label for="Fin">Hora de finalización:</label>
@@ -207,7 +210,6 @@
                 </form>
             </div>
         </div>
-
 
         <!---------------------------------------------CONTENEDOR DERECHO (EN ESTE SE MUESTRAN LOS CHATS DE LAS COMUNIDADES DEL USUARIOS)------------------------------------------------------------>
         <aside class="right_bar_content">
@@ -254,6 +256,8 @@
 <script type="module" src="../JS/Posts.js"></script>
 <script src="../JS/like.js"></script>
 <script src="../JS/Event.js"></script>
+<script src="../JS/coments.js"></script>
+
 <script>
     document.getElementById('darkmode').addEventListener('change', function () {
         document.body.classList.toggle('dark-mode', this.checked);
