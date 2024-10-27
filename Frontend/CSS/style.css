@@ -293,6 +293,7 @@ header {
 .center_bar_content .feed .user .info h3 {
     color: #2c2c2c; /* Negro grisáceo */
     font-weight: 600;
+    
 }
 
 .center_bar_content .feed .user .info h3 a {
@@ -304,9 +305,20 @@ header {
     color: #2c2c2c; /* Mantén el mismo color al pasar el mouse */
 }
 
+.center_bar_content .feed .user .info  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+
 .center_bar_content .feed .user .info small {
     color: #555; /* Gris suave */
+    margin-left: 4rem;
 }
+
 .center_bar_content .feed .photo {
     width: 100%;
     border-radius: 2rem;
@@ -395,6 +407,10 @@ header {
     align-items: center; /* Centrado vertical */
 }
 
+#evento-h2{
+    margin-top: 1rem;
+}
+
 .modal-content {
     display: flex; /* Usar flexbox para el diseño horizontal */
     flex-direction: column; /* Cambia a columna para el contenido */
@@ -476,6 +492,7 @@ header {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 8px;
 }
 
 .modal button:hover {
@@ -576,6 +593,86 @@ header {
     color: #000000; 
 }
 
+/*----------------------ESTILO PARA EL MODAL DE comentarios------------------------------------*/
+
+/* Estilos mejorados para el modal */
+.modal-coments {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro más intenso */
+    backdrop-filter: blur(5px); /* Añade un efecto de desenfoque */
+}
+
+.modal-content-coments {
+    background-color: #f9f9f9;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    animation: fadeIn 0.5s; /* Efecto de entrada */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.close-coments {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.close-coments:hover,
+.close-coments:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos para el textarea */
+#commentText {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+}
+
+#commentText:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Estilos para el botón de enviar */
+button#submitComment {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button#submitComment:hover {
+    background-color: #0056b3;
+}
 
 
 /*--------ESTILO PARA LOS CHATS DE LAS COMUNIDADES Y LOS CHATS PRIVADOS DEL USUARIO-------------------*/

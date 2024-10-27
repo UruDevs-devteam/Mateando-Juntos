@@ -65,16 +65,28 @@ async function fetchPosts() {
                                 <i class="${likeclass}" id="likeButton-${post.ID_post}"></i>
                             </button>
                             <text id="counter">${likeCount}</text>
-                            <button class="button-icon"><i class="uil uil-comment-dots"></i></button>
+                            <button class="button-icon" id="comentario"><i class="uil uil-comment-dots"></i></button>
                             <button class="button-icon"><i class="uil uil-share-alt"></i></button>
                         </div>
                     </div>
 
                     <div class="caption">
-                        <p> ${post.Descripcion || 'Descripción no disponible'}</p>
+                        <p>${post.Descripcion || 'Descripción no disponible'}</p>
+                    </div>
+
+                    <div class="modal-coments">
+                        <h3>Comentarios</h3>
+                        <ul id="comments-list-${post.ID_post}"></ul> <!-- Cambia el ID para cada post -->
+                        <form id="commentForm-${post.ID_post}" action="guardar_comentario.php" method="POST">
+                        <input type="hidden" name="ID_post" value="${post.ID_post}"> <!-- ID del post -->
+                        <input type="hidden" name="ID_usuario" value="${post.ID_usuario}"> <!-- Debes pasar el ID del usuario, no el nombre -->
+                        <textarea name="contenido" required placeholder="Escribe un comentario..."></textarea>
+                        <button type="submit">Enviar</button>
+                        </form>
                     </div>
                 </article>
             `;
+            
             feedsSection.insertAdjacentHTML('beforeend', article);
 
             // Cargar imágenes relacionadas con el post

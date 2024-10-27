@@ -156,7 +156,7 @@ header {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    max-height: 400px; /* Ajusta la altura según sea necesario */
+    max-height: 100%; /* Ajusta la altura según sea necesario */
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9; /* Color de fondo suave */
@@ -169,6 +169,7 @@ header {
     border-bottom: 1px solid #e0e0e0;
     cursor: pointer;
     transition: background-color 0.3s;
+    overflow: hidden;
 }
 
 .chat-item:hover {
@@ -249,6 +250,7 @@ header {
 .message.received {
     background-color: #f1f1f1;
     align-self: flex-start;
+    margin-top: 20px;
 }
 
 .message.sent {
@@ -268,20 +270,21 @@ header {
 }
 
 .chat-input {
+    width: 100%;
     display: flex;
     align-items: center;
     border-top: 1px solid #ddd;
     padding: 10px;
-    background-color: #f9f9f9; /* Fondo del input */
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    gap: 10px; /* Espacio entre el campo de texto y el botón */
 }
 
 .chat-input input {
     flex: 1;
     border: none;
-    width: 90%;
     padding: 10px;
     border-radius: 20px;
-    margin-right: 10px;
     background-color: #e0e0e0;
     font-size: 14px;
 }
@@ -624,28 +627,91 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.profile-photo {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+}
+
 .profile-photo img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
 }
+
 .FotoPerfil {
     width: 50px; /* Aumentar tamaño de la foto */
     height: 50px; /* Aumentar tamaño de la foto */
     border-radius: 50%; /* Hace que la foto sea redonda */
     margin-right: 10px; /* Espacio entre la foto y el texto */
 }
+/* Título del perfil */
 .profile-info h2 {
+    margin-top: 15px;
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    line-height: 1.2;
+    transition: color 0.3s;
+}
+
+.profile-info h2:hover {
+    color: #818386; /* Cambia a un color más vivo al pasar el ratón */
+}
+
+/* Biografía del perfil */
+.profile-info p {
+    color: #555;
+    font-size: 1rem;
     margin-top: 10px;
-    font-size: 1.5rem;
+    text-align: center;
+    font-style: italic;
+    padding: 0 15px;
+    line-height: 1.5;
+    transition: color 0.3s;
     
 }
 
-.profile-info p {
-    color: #777;
-    font-size: 1rem;
+.profile-info p:hover {
+    color: #333; /* Cambia a un color más oscuro al pasar el ratón */
 }
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    gap: 15px; /* Espacio entre los botones */
+    margin-top: 20px; /* Margen opcional para separar de otros elementos */
+}
+
+/* Estilos de los botones */
+.follow-button, .mensaje-button {
+    background-color: #474747;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.follow-button:hover {
+    background-color: #707070;
+    transform: scale(1.05);
+}
+
+.mensaje-button:hover {
+    background-color: #707070;
+    transform: scale(1.05);
+}
+
 
 /* Sección de los posts del usuario */
 .center_bar_content h3 {
@@ -662,6 +728,8 @@ header {
 
 
 /* Responsive Design */
+
+
 @media (max-width: 768px) {
     .settings-container {
 
@@ -694,6 +762,53 @@ header {
         display: none;
 
     }
+    /*Perfiles de usuarios responsives */
+
+    .perfil-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-column {
+        flex: 1;
+        height: 100vh;
+        width: 100%;
+        padding-right: 10px; /* Un pequeño padding para evitar que el contenido toque el borde derecho */
+    }
+
+    .right-column {
+        width: 100%;
+         position: sticky;
+         top: 0;
+         align-self: flex-start; /* Esto asegura que se alinee al principio */
+         height: 100vh;
+         overflow-y: auto; /* Esto es opcional si también quieres scroll en el contenido derecho si es necesario */
+         padding-left: 10px; /* Un pequeño padding para evitar que el contenido toque el borde izquierdo */
+     }
+
+    .profile-photo img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .center_bar_content, .profile-follow, .profile-header {
+        width: 100%;
+    }
+
+    /*chats responsives*/
+    .chat-item p {
+        display: none;
+    }
+    
+    .last-message {
+        display: none;
+    }
+
+
 }
 
 
