@@ -1,4 +1,4 @@
-import { GetSession, fetchData, getProfileImage,getProfilename  } from './shared_function.js'; 
+import { GetSession, fetchData, getProfileImage, getProfilename } from './shared_function.js'; 
 
 // Función para cargar lista de chats
 async function loadChatList() {
@@ -17,6 +17,7 @@ async function loadChatList() {
 
             const chatItem = document.createElement('div');
             chatItem.className = 'chat-item';
+            chatItem.setAttribute('data-contact-id',contact.ID_usuario);
             chatItem.innerHTML = `
                 <img src="${profilePhoto}" alt="${UserName}'s profile" class="profile-photo">
                 <div class="chat-details">
@@ -70,6 +71,7 @@ async function sendMessage(userId) {
         if (response) {
             messageInput.value = ''; // Limpiar el campo
             await loadMessages(ContactId); // Recargar los mensajes
+            updateLastMessage(ContactId, messageText); // Actualizar la vista del último mensaje
         } else {
             console.error('Error al enviar el mensaje:', response.message);
         }
@@ -83,8 +85,18 @@ async function sendMessage(userId) {
 // Crear el chat visualmente en frontend sin guardar en la base de datos
 async function createChatFrontend(contactId, contactName, profilePhoto) {
     const chatListContainer = document.getElementById('chat-list');
+    console.log(chatListContainer);
+    const existingChatItem = chatListContainer.querySelector(`[data-contact-id="${contactId}"]`);
+    if (existingChatItem) {
+        console.log(`El chat con el usuario ${contactId} ya existe, seleccionando...`);
+        existingChatItem.click(); // Simular clic en el chat existente
+        return;
+    }
+    console.log(existingChatItem);
+    // Si no existe, crear un nuevo chat visualmente
     const chatItem = document.createElement('div');
     chatItem.className = 'chat-item';
+    chatItem.setAttribute('data-contact-id', contactId); // Agregar data-contact-id para identificación
 
     chatItem.innerHTML = `
         <img src="${profilePhoto}" alt="${contactName}'s profile" class="profile-photo">
@@ -108,7 +120,7 @@ async function createChatFrontend(contactId, contactName, profilePhoto) {
 
     // Añadir el nuevo chat a la lista
     chatListContainer.appendChild(chatItem);
-    chatItem.click();
+    chatItem.click(); // Simular un clic para cargar los mensajes automáticamente
 }
 
 // Cargar mensajes desde la DB
@@ -120,6 +132,7 @@ async function loadMessages(ContactId) {
 
     try {
         const messages = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Chats/API_Chats.php/Mensajes/${ContactId}/${userId}`);
+        const fragment = document.createDocumentFragment(); // Para optimizar la inserción
         messages.forEach(message => {
             const messageElement = document.createElement('div');
             messageElement.className = message.ID_usuario_envia === userId ? 'message sent' : 'message received';
@@ -127,12 +140,29 @@ async function loadMessages(ContactId) {
                 <p>${message.Contenido}</p>
                 <span class="timestamp">${formatTimestamp(message.Fecha_envio)}</span>
             `;
-            messagesContainer.appendChild(messageElement);
+            fragment.appendChild(messageElement);
         });
-        messagesContainer.scrollTop = messagesContainer.scrollHeight; // Desplazarse hacia abajo
+        messagesContainer.appendChild(fragment);
+        messagesContainer.scrollTo({
+            top: messagesContainer.scrollHeight,
+            behavior: 'smooth' // Animación suave al desplazarse al final
+        });
     } catch (error) {
         console.error('Error al cargar mensajes:', error);
     }
+}
+
+// Actualizar último mensaje en la vista de chatitem
+function updateLastMessage(contactId, lastMessage) {
+    const chatItems = document.querySelectorAll('.chat-item');
+    chatItems.forEach(item => {
+        const sendButton = document.getElementById('send-button');
+        const contact = parseInt(sendButton.getAttribute('data-contact-id'), 10);
+        if (contact === contactId) {
+            const lastMessageSpan = item.querySelector('.last-message');
+            lastMessageSpan.textContent = lastMessage;
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -143,7 +173,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const contactId = params.get('contactId');
     const contactName = await getProfilename(contactId);
-    const profilePhoto = await getProfileImage(contactId) ;
+    const profilePhoto = await getProfileImage(contactId);
 
     if (contactId && contactName && profilePhoto) {
         // Crear visualmente el chat en frontend
@@ -169,5 +199,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Formatear timestamp
 function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
-    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`; // Formato HH:mm
+    const now = new Date();
+    const isSameDay = date.toDateString() === now.toDateString();
+    if (!isSameDay) {
+        return `${date.toLocaleDateString()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+    }
+    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`; 
 }

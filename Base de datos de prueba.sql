@@ -31,9 +31,9 @@ CREATE TABLE Comunidad (
     Nombre_comunidad VARCHAR(100)  NOT NULL,
     Descripcion TEXT,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ID_perfil INT NOT NULL,
-    Url_fotocomunidad varchar(255),
-    FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil)
+    ID_usuario_creador INT NOT NULL,
+    Url_fotocomunidad longblob,
+    FOREIGN KEY (ID_usuario_creador) REFERENCES usuario(ID_usuario)
 );
 
 CREATE TABLE Idioma (
@@ -53,10 +53,10 @@ CREATE TABLE Mensaje (
 ); 
 
 CREATE TABLE Pertenece (
-    ID_perfil INT,
+    ID_usuario INT,
     ID_comunidad INT,
-    PRIMARY KEY (ID_perfil, ID_comunidad),
-    FOREIGN KEY (ID_perfil) REFERENCES Perfil_usuario(ID_perfil),
+    PRIMARY KEY (ID_usuario, ID_comunidad),
+    FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario),
     FOREIGN KEY (ID_comunidad) REFERENCES Comunidad(ID_comunidad)
 );
 
@@ -91,6 +91,24 @@ CREATE TABLE Post_multimedia (
     ID_post INT ,
     primary key (Numero_mul,ID_post),
     FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
+);
+CREATE TABLE Comunidad_Evento (
+    ID_comunidad INT,
+    ID_evento INT,
+    PRIMARY KEY (ID_comunidad, ID_evento),
+    FOREIGN KEY (ID_comunidad) REFERENCES Comunidad(ID_comunidad)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (ID_evento) REFERENCES Evento(ID_evento)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE TABLE Comunidad_Post (
+    ID_comunidad INT,
+    ID_post INT,
+    PRIMARY KEY (ID_comunidad, ID_post),
+    FOREIGN KEY (ID_comunidad) REFERENCES Comunidad(ID_comunidad)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Comentarios (
@@ -167,5 +185,8 @@ CREATE TABLE TieneComentarios (
     FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
 );
 ALTER TABLE Post_multimedia MODIFY COLUMN Src_mul LONGBLOB;
+ALTER TABLE Comunidad MODIFY COLUMN Url_fotocomunidad LONGBLOB;
+
+
 
 

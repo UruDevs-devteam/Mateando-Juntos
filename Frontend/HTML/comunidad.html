@@ -7,58 +7,50 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../CSS/style.css">
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
-    <title>MateandoJuntos</title>
+    <title>MateandoJuntos - Comunidad</title>
 </head>
 
 <body>
 
-    <!---------------------------------------------HEADER------------------------------------------------------------>
-
+    <!-- HEADER -->
     <header>
         <div class="left">
             <a href="home.html" class="Logo"><img src="../img/logo-removebg-preview.png" alt="Logo"></a>
         </div>
         <div class="right">
             <ul class="icons_nav">
-                <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="mensagges"></a></li>
-                <li><a href="chats.html" id="message"><img src="../img/rectangular-speech-bubble_32642.png"
-                            alt="comunitys"></a></li>
+                <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="communities"></a></li>
+                <li><a href="chats.html" id="message"><img src="../img/rectangular-speech-bubble_32642.png" alt="messages"></a></li>
             </ul>
             <div class="search_box">
-                <a href="#"><img src="../img/magnifier_64673.png" alt=""></a>
+                <a href="#"><img src="../img/magnifier_64673.png" alt="search"></a>
                 <input type="text" placeholder="Busqueda">
             </div>
             <ul class="icons_nav">
                 <li class="Profile">
                     <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
                     <ul class="dropdown-menu-profile">
-
-                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerar sesion</a></li>
-
+                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerrar sesión</a></li>
                         <li>
                             <label for="darkmode" class="Size">Modo Oscuro</label>
                             <input type="checkbox" name="darkmode" id="darkmode">
                         </li>
-
                         <li><a class="Size" href="Settings_user.html">Ajustes</a></li>
-
                         <li><a class="Size" href="Perfil.html">Perfil</a></li>
                     </ul>
                 </li>
-                <li><a href="#"><img src="../img/bell_143144.png" alt="bell_notifications"></a></li>
-
+                <li><a href="#"><img src="../img/bell_143144.png" alt="notifications"></a></li>
             </ul>
         </div>
     </header>
 
-
-    <!---------------------------------------------CONTENEDOR PRINCIPAL (ESTE ES EL CONTENEDOR PADRE)------------------------------------------------------------>
-
+    <!-- CONTENEDOR PRINCIPAL -->
     <div class="container">
 
-        <!---------------------------------------------CONTENEDOR IZQUIERDO (EN ESTE SE MUESTRAN LOS CHATS DEL USUARIOS)------------------------------------------------------------>
+        <!-- CONTENIDO IZQUIERDO -->
         <aside class="left_bar_content">
             <section class="chats">
                 <a href="chats.html">
@@ -139,15 +131,27 @@
             </section>
         </aside>
 
-        <!--------------------------------------------CONTENEDOR MAIN (EN ESTE SE MOSTRARN LOS POSTS DE LOS USUARIOS)-------------------------->
+        <!-- CONTENIDO PRINCIPAL -->
         <main class="center_bar_content">
+            <!-- Encabezado de la comunidad -->
+            <section class="community-header">
+                <div class="profile-photo">
+                    <img src="../img/avatar_167770.png" id="photo_comunity">
+                </div>
+                <h1 id="community-name">Nombre de la Comunidad</h1>
+                <p id="community-description">Descripción de la comunidad...</p>
+                <p id="community-members">0</p>
+
+                <div class="seguir_comunidad">
+                    <button id="joinButton" ><i class="fas fa-user-plus"></i> Unirse</button>
+                </div>
+            </section>
+
             <section class="create-post">
                 <div class="profile-photo">
                     <img src="../img/avatar_167770.png" id="Foto_usuario">
                     <p id="Nombre_usuario">Nombre usuario </p>
-
                 </div>
-
                 <div class="text_post">
                     <textarea name="text-post" id="postDescription" rows="3" placeholder="¿Que estas pensando?">
                         </textarea>
@@ -160,120 +164,41 @@
                 </div>
             </section>
 
-            <!-------------------------------------------POSTS DE LOS USUARIOS----------------------------------------------------------------->
-            <section class="feeds">
-
+            <!-- Foro de la comunidad -->
+            <section class="community-forum">
+                <h2>Foro</h2>
+                <div class="forum-posts">
+                    <!-- Sección para publicar y responder temas en el foro -->
+                    <!-- Esto puede expandirse más adelante con funcionalidad completa -->
+                    <p>Aquí los usuarios pueden publicar temas y responder.</p>
+                </div>
             </section>
 
-            <!---------------------------------------------eventos usuarios(EN ESTE SE MUESTRAN eventos de los usuarios DEL USUARIOS)------------------------------------------------------------>
-            <section class="eventos">
-                <h2>Eventos</h2>
-                <div class="evento-item">
-                    <!-- Aquí se mostrará cada evento -->
+            <!-- Posts de la comunidad -->
+            <section class="feeds">
+                <h2>Publicaciones</h2>
+                <div class="feed-items">
+                    <!-- Aquí se mostrarán los posts filtrados por comunidad -->
                 </div>
             </section>
         </main>
-        <!---------------------------------------------ventana de evento  (EN ESTE SE MUESTRAun formulario para eventos)------------------------------------------------------------>
-        <div id="modalEvento" class="modal">
-            <div class="modal-content">
-                <div class="header">
-                    <h2>Crear Evento</h2>
-                    <span class="close">&times;</span>
-                </div>
-                <form id="crearEventoForm" action="../../Backend/PHP/Putevent.php" method="POST">
-                    <div class="form-container">
-                        <div class="form-left">
-                            <label for="Titulo">Título:</label>
-                            <input type="text" name="Titulo" id="Titulo" required>
-                            
-                            <label for="Descripcion">Descripción:</label>
-                            <textarea name="Descripcion" id="Descripcion" required></textarea>
-                        </div>
-                        <div class="form-right">
-                            <label for="Fecha">Fecha:</label>
-                            <input type="date" name="Fecha" id="Fecha" required>
-                            <label for="Lugar">Lugar:</label>
-                            <input type="text" name="Lugar" id="Lugar" required>   
-                            <label for="Start">Hora de inicio:</label>
-                            <input type="time" name="Start" id="Start" required>
-                            <label for="Fin">Hora de finalización:</label>
-                            <input type="time" name="Fin" id="Fin" required>
-                        </div>
-                    </div>
-                    <div class="map" id="map"></div>
-                    <input type="hidden" name="Latitud" id="Latitud" required>
-                    <input type="hidden" name="Longitud" id="Longitud" required>
-                    <button type="submit">Crear Evento</button>
-                </form>
-            </div>
-        </div>
 
-
-        <!---------------------------------------------CONTENEDOR DERECHO (EN ESTE SE MUESTRAN LOS CHATS DE LAS COMUNIDADES DEL USUARIOS)------------------------------------------------------------>
+        <!-- CONTENEDOR DERECHO -->
         <aside class="right_bar_content">
-            <section class="chats">
-                <a href="home_comunidades.html">
-                    <H2>Comunidades</H2>
-                </a>
-
-                <section class="messages">
-                    <div class="heading">
-                        <h4>Comunidades</h4>
-                    </div>
-
-                    <section class="search_box">
-                        <a href="#"><img src="../img/magnifier_64673.png" alt="Search"></a>
-                        <input type="search" placeholder="Buscar Comunidades" id="message-search">
-                    </section>
-
-                    <article class="message">
-                        <div class="profile-photo">
-                            <img src="../img/avatar_167770.png">
-                        </div>
-                        <div class="message-body">
-                            <h5>Lago Shangrila</h5>
-                            <p class="text-muted">Pepe:hola</p>
-                        </div>
-                    </article>
-
-                    <article class="message">
-                        <div class="profile-photo">
-                            <img src="../img/avatar_167770.png">
-                        </div>
-                        <div class="message-body">
-                            <h5>Buceo Mates</h5>
-                            <p class="text-bold">Maria:Chao</p>
-                        </div>
-                    </article>
-                </section>
+            <section class="community-events">
+                <h2>Eventos de la Comunidad</h2>
+                <div class="events-list">
+                    <!-- Aquí se pueden listar eventos específicos de esta comunidad -->
+                </div>
             </section>
         </aside>
+    </div>
 
+  
+    <script type="module" src="../JS/Comunidad.js"></script>
+    <script src="../JS/like.js"></script>
+  
+   
 </body>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script type="module" src="../JS/Posts.js"></script>
-<script src="../JS/like.js"></script>
-<script src="../JS/Event.js"></script>
-<script>
-    document.getElementById('darkmode').addEventListener('change', function () {
-        document.body.classList.toggle('dark-mode', this.checked);
-    });
-
-    // Opción: Guardar la preferencia del usuario en localStorage
-    if (localStorage.getItem('dark-mode') === 'true') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('darkmode').checked = true;
-    }
-
-    document.getElementById('darkmode').addEventListener('change', function () {
-        if (this.checked) {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('dark-mode', 'true');
-        } else {
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('dark-mode', 'false');
-        }
-    });
-</script>
 
 </html>

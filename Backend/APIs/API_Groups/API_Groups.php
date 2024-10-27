@@ -13,15 +13,24 @@ switch ($method) {
             echo json_encode($Groups);
         } elseif (preg_match('/^\/Group\/(\d+)$/', $endpoint, $matches)) {
             $id = $matches[1];
-            $Group = $Group_obj->getGropupByID($id);
+            $Group = $Group_obj->getGroupByID($id);
             echo json_encode($Group);
         } elseif (preg_match('/^\/Group\/([a-zA-Z0-9_]+)$/', $endpoint, $matches)) {
             $name = $matches[1];
-            $Group_n = $Group_obj->getGropupByName($name);
+            $Group_n = $Group_obj->getGroupByName($name);
             echo json_encode($Group_n);
         } elseif (preg_match('/^\/Users\/(\d+)$/', $endpoint, $matches)) {
             $id = $matches[1];
-            $Group = $Group_obj->GetUsers($id);
+            $Users = $Group_obj->GetUsers($id);
+            echo json_encode($Users);
+        } elseif (preg_match('/^\/Posts\/(\d+)$/', $endpoint, $matches)) { // Obtener posts en grupo
+            $id = $matches[1];
+            $posts = $Group_obj->GetPostsInGroup($id);
+            echo json_encode($posts);
+        } elseif (preg_match('/^\/Events\/(\d+)$/', $endpoint, $matches)) { // Obtener eventos en grupo
+            $id = $matches[1];
+            $events = $Group_obj->GetEventsInGroup($id);
+            echo json_encode($events);
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
@@ -31,24 +40,53 @@ switch ($method) {
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
         if ($endpoint == '/Group') {
-            if (Valid_Data($data)) {
-                $Group_obj->AddGroup($data);
-                echo json_encode(['success' => $Resul]);     
+            if (Valid_Data_Group($data)) {
+                $Resul = $Group_obj->AddGroup($data);
+                echo json_encode(['success' => $Resul]);
+
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacio o mal formado']);
+            }
+        } elseif ($endpoint == '/UserG') {
+            if (Valid_Data_User($data)) {
+                $Resul = $Group_obj->AddUserToGroup($data);
+                echo json_encode(['success' => $Resul]);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacio o mal formado']);
+            }
+        } elseif ($endpoint == '/AddPostToGroup') { // Agregar un post a una comunidad
+            if (Valid_Data_PostGroup($data)) {
+                $Resul = $Group_obj->AddPostToGroup($data);
+                echo json_encode(['success' => $Resul]);
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'JSON vacio o mal formado']);
+            }
+        } elseif ($endpoint == '/AddEventToGroup') { // Agregar un evento a una comunidad
+            if (Valid_Data_EventGroup($data)) {
+                $Resul = $Group_obj->AddEventToGroup($data);
+                echo json_encode(['success' => $Resul]);
+            }  else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Endpoint no valido']);
+        }}
+        break;
+
+    case 'DELETE':
+        if ($endpoint == '/Group') {
+            $Resul = $Group_obj->DeleteGroup($data);
+            echo json_encode(['success' => $Resul]);
+        } elseif ($endpoint == '/UserG') {
+            if (Valid_Data_User($data)) {
+                $Resul = $Group_obj->DeleteUserFromGroup($data);
+                echo json_encode(['success' => $Resul]);
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'JSON vacio o mal formado']);
             }
         } else {
-            http_response_code(404);
-            echo json_encode(['error' => 'Endpoint no valido']);
-        }
-        break;
-
-    case 'DELETE':
-        if($endpoint == '/Group'){
-            $Group_obj->DeleteGroup($data);
-            echo json_encode(['success' => $Resul]);
-        }else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
         }
@@ -61,19 +99,47 @@ switch ($method) {
 }
 
 
-function Valid_Data($data)
+function Valid_Data_Group($data)
 {
 
     if (empty($data)) {
         return false;
     } elseif (
-        !isset($data['Group_name']) || empty($data['Group_name']) ||
-        !isset($data['Photo']) || empty($data['Photo']) ||
-        !isset($data['Descrip']) || empty($data['Descrip']) ||
-        !isset($data['Creation_date']) || empty($data['Creation_date'])
+        !isset($data['communityName']) || empty($data['communityName']) ||
+        !isset($data['profile_picture']) || empty($data['profile_picture']) ||
+        !isset($data['communityDescription']) || empty($data['communityDescription']) ||
+        !isset($data['User_creator']) || empty($data['User_creator'])
     ) {
         return false;
     } else {
         return true;
     }
+}
+
+function Valid_Data_User($data)
+{
+
+    if (empty($data)) {
+        return false;
+    } elseif (
+        !isset($data['ID_usuario']) || empty($data['ID_usuario']) ||
+        !isset($data['ID_comunidad']) || empty($data['ID_comunidad'])
+    ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function Valid_Data_PostGroup($data) {
+    return !(empty($data) ||
+        !isset($data['ID_comunidad']) || empty($data['ID_comunidad']) ||
+        !isset($data['ID_post']) || empty($data['ID_post']));
+}
+
+// Validar datos para agregar evento a grupo
+function Valid_Data_EventGroup($data) {
+    return !(empty($data) ||
+        !isset($data['ID_comunidad']) || empty($data['ID_comunidad']) ||
+        !isset($data['ID_evento']) || empty($data['ID_evento']));
 }

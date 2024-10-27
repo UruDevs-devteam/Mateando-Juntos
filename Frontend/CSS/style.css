@@ -726,8 +726,74 @@ header {
     color: #fff;
 }
 
+/*--------------------------------Comunidades ______________________________________________________*/
 
 
+.comunidades {
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.comunidades h2 {
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin-bottom: 15px; /* Espaciado inferior del título */
+    color: #333; /* Color del texto */
+}
+
+.comunity-item {
+    display: flex; /* Disposición en línea */
+    flex-direction: column; /* Columnas para los artículos */
+    gap: 10px; /* Espaciado entre artículos */
+}
+
+.comunity {
+    display: flex; /* Disposición flexible para la comunidad */
+    padding: 10px; /* Espaciado interno */
+    background-color: #ffffff; /* Fondo blanco para los artículos */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+}
+
+.comunity:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el mouse */
+}
+
+.comunity-body {
+    flex: 1; /* Ocupa el espacio restante */
+}
+
+.comunity-body h5 {
+    font-size: 18px; /* Tamaño de fuente del nombre de la comunidad */
+    margin: 0; /* Eliminar márgenes */
+    color: #333; /* Color del texto */
+}
+
+.comunity-body .caption {
+    margin: 5px 0 0; /* Márgenes superior e inferior */
+    color: #666; /* Color del texto de descripción */
+}
+.seguir_comunidad {
+    display: flex; /* Para alinear el botón */
+    align-items: center; /* Centrar verticalmente */
+    margin-left: 10px; /* Espacio a la izquierda del botón */
+}
+
+.seguir_comunidad button {
+    display: flex; /* Para alinear el icono y el texto */
+    align-items: center; /* Centrar verticalmente */
+    padding: 8px 12px; /* Espaciado interno */
+    background-color: #000000; /* Color de fondo del botón */
+    color: #ffffff; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+}
+
+.seguir_comunidad button i {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+    font-size: 16px; /* Tamaño del icono */
+}
 
 /*MEDIAS QUERYS*/
 

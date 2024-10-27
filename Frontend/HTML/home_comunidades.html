@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/style.css">
+
+
+    <title>MateandoJuntos - Comunidades</title>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="left">
+            <a href="home.html" class="Logo"><img src="../img/logo-removebg-preview.png" alt="Logo"></a>
+        </div>
+        <div class="right">
+            <ul class="icons_nav">
+                <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="mensagges"></a></li>
+                <li><a href="chats.html" id="message"><img src="../img/rectangular-speech-bubble_32642.png"
+                            alt="comunitys"></a></li>
+            </ul>
+            <div class="search_box">
+                <a href="#"><img src="../img/magnifier_64673.png" alt=""></a>
+                <input type="text" placeholder="Busqueda">
+            </div>
+            <ul class="icons_nav">
+                <li class="Profile">
+                    <a href="#"><img src="../img/avatar_167770.png" alt=""></a>
+                    <ul class="dropdown-menu-profile">
+
+                        <li><a class="Size" href="../../Backend/PHP/CloseSession.php">Cerar sesion</a></li>
+
+                        <li>
+                            <label for="darkmode" class="Size">Modo Oscuro</label>
+                            <input type="checkbox" name="darkmode" id="darkmode">
+                        </li>
+
+                        <li><a class="Size" href="Settings_user.html">Ajustes</a></li>
+
+                        <li><a class="Size" href="Perfil.html">Perfil</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><img src="../img/bell_143144.png" alt="bell_notifications"></a></li>
+
+            </ul>
+        </div>
+    </header>
+
+
+
+    <div class="container">
+
+        <!---------------------------------------------CONTENEDOR IZQUIERDO (EN ESTE SE MUESTRAN LOS CHATS DEL USUARIOS)------------------------------------------------------------>
+        <aside class="left_bar_content">
+            <section class="chats">
+                <a href="chats.html">
+                    <H2>Chats</H2>
+                </a>
+                <section class="messages">
+                    <div class="heading">
+                        <h4>Mensajes</h4>
+
+                    </div>
+                    <div class="search_box">
+                        <a href="#"><img src="../img/magnifier_64673.png" alt="Search"></a>
+                        <input type="search" placeholder="Buscar Chats" id="message-search">
+                    </div>
+                    <!-----------------------------------------------MENSAJE PRUEBA---------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png" alt="Avatar Juan">
+                        </div>
+                        <div class="message-body">
+                            <h5>Juan</h5>
+                            <p class="text-muted">hola</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Maria</h5>
+                            <p class="text-bold">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+
+                        </div>
+                        <div class="message-body">
+                            <h5>Pepe</h5>
+                            <p class="text-muted">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Julieta</h5>
+                            <p class="text-muted">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!-----------------------------------------------MENSAJE PRUEBA---------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Uriel</h5>
+                            <p class="text-bold">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                    <!------------------------------------------------MENSAJE PRUEBA--------------------------------------------------------->
+                    <article class="message">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png">
+                        </div>
+                        <div class="message-body">
+                            <h5>Pablo<h5>
+                                    <p class="text-muted">Lorem ipsum dolor si</p>
+                        </div>
+                    </article>
+                </section>
+
+            </section>
+        </aside>
+
+        <!--------------------------------------------CONTENEDOR CENTRAL (MUESTRA LAS COMUNIDADES)------------------------------>
+        <main class="center_bar_content">
+            <!-- Botón para abrir el modal -->
+            <div class="modal-button">
+                <button id="openModal">Crear Comunidad</button>
+            </div>
+
+            <!-- Modal para crear comunidades -->
+            <div id="createCommunityModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Crear Comunidad</h2>
+                    <form id="createCommunityForm" action="../../Backend/PHP/AddComunity.php" method="POST"  enctype="multipart/form-data">
+                        <label>Nombre de la Comunidad:</label>
+                        <input type="text" id="communityName" name="communityName" required>
+
+                        <label>Descripción:</label>
+                        <textarea id="communityDescription" name="communityDescription" required ></textarea>
+
+                        <label>Foto de la Comunidad :</label>
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+
+                        <button type="submit">Crear</button>
+                    </form>
+                </div>
+            </div>
+
+            <section class="comunidades">
+                <h2>Comunidades</h2>
+                <div class="comunity-item">
+                    <article class="comunity">
+                        <div class="profile-photo">
+                            <img src="../img/avatar_167770.png" alt="Comunidad 1">
+                        </div>
+                        <div class="comunity-body">
+                            <h5>Lago Shangrila</h5>
+                            <p class="caption">Descripción de la comunidad...</p>
+                        </div>
+                        <div class="seguir_comunidad">
+                            <button id="joinButton"><i class="fas fa-user-plus"></i> Unirse</button>
+                        </div>
+                    </article>
+
+                    <!-- Agrega más comunidades aquí -->
+                </div>
+            </section>
+        </main>
+
+        <!---------------------------------------------CONTENEDOR DERECHO (EN ESTE SE MUESTRAN LOS POSTS DE LOS USUARIOS)------------------------------------------------>
+        <aside class="right_bar_content">
+            <section class="chats">
+                <h1>Posts</h1>
+
+                <section class="feeds">
+
+                </section>
+            </section>
+        </aside>
+
+</body>
+<script type="module" src="../JS/Comunidades.js"></script>
+
+</html>
