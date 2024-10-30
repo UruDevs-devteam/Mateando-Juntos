@@ -31,7 +31,7 @@ async function updateComunityinfo(comunityId) {
         if (response) {
             comunityName.textContent = response.Nombre_comunidad || "Nombre no disponible";
             description.textContent = response.Descripcion || "Descripción no disponible";
-            membersElement.textContent = `${membersCount || 0} miembros`;
+            membersElement.textContent = `Miembros de la comunidad: ${membersCount || 0}`;
             photo_comunity.src = response.Url_fotocomunidad ? `data:image/jpeg;base64,${response.Url_fotocomunidad}` : "ruta/a/imagen/por/defecto.jpg";
         } else {
             console.warn('Datos de la comunidad no encontrados');

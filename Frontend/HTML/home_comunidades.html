@@ -138,50 +138,53 @@
 
         <!--------------------------------------------CONTENEDOR CENTRAL (MUESTRA LAS COMUNIDADES)------------------------------>
         <main class="center_bar_content">
-            <!-- Botón para abrir el modal -->
-            <div class="modal-button">
-                <button id="openModal">Crear Comunidad</button>
-            </div>
+            <aside class="communities-container">
+                <!-- Modal para crear comunidades -->
+                <div id="createCommunityModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Crear Comunidad</h2>
+                        <form id="createCommunityForm" action="../../Backend/PHP/AddComunity.php" method="POST"
+                            enctype="multipart/form-data">
+                            <label>Nombre de la Comunidad:</label>
+                            <input type="text" id="communityName" name="communityName" required>
 
-            <!-- Modal para crear comunidades -->
-            <div id="createCommunityModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Crear Comunidad</h2>
-                    <form id="createCommunityForm" action="../../Backend/PHP/AddComunity.php" method="POST"  enctype="multipart/form-data">
-                        <label>Nombre de la Comunidad:</label>
-                        <input type="text" id="communityName" name="communityName" required>
+                            <label>Descripción:</label>
+                            <textarea id="communityDescription" name="communityDescription" required></textarea>
 
-                        <label>Descripción:</label>
-                        <textarea id="communityDescription" name="communityDescription" required ></textarea>
+                            <label>Foto de la Comunidad :</label>
+                            <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
 
-                        <label>Foto de la Comunidad :</label>
-                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
-
-                        <button type="submit">Crear</button>
-                    </form>
+                            <button type="submit">Crear</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <section class="comunidades">
-                <h2>Comunidades</h2>
-                <div class="comunity-item">
-                    <article class="comunity">
-                        <div class="profile-photo">
-                            <img src="../img/avatar_167770.png" alt="Comunidad 1">
-                        </div>
-                        <div class="comunity-body">
-                            <h5>Lago Shangrila</h5>
-                            <p class="caption">Descripción de la comunidad...</p>
-                        </div>
-                        <div class="seguir_comunidad">
-                            <button id="joinButton"><i class="fas fa-user-plus"></i> Unirse</button>
-                        </div>
-                    </article>
+                <section class="comunidades">
+                    <h2>Comunidades</h2>
+                    <div class="comunity-item">
+                        <article class="comunity">
+                            <div class="profile-photo">
+                                <img src="../img/avatar_167770.png" alt="Comunidad 1">
+                            </div>
+                            <div class="comunity-body">
+                                <h5>Lago Shangrila</h5>
+                                <p class="caption">Descripción de la comunidad...</p>
+                            </div>
+                            <div class="seguir_comunidad">
+                                <button id="joinButton"><i class="fas fa-user-plus"></i> Unirse</button>
+                            </div>
+                        </article>
 
-                    <!-- Agrega más comunidades aquí -->
+                        <!-- Agrega más comunidades aquí -->
+                    </div>
+                </section>
+
+                <!-- Botón para abrir el modal -->
+                <div class="modal-button">
+                    <button class="button-comunity" id="openModal">Crear Comunidad</button>
                 </div>
-            </section>
+            </aside>
         </main>
 
         <!---------------------------------------------CONTENEDOR DERECHO (EN ESTE SE MUESTRAN LOS POSTS DE LOS USUARIOS)------------------------------------------------>

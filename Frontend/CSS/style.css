@@ -152,8 +152,8 @@ header {
 .container {
     display: flex;
     justify-content: space-between;
-    height: 100vh;
-
+    height: 100%;
+    margin-bottom: 4rem;
 }
 
 
@@ -506,6 +506,14 @@ header {
     border-radius: 4px; /* Bordes redondeados */
 }
 /*----------------------------------ESTILO PARA LOS EVENTOS---------------------------------------------------------------------*/
+.eventos{
+    margin-top: 1rem;
+    background-color: rgb(255, 255, 255);
+    padding: 5px;
+    text-align: center;
+    border-radius: 15px;
+}
+
 .eventos h2 {
     text-align: center;
     font-size: 24px;
@@ -758,6 +766,9 @@ button#submitComment:hover {
     z-index: 100;
 }
 
+
+
+
 /*DARKMODE*/
 /* Estilos generales para el modo oscuro */
 
@@ -824,7 +835,13 @@ button#submitComment:hover {
 }
 
 /*--------------------------------Comunidades ______________________________________________________*/
-
+.communities-container{
+    margin-top: 1rem;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
+    
+    border-radius: 15px;
+}
 
 .comunidades {
     margin-bottom: 20px; /* Espaciado inferior */
@@ -849,6 +866,33 @@ button#submitComment:hover {
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+    border: 0.2px solid #333; /* Borde de medio píxel y color oscuro */
+
+}
+
+.button-comunity{
+    margin-top: 10px;
+    margin-bottom: 1rem;
+    background-color: #474747;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-comunity:hover{
+    background-color: #707070;
+    transform: scale(1.05);
+}
+
+.comunity .profile-photo img {
+    width: 48px;
+    height: 48px;
 }
 
 .comunity:hover {
@@ -861,12 +905,14 @@ button#submitComment:hover {
 
 .comunity-body h5 {
     font-size: 18px; /* Tamaño de fuente del nombre de la comunidad */
-    margin: 0; /* Eliminar márgenes */
+    padding: 3px;
+    margin-left: 4px;
     color: #333; /* Color del texto */
 }
 
 .comunity-body .caption {
-    margin: 5px 0 0; /* Márgenes superior e inferior */
+    margin-left: 8px;
+    
     color: #666; /* Color del texto de descripción */
 }
 .seguir_comunidad {
@@ -887,10 +933,111 @@ button#submitComment:hover {
     transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
 }
 
+.seguir_comunidad button:hover{
+    background-color: #707070;
+    transform: scale(1.05);
+}
+
 .seguir_comunidad button i {
     margin-right: 5px; /* Espacio entre el icono y el texto */
     font-size: 16px; /* Tamaño del icono */
 }
+
+.community-header{
+    margin-top: 1rem;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.community-header .profile-photo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.community-header .profile-photo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.community-header #community-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0.5rem 0;
+}
+
+.community-header #community-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0.5rem 0;
+}
+
+.community-header #community-members {
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.community-header .seguir_comunidad {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+
+}
+
+.community-forum {
+    margin-top: 1rem;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.community-forum h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.community-forum .forum-posts {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.community-forum .forum-posts p {
+    margin: 0;
+    font-style: italic;
+    color: #555;
+}
+
+.community-forum .forum-posts::before {
+    content: "📝";
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.community-events{
+    margin: 1rem;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
+    text-align: center;
+    border-radius: 15px;
+}
+
+
+
 
 /*MEDIAS QUERYS*/
 
