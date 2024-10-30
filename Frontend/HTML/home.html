@@ -165,7 +165,7 @@
 
             </section>
 
-            
+
 
             <!---------------------------------------------eventos usuarios(EN ESTE SE MUESTRAN eventos de los usuarios DEL USUARIOS)------------------------------------------------------------>
             <section class="eventos">
@@ -178,7 +178,7 @@
 
         <!---------------------------------------------ventana de evento  (EN ESTE SE MUESTRAun formulario para eventos)------------------------------------------------------------>
         <div id="modalEvento" class="modal">
-            <div class="modal-content">
+            <div class="modal-contentEV">
                 <div class="header">
                     <h2>Crear Evento</h2>
                     <span class="close">&times;</span>
@@ -208,6 +208,25 @@
                     <input type="hidden" name="Longitud" id="Longitud" required>
                     <button type="submit">Crear Evento</button>
                 </form>
+            </div>
+        </div>
+
+        <!---------------------------------------------ventana de comentario  (EN ESTE SE MUESTRAun formulario para comentarios)------------------------------------------------------------>
+        <div class="modal-coments" id="modal-coments">
+            <div class="modal-content">
+                <span class="close-coments">&times;</span>
+                <h2 class="modal-title">Añadir un comentario al post</h2>
+                <form id="commentForm" action="" method="POST">
+                    <input type="hidden" name="ID_post" id="comment-post-id">
+                    <input type="hidden" name="ID_user" id="comment-user-id">
+                    <textarea name="content" id="commentText" required placeholder="Escribe tu comentario..."></textarea>
+                    <button type="submit" id="submitComment">Enviar</button>
+                </form>
+        
+                <!-- Contenedor de los comentarios debajo del formulario -->
+                <div class="Coments-seccion" id="Coments-seccion">
+                    <!-- Aquí se generarán los comentarios -->
+                </div>
             </div>
         </div>
 
@@ -256,7 +275,7 @@
 <script type="module" src="../JS/Posts.js"></script>
 <script src="../JS/like.js"></script>
 <script src="../JS/Event.js"></script>
-<script src="../JS/coments.js"></script>
+<script type="module" src="../JS/coments.js"></script>
 
 <script>
     document.getElementById('darkmode').addEventListener('change', function () {

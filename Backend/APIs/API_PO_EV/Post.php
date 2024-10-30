@@ -131,6 +131,39 @@ public function DeleteLike($data){
     return $result;
 }
 
+// Obtener comentarios por ID de post
+public function GetComentariosByPost($id_post) {
+    $sql = "SELECT c.ID_comentario, c.Contenido, c.Fecha_creacion, u.ID_usuario, u.Nombre_usuario
+            FROM Comentarios c
+            JOIN Usuario u ON c.ID_usuario = u.ID_usuario
+            WHERE c.ID_post = ?
+            ORDER BY c.Fecha_creacion DESC"; // Orden descendente por fecha de creación
+    $stmt = $this->conex->prepare($sql);
+    $stmt->bind_param("i", $id_post);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+// Añadir un comentario
+public function AddComentario($data) {
+    $sql = "INSERT INTO Comentarios (Contenido, ID_usuario, ID_post) VALUES (?, ?, ?)";
+    $stmt = $this->conex->prepare($sql);
+    $stmt->bind_param("sii", $data['Contenido'], $data['ID_usuario'], $data['ID_post']);
+    $result = $stmt->execute();
+    $stmt->close();
+    return $result;
+}
+
+// Eliminar un comentario
+public function DeleteComentario($id_comentario) {
+    $sql = "DELETE FROM Comentarios WHERE ID_comentario = ?";
+    $stmt = $this->conex->prepare($sql);
+    $stmt->bind_param("i", $id_comentario);
+    $result = $stmt->execute();
+    $stmt->close();
+    return $result;
+}
 
 
 }

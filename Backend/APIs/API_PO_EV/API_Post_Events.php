@@ -2,11 +2,9 @@
 require_once "../Config.php";
 require_once "Post.php";
 require_once "Event.php";
-require_once "Comentarios.php"; // Asegúrate de crear esta clase para manejar los comentarios
 
 $Post_obj = new Post($conex); // creamos un objeto Post y le damos la conexion a la BD
 $Event_obj = new Event($conex);// creamos un objeto Evento y le damos la conexion a la BD
-$Comentario_obj = new Comentario($conex); // Objeto para manejar comentarios
 
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
 $endpoint = $_SERVER['PATH_INFO'];    // la URL, pero toma la parte final, lo que no sea ruta
@@ -42,9 +40,9 @@ switch ($method) {
             $hasLiked = $Post_obj->GetkUserLike($id_user, $id_post); // Llama al método que verifica si existe el like
             echo json_encode(['hasLiked' => $hasLiked]); // Devuelve si el usuario ha dado like o no
 
-        } elseif (preg_match('/^\/Post\/(\d+)\/Comentarios$/', $endpoint, $matches)) {
+        } elseif (preg_match('/^\/Coments\/(\d+)$/', $endpoint, $matches)) {
             $id_post = $matches[1];
-            $Comentarios = $Comentario_obj->GetComentariosByPost($id_post);  // Obtener comentarios por ID de post
+            $Comentarios = $Post_obj->GetComentariosByPost($id_post);  // Obtener comentarios por ID de post
             echo json_encode($Comentarios);
 
         } else {
@@ -56,10 +54,9 @@ switch ($method) {
     case 'POST': // insert
         $data = json_decode(file_get_contents('php://input'), true);  // Obtiene los parámetros del cuerpo de la solicitud
 
-        if ($endpoint=="/Comentario") {
-            $id_post = $matches[1];
+        if ($endpoint == "/Coment") {
             if (Valid_Data_Comentario($data)) { // Valida que el comentario tenga datos correctos
-                $Resul = $Comentario_obj->AddComentario($data);  // Llama a la función para crear el comentario
+                $Resul = $Post_obj->AddComentario($data);  // Llama a la función para crear el comentario
                 echo json_encode(['success' => $Resul]);
             } else {
                 http_response_code(400);
@@ -109,7 +106,7 @@ switch ($method) {
 
         if (preg_match('/^\/Comentario\/(\d+)$/', $endpoint, $matches)) {
             $id_comentario = $matches[1]; // Obtiene el ID del comentario desde la URL
-            $Resul = $Comentario_obj->DeleteComentario($id_comentario); // Llama a la función para eliminar el comentario
+            $Resul = $Post_obj->DeleteComentario($id_comentario); // Llama a la función para eliminar el comentario
             echo json_encode(['success' => $Resul]);
         } elseif ($endpoint == '/Post') {
             if (Valid_ID($data)) {
@@ -191,7 +188,7 @@ function Valid_Data_Comentario($data)
     if (empty($data)) {
         return false;
     } elseif (
-        !isset($data['ID_perfil']) || empty($data['ID_perfil']) ||
+        !isset($data['ID_usuario']) || empty($data['ID_usuario']) ||
         !isset($data['ID_post']) || empty($data['ID_post']) ||
         !isset($data['Contenido']) || empty($data['Contenido'])
     ) {

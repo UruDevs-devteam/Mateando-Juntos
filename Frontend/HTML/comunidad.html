@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../CSS/style.css">
-    
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
     <title>MateandoJuntos - Comunidad</title>
@@ -23,7 +23,8 @@
         <div class="right">
             <ul class="icons_nav">
                 <li><a href="#" id="group"><img src="../img/group_2811041.png" alt="communities"></a></li>
-                <li><a href="chats.html" id="message"><img src="../img/rectangular-speech-bubble_32642.png" alt="messages"></a></li>
+                <li><a href="chats.html" id="message"><img src="../img/rectangular-speech-bubble_32642.png"
+                            alt="messages"></a></li>
             </ul>
             <div class="search_box">
                 <a href="#"><img src="../img/magnifier_64673.png" alt="search"></a>
@@ -143,7 +144,7 @@
                 <p id="community-members">0</p>
 
                 <div class="seguir_comunidad">
-                    <button id="joinButton" ><i class="fas fa-user-plus"></i> Unirse</button>
+                    <button id="joinButton"><i class="fas fa-user-plus"></i> Unirse</button>
                 </div>
             </section>
 
@@ -181,6 +182,25 @@
                     <!-- Aquí se mostrarán los posts filtrados por comunidad -->
                 </div>
             </section>
+            <!---------------------------------------------ventana de comentario  (EN ESTE SE MUESTRAun formulario para comentarios)------------------------------------------------------------>
+            <div class="modal-coments" id="modal-coments">
+                <div class="modal-content">
+                    <span class="close-coments">&times;</span>
+                    <h2 class="modal-title">Añadir un comentario al post</h2>
+                    <form id="commentForm" action="" method="POST">
+                        <input type="hidden" name="ID_post" id="comment-post-id">
+                        <input type="hidden" name="ID_user" id="comment-user-id">
+                        <textarea name="content" id="commentText" required
+                            placeholder="Escribe tu comentario..."></textarea>
+                        <button type="submit" id="submitComment">Enviar</button>
+                    </form>
+
+                    <!-- Contenedor de los comentarios debajo del formulario -->
+                    <div class="Coments-seccion" id="Coments-seccion">
+                        <!-- Aquí se generarán los comentarios -->
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- CONTENEDOR DERECHO -->
@@ -194,11 +214,12 @@
         </aside>
     </div>
 
-  
+
     <script type="module" src="../JS/Comunidad.js"></script>
     <script src="../JS/like.js"></script>
-  
-   
+    <script type="module" src="../JS/coments.js"></script>
+
+
 </body>
 
 </html>

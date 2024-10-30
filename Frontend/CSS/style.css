@@ -392,7 +392,154 @@ header {
     object-position: center; /* Centra la imagen para que el corte sea equilibrado */
     border-radius: 2rem;
 }
+ /*----------------------ESTILO PARA EL MODAL DE comentarios------------------------------------*/
+/* Fondo oscuro con desenfoque */
+.modal-coments {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Contenido del modal */
+  .modal-content {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    text-align: center;
+    animation: fadeIn 0.4s ease-in-out;
+  }
+  
+  /* Sección de comentarios debajo del formulario en el modal */
+  .Coments-seccion {
+    margin-top: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  /* Cada comentario individual */
+  .Coments-seccion .comment {
+    display: flex; /* Usamos flexbox para la alineación */
+    align-items: center; /* Alinea verticalmente el contenido */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+.Coments-seccion .comment .profile-photo {
+    margin-right: 10px; /* Espacio entre la foto y el contenido del comentario */
+}
 
+.Coments-seccion .comment-content {
+    flex: 1; /* Permite que el contenido del comentario ocupe el espacio restante */
+}
+  /* Nombre de usuario en comentario */
+  .Coments-seccion .comment p strong {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Texto del comentario */
+  .Coments-seccion .comment p {
+    color: #555;
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  
+  /* Fecha del comentario */
+  .Coments-seccion .comment small {
+    color: #888;
+    font-size: 12px;
+    display: block;
+    text-align: right;
+  }
+  
+  /* Otros estilos para el modal y formulario */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  /* Título del modal */
+  .modal-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Botón de cierre */
+  .close-coments {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #888;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .close-coments:hover {
+    color: #333;
+  }
+  
+  /* Estilos para el textarea */
+  #commentText {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  #commentText:focus {
+    border-color: #000000;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.2);
+    outline: none;
+  }
+  
+  /* Estilo para el botón de enviar */
+  #submitComment {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+  }
+  
+  #submitComment:hover {
+    background-color: #4b4b4b;
+  }
+  
+  #submitComment:active {
+    transform: scale(0.98);
+  }
+  
 /*----------------------ESTILO PARA EL MODAL DE EVENTOS------------------------------------*/
 .modal {
     display: none; /* Oculto por defecto */
@@ -411,7 +558,7 @@ header {
     margin-top: 1rem;
 }
 
-.modal-content {
+.modal-contentEV {
     display: flex; /* Usar flexbox para el diseño horizontal */
     flex-direction: column; /* Cambia a columna para el contenido */
     background-color: #fff; /* Fondo blanco */
@@ -599,87 +746,6 @@ header {
 .event-details .detail-item strong {
     font-weight: 600;
     color: #000000; 
-}
-
-/*----------------------ESTILO PARA EL MODAL DE comentarios------------------------------------*/
-
-/* Estilos mejorados para el modal */
-.modal-coments {
-    display: none; 
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro más intenso */
-    backdrop-filter: blur(5px); /* Añade un efecto de desenfoque */
-}
-
-.modal-content-coments {
-    background-color: #f9f9f9;
-    margin: 10% auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más suave */
-    width: 80%;
-    max-width: 500px;
-    text-align: center;
-    animation: fadeIn 0.5s; /* Efecto de entrada */
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.close-coments {
-    color: #aaa;
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.close-coments:hover,
-.close-coments:focus {
-    color: #333;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Estilos para el textarea */
-#commentText {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s;
-}
-
-#commentText:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Estilos para el botón de enviar */
-button#submitComment {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button#submitComment:hover {
-    background-color: #0056b3;
 }
 
 
