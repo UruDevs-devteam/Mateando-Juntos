@@ -119,6 +119,7 @@ CREATE TABLE Comentarios (
     FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario)
 );
 
+
 CREATE TABLE Modifica (
     ID_perfil INT,
     ID_idioma INT,

@@ -1,4 +1,4 @@
-import { fetchData, getLikeCount, getLikeIconClass, fetchImages,GetSession } from './shared_function.js';
+import { fetchData, getLikeCount, getLikeIconClass, fetchImages, GetSession } from './shared_function.js';
 
 
 async function updateUserName() { // Actualizar el nombre de usuario en la etiqueta
@@ -7,12 +7,12 @@ async function updateUserName() { // Actualizar el nombre de usuario en la etiqu
         if (data.Nombre_usuario) {
             document.getElementById("Nombre_usuario").textContent = data.Nombre_usuario;
             const img = await getProfileImage(data.ID_usuario);
-             document.getElementById('Foto_usuario').src = img;
+            document.getElementById('Foto_usuario').src = img;
         }
     } catch (error) {
         console.error('Error al obtener el usuario de la sesión:', error);
     }
-    
+
 }
 
 //imagen de perfil
@@ -21,9 +21,10 @@ async function getProfileImage(userId) {
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Foto_perfil) {
             // La imagen puede estar en formato base64
-            return `data:image/jpeg;base64,${response.Foto_perfil}`; 
-        }else{
-        return '../img/avatar_167770.png'; }// Imagen por defecto si no se encuentra
+            return `data:image/jpeg;base64,${response.Foto_perfil}`;
+        } else {
+            return '../img/avatar_167770.png';
+        }// Imagen por defecto si no se encuentra
     } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
         return '../img/avatar_167770.png'; // Imagen por defecto en caso de error
@@ -65,7 +66,9 @@ async function fetchPosts() {
                                 <i class="${likeclass}" id="likeButton-${post.ID_post}"></i>
                             </button>
                             <text id="counter">${likeCount}</text>
-                            <button class="button-icon" id="comentario"><i class="uil uil-comment-dots"></i></button>
+                            <button class="button-icon coment" data-post-id="${post.ID_post}">
+                                <i class="uil uil-comment-dots" id="coment-${post.ID_post}"></i>
+                             </button>
                             <button class="button-icon"><i class="uil uil-share-alt"></i></button>
                         </div>
                     </div>
@@ -74,19 +77,10 @@ async function fetchPosts() {
                         <p>${post.Descripcion || 'Descripción no disponible'}</p>
                     </div>
 
-                    <div class="modal-coments">
-                        <h3>Comentarios</h3>
-                        <ul id="comments-list-${post.ID_post}"></ul> <!-- Cambia el ID para cada post -->
-                        <form id="commentForm-${post.ID_post}" action="guardar_comentario.php" method="POST">
-                        <input type="hidden" name="ID_post" value="${post.ID_post}"> <!-- ID del post -->
-                        <input type="hidden" name="ID_usuario" value="${post.ID_usuario}"> <!-- Debes pasar el ID del usuario, no el nombre -->
-                        <textarea name="contenido" required placeholder="Escribe un comentario..."></textarea>
-                        <button type="submit">Enviar</button>
-                        </form>
-                    </div>
+                    
                 </article>
             `;
-            
+
             feedsSection.insertAdjacentHTML('beforeend', article);
 
             // Cargar imágenes relacionadas con el post
@@ -103,7 +97,7 @@ async function publishPost() {
     if (!descripcion) return alert("Por favor, escribe algo en la descripción.");
 
     try {
-        const userData =await GetSession();
+        const userData = await GetSession();
         if (!userData.ID_usuario) return alert("No se pudo obtener el usuario logueado.");
 
         const postData = {

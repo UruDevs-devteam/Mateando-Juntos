@@ -50,26 +50,26 @@
         </div>
     </header>
 
-  <!---------------------------------------------CONTENEDOR PRINCIPAL------------------------------------------------------------>
-  <div class="perfil-container">
-    <div class="left-column">
-        <!-- Sección de Información del Usuario -->
-        <section class="profile-header">
-            <div class="profile-photo">
-                <img src="../img/avatar_167770.png" alt="Foto de perfil" id="FotoPerfil">
-            </div>
-            <div class="profile-info">
-                <h2 id="Nombre-Usuario">Nombre usuario</h2>
-                <p id="Biografia">"Bio"</p>
-                <div class="button-container">
-                    <button id="seguir-button" class="follow-button">Seguir</button>
-                    <button id="mensaje-button" class="mensaje-button">Enviar mensaje</button>
+    <!---------------------------------------------CONTENEDOR PRINCIPAL------------------------------------------------------------>
+    <div class="perfil-container">
+        <div class="left-column">
+            <!-- Sección de Información del Usuario -->
+            <section class="profile-header">
+                <div class="profile-photo">
+                    <img src="../img/avatar_167770.png" alt="Foto de perfil" id="FotoPerfil">
                 </div>
-            </div>
-        </section>
-        <!-- Sección de Seguidores y Seguidos -->
-        <section class="profile-follow">
-            <h3>Seguidores</h3>
+                <div class="profile-info">
+                    <h2 id="Nombre-Usuario">Nombre usuario</h2>
+                    <p id="Biografia">"Bio"</p>
+                    <div class="button-container">
+                        <button id="seguir-button" class="follow-button">Seguir</button>
+                        <button id="mensaje-button" class="mensaje-button">Enviar mensaje</button>
+                    </div>
+                </div>
+            </section>
+            <!-- Sección de Seguidores y Seguidos -->
+            <section class="profile-follow">
+                <h3>Seguidores</h3>
                 <div class="follow-info">
                     <p><strong>Seguidores:</strong><span id="seguidores-count">0</span></p> <br>
                 </div>
@@ -77,24 +77,44 @@
                 <div class="follow-info">
                     <p><strong>Seguidos:</strong><span id="seguidos-count">0</span></p>
                 </div>
-        </section>
+            </section>
 
-        
+
+        </div>
+
+
+        <div class="right-column">
+            <!-- Sección de Posts del Usuario -->
+            <section class="center_bar_content ">
+                <h3>Posts</h3>
+                <div class="feeds">
+                    <!-- Los posts del usuario se mostrarán aquí dinámicamente -->
+                </div>
+            </section>
+        </div>
     </div>
+    <!---------------------------------------------ventana de comentario  (EN ESTE SE MUESTRAun formulario para comentarios)------------------------------------------------------------>
+    <div class="modal-coments" id="modal-coments">
+        <div class="modal-content">
+            <span class="close-coments">&times;</span>
+            <h2 class="modal-title">Añadir un comentario al post</h2>
+            <form id="commentForm" action="" method="POST">
+                <input type="hidden" name="ID_post" id="comment-post-id">
+                <input type="hidden" name="ID_user" id="comment-user-id">
+                <textarea name="content" id="commentText" required placeholder="Escribe tu comentario..."></textarea>
+                <button type="submit" id="submitComment">Enviar</button>
+            </form>
 
-    <div class="right-column">
-        <!-- Sección de Posts del Usuario -->
-        <section class="center_bar_content ">
-            <h3>Posts</h3>
-            <div class="feeds">
-                <!-- Los posts del usuario se mostrarán aquí dinámicamente -->
+            <!-- Contenedor de los comentarios debajo del formulario -->
+            <div class="Coments-seccion" id="Coments-seccion">
+                <!-- Aquí se generarán los comentarios -->
             </div>
-        </section>
+        </div>
     </div>
-  </div>
 
-    <script  type="module" src="../JS/Perfil_Otro.js"></script>
-    <script   src="../JS/like.js"></script>
+    <script type="module" src="../JS/Perfil_Otro.js"></script>
+    <script src="../JS/like.js"></script>
+    <script type="module" src="../JS/coments.js"></script>
 </body>
 
 </html>

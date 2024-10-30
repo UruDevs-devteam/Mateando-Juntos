@@ -76,7 +76,9 @@ async function fetchPosts(comunityId) {
                                 <i class="${likeclass}" id="likeButton-${post.ID_post}"></i>
                             </button>
                             <text id="counter">${likeCount}</text>
-                            <button class="button-icon"><i class="uil uil-comment-dots"></i></button>
+                            <button class="button-icon coment" data-post-id="${post.ID_post}">
+                                <i class="uil uil-comment-dots" id="coment-${post.ID_post}"></i>
+                             </button>
                             <button class="button-icon"><i class="uil uil-share-alt"></i></button>
                         </div>
                     </div>
