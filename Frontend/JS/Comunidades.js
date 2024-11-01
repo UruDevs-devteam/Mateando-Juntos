@@ -10,7 +10,7 @@ async function fetchcomunitys() {
             const article = `
                 <article class="comunity"  data-id="${comunity.ID_comunidad}" >
                     <div class="profile-photo">
-                        <img src="data:image/jpeg;base64,${profilephoto}" alt="Foto de la comunidad">
+                        <img src="../../UsersUploads/${profilephoto}" alt="Foto de la comunidad">
                     </div>
                     <div class="comunity-body">
                         <h5>${comunity.Nombre_comunidad}</h5>
@@ -37,7 +37,6 @@ async function fetchcomunitys() {
         console.error('Error al obtener las comunidades:', error);
     }
 }
-
 
 
 

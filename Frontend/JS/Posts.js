@@ -21,7 +21,7 @@ async function getProfileImage(userId) {
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Foto_perfil) {
             // La imagen puede estar en formato base64
-            return `data:image/jpeg;base64,${response.Foto_perfil}`;
+            return `../../UsersUploads/${response.Foto_perfil}`;
         } else {
             return '../img/avatar_167770.png';
         }// Imagen por defecto si no se encuentra

@@ -59,16 +59,25 @@ public function DeleteGroup($data)
 }
 public function AddGroup($data){
     
+    $UsersUploads = "../../../UsersUploads/";
+    $base64String = $data['profile_picture'];
+    $fileName = uniqid() . '.jpg'; 
+    $filePath = $UsersUploads . $fileName;
+
+    if (file_put_contents($filePath, base64_decode($base64String)) !== false) {
     $Group_name = $data['communityName'];
-    $Photo = $data['profile_picture'];
     $Descrip = $data['communityDescription']; 
     $User_creator = $data['User_creator'];
     $query = "INSERT INTO Comunidad (Nombre_comunidad, Descripcion, ID_usuario_creador, Url_fotocomunidad) VALUES (?, ?, ?, ?)";
     $stmt = $this->conex->prepare($query);
-    $stmt->bind_param("ssis", $Group_name, $Descrip , $User_creator, $Photo);
+    $stmt->bind_param("ssis", $Group_name, $Descrip , $User_creator, $fileName);
     $result = $stmt->execute();
     $stmt->close();
     return $result;
+
+    }else{
+        return false;
+    }
      
 }
 public function AddUserToGroup($data) {

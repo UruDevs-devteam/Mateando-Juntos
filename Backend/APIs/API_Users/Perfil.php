@@ -59,15 +59,24 @@ class Perfil
     }
     function ModifyPerfil($data)
     {
+        $UsersUploads = "../../../UsersUploads/";
+        $fileName = uniqid() . '.jpg'; // Generar un nombre único para la imagen
+        $filePath = $UsersUploads . $fileName;
         $User_ID = $data['User_ID'];
         $imgContent = $data['profile_picture'];
         $Biografia = $data['bio'];
-        $query = "UPDATE Perfil_usuario SET Foto_perfil = ?, Biografia = ? WHERE ID_usuario = ?";
-        $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("ssi", $imgContent, $Biografia, $User_ID);
-        $result = $stmt->execute();
-        $stmt->close();
-        return $result;
+
+        if (file_put_contents($filePath, base64_decode($imgContent)) !== false) {
+            $query = "UPDATE Perfil_usuario SET Foto_perfil = ?, Biografia = ? WHERE ID_usuario = ?";
+            $stmt = $this->conex->prepare($query);
+            $stmt->bind_param("ssi", $fileName, $Biografia, $User_ID);
+            $result = $stmt->execute();
+            $stmt->close();
+            return $result;
+        }else {
+            // Manejo de errores si la imagen no se pudo guardar
+            return false;
+        }
     }
     function AddSeguidor($data)
     {
@@ -96,31 +105,31 @@ class Perfil
 
     function GetSeguidos($UserID)
     {
-    $query = "SELECT Perfil_usuario_Seguido FROM Seguir WHERE Perfil_usuario_Seguidor = ? ";
-    $stmt = $this->conex->prepare($query);
-    $stmt->bind_param("i", $UserID);
-    $stmt->execute();
-    $result = $stmt->get_result();  // Obtener los resultados de la ejecución
-    $seguidos = [];
-    while ($row = $result->fetch_assoc()) { // Recorre los resultados y los añade al array
-        $seguidos[] = $row;
-    }
-    $stmt->close();
-    return $seguidos;  // Retorna el array con los resultados
+        $query = "SELECT Perfil_usuario_Seguido FROM Seguir WHERE Perfil_usuario_Seguidor = ? ";
+        $stmt = $this->conex->prepare($query);
+        $stmt->bind_param("i", $UserID);
+        $stmt->execute();
+        $result = $stmt->get_result();  // Obtener los resultados de la ejecución
+        $seguidos = [];
+        while ($row = $result->fetch_assoc()) { // Recorre los resultados y los añade al array
+            $seguidos[] = $row;
+        }
+        $stmt->close();
+        return $seguidos;  // Retorna el array con los resultados
     }
     function GetSeguidores($UserID)
     {
-    $query = "SELECT Perfil_usuario_Seguidor FROM Seguir WHERE Perfil_usuario_Seguido = ? ";
-    $stmt = $this->conex->prepare($query);
-    $stmt->bind_param("i", $UserID);
-    $stmt->execute();
-    $result = $stmt->get_result();  // Obtener los resultados de la ejecución
-    $seguidores = [];
-    while ($row = $result->fetch_assoc()) { // Recorre los resultados y los añade al array
-        $seguidores[] = $row;
-    }
-    $stmt->close();
-    return $seguidores;  // Retorna el array con los resultados
+        $query = "SELECT Perfil_usuario_Seguidor FROM Seguir WHERE Perfil_usuario_Seguido = ? ";
+        $stmt = $this->conex->prepare($query);
+        $stmt->bind_param("i", $UserID);
+        $stmt->execute();
+        $result = $stmt->get_result();  // Obtener los resultados de la ejecución
+        $seguidores = [];
+        while ($row = $result->fetch_assoc()) { // Recorre los resultados y los añade al array
+            $seguidores[] = $row;
+        }
+        $stmt->close();
+        return $seguidores;  // Retorna el array con los resultados
     }
 
 }

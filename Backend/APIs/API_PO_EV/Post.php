@@ -63,12 +63,31 @@ class Post
 
     public function AddMulti($data)
     {
-        $query = "INSERT INTO Post_multimedia ( Src_mul, ID_post) VALUES (?, ?)";
+        // Define la ruta donde se guardarán las imágenes
+    $UsersUploads = "../../../UsersUploads/";
+    // Asegúrate de que la carpeta exista
+    if (!is_dir($UsersUploads)) {
+        mkdir($UsersUploads, 0755, true); // Crea la carpeta si no existe
+    }
+
+    // Obtener la imagen desde el base64
+    $base64String = $data['src'];
+    $fileName = uniqid() . '.jpg'; // Generar un nombre único para la imagen
+    $filePath = $UsersUploads . $fileName;
+
+    // Decodificar la cadena base64 y guardar el archivo
+    if (file_put_contents($filePath, base64_decode($base64String)) !== false) {
+        // Si la imagen se guardó correctamente, inserta en la base de datos
+        $query = "INSERT INTO Post_multimedia (Src_mul, ID_post) VALUES (?, ?)";
         $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("si", $data['src'], $data['postId']); // "is" un enteros y una cadena
+        $stmt->bind_param("si", $fileName, $data['postId']); // "si" para string e integer
         $result = $stmt->execute();
         $stmt->close();
         return $result;
+    } else {
+        // Manejo de errores si la imagen no se pudo guardar
+        return false;
+    }
     }
     public function GetMulyiByID($id)
 {

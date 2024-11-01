@@ -29,7 +29,7 @@ export async function fetchImages(postId) {
         if (Array.isArray(images) && images.length > 0) {
             images.forEach(image => {
                 const imgElement = document.createElement('img');
-                imgElement.src = `data:image/jpeg;base64,${image}`;
+                imgElement.src = `../../UsersUploads/${image}`;
                 photoContainer.appendChild(imgElement);
             });
         } else {
@@ -79,7 +79,7 @@ export async function getProfileImage(userId) {
     try {
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Foto_perfil) {
-            return `data:image/jpeg;base64,${response.Foto_perfil}`;
+            return `../../UsersUploads/${response.Foto_perfil}`;
         } else {
             return '../img/avatar_167770.png'; // Imagen por defecto si no se encuentra
         }

@@ -19,7 +19,7 @@ CREATE TABLE Administrador (
 CREATE TABLE Perfil_usuario (
     ID_perfil INT PRIMARY KEY AUTO_INCREMENT,
     Tema boolean DEFAULT TRUE,
-    Foto_perfil longblob,
+    Foto_perfil text,
     Biografia TEXT,
     Privado BOOLEAN DEFAULT FALSE,
     ID_usuario INT,
@@ -32,7 +32,7 @@ CREATE TABLE Comunidad (
     Descripcion TEXT,
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ID_usuario_creador INT NOT NULL,
-    Url_fotocomunidad longblob,
+    Url_fotocomunidad Text,
     FOREIGN KEY (ID_usuario_creador) REFERENCES usuario(ID_usuario)
 );
 
@@ -87,11 +87,12 @@ CREATE TABLE Post (
 
 CREATE TABLE Post_multimedia (
     Numero_mul INT  AUTO_INCREMENT,
-    Src_mul VARCHAR(255),
+    Src_mul TEXT,
     ID_post INT ,
     primary key (Numero_mul,ID_post),
     FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
 );
+
 CREATE TABLE Comunidad_Evento (
     ID_comunidad INT,
     ID_evento INT,
@@ -113,12 +114,14 @@ CREATE TABLE Comunidad_Post (
 
 CREATE TABLE Comentarios (
     ID_comentario INT PRIMARY KEY AUTO_INCREMENT,
-    ID_usuario INT,
-    contenido text,
-     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario)
+    ID_usuario INT NOT NULL,
+    ID_post INT NOT NULL,
+    Contenido TEXT NOT NULL,
+    Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ID_usuario) REFERENCES Usuario(ID_usuario),
+    FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
 );
-
+select * from Comentarios;
 
 CREATE TABLE Modifica (
     ID_perfil INT,
@@ -178,15 +181,9 @@ CREATE TABLE Elimina_usuario (
     FOREIGN KEY (ID_admin) REFERENCES Administrador(ID_admin)
 );
 
-CREATE TABLE TieneComentarios (
-    ID_comentario INT,
-    ID_post INT,
-    PRIMARY KEY (ID_comentario, ID_post),
-    FOREIGN KEY (ID_comentario) REFERENCES Comentarios(ID_comentario),
-    FOREIGN KEY (ID_post) REFERENCES Post(ID_post)
-);
-ALTER TABLE Post_multimedia MODIFY COLUMN Src_mul LONGBLOB;
-ALTER TABLE Comunidad MODIFY COLUMN Url_fotocomunidad LONGBLOB;
+
+ALTER TABLE Perfil_usuario  MODIFY COLUMN Foto_perfil text;
+ALTER TABLE Comunidad MODIFY COLUMN Url_fotocomunidad text;
 
 
 

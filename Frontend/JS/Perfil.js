@@ -26,7 +26,7 @@ async function GetPerfilPhoto(UserID) {
     try {
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${UserID}`);
         return {
-            profilePhoto: response?.Foto_perfil ? `data:image/jpeg;base64,${response.Foto_perfil}` : '../img/avatar_167770.png',
+            profilePhoto: response?.Foto_perfil ? `../../UsersUploads/${response.Foto_perfil}` : '../img/avatar_167770.png',
             biografia: response?.Biografia || '',
             privado: response?.Privado || false
         };
