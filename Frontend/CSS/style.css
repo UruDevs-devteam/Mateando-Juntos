@@ -176,7 +176,11 @@ header {
     height: max-content;
 }
 
-
+.left_bar_content .chat-item :hover{
+    background-color: #D5DBDB;
+    border-radius: 10%;
+    cursor: pointer;
+}
 
 /*ESTILO PARA LA CREACION DE POSTS Y LOS POSTS QUE SE MUESTRAN EN EL FEED*/
 

@@ -31,6 +31,10 @@ switch ($method) {
             $id = $matches[1];
             $events = $Group_obj->GetEventsInGroup($id);
             echo json_encode($events);
+        } elseif (preg_match('/^\/GroupByUser\/(\d+)$/', $endpoint, $matches)) { // Obtener eventos en grupo
+            $id = $matches[1];
+            $events = $Group_obj->getCommunitiesByUserId($id);
+            echo json_encode($events);
         } else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);

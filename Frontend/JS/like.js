@@ -11,13 +11,19 @@ async function fetchData(url, options = {}) {
 // Función para manejar el envío del like
 async function sendLike(postID, userID) {
     try {
+        const likeIcon = document.getElementById(`likeButton-${postID}`);
+        let method = 'POST';  // Cambiado a let para permitir reasignación
+        if (likeIcon.className === "fa fa-heart") {
+            method = 'DELETE';
+        }
+
         const likedata = {
             ID_post: postID,
             ID_usuario: userID
         };
 
         const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/like', {
-            method: 'POST',
+            method: method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(likedata)
         });
@@ -25,7 +31,6 @@ async function sendLike(postID, userID) {
         if (response.success) {
             console.log('Like enviado con éxito');
             await updateLikes(postID);  // Actualiza el contador de likes
-            
         } else {
             console.error('Error al enviar el like:', response.error);
         }
@@ -44,7 +49,10 @@ async function updateLikes(postID) {
             counter.textContent = likeCount || 0; // Actualiza el contador de likes
         // cambiar el like
         const likeIcon = document.getElementById(`likeButton-${postID}`);
-        likeIcon.className = 'fa fa-heart';
+        if(likeIcon.className == 'fa fa-heart'){
+            likeIcon.className = 'uil uil uil-heart'; 
+        }else{
+        likeIcon.className = 'fa fa-heart';}
         }
     } catch (error) {
         console.error('Error al actualizar los likes:', error);

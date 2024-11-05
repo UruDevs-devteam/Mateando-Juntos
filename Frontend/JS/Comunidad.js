@@ -1,4 +1,4 @@
-import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage, GetSession } from './shared_function.js';
+import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage, GetSession,loadChatList } from './shared_function.js';
 
 async function getComuIdFromURL() {
     const params = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@ async function updateComunityinfo(comunityId) {
             comunityName.textContent = response.Nombre_comunidad || "Nombre no disponible";
             description.textContent = response.Descripcion || "Descripción no disponible";
             membersElement.textContent = `Miembros de la comunidad: ${membersCount || 0} `;
-            photo_comunity.src = response.Url_fotocomunidad ? `data:image/jpeg;base64,${response.Url_fotocomunidad}` : "ruta/a/imagen/por/defecto.jpg";
+            photo_comunity.src = response.Url_fotocomunidad ? `../../UsersUploads/${response.Url_fotocomunidad}` : "ruta/a/imagen/por/defecto.jpg";
         } else {
             console.warn('Datos de la comunidad no encontrados');
         }
@@ -202,6 +202,7 @@ async function uploadPostCom(ID_post) {
     updateComunityinfo(ID_comunidad);
     updateUserName();
     fetchPosts(ID_comunidad);
+    loadChatList();
 });
 //escuchar el boton de publicar 
 document.getElementById('publicarBtn').addEventListener('click', event => {

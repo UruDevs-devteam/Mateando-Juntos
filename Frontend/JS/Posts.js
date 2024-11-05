@@ -1,4 +1,4 @@
-import { fetchData, getLikeCount, getLikeIconClass, fetchImages, GetSession } from './shared_function.js';
+import { fetchData, getLikeCount, getLikeIconClass, fetchImages, GetSession,loadChatList } from './shared_function.js';
 
 
 async function updateUserName() { // Actualizar el nombre de usuario en la etiqueta
@@ -164,10 +164,54 @@ async function uploadImage(postId) {
     });
 }
 
+
+
+async function fetchcomunitys() {
+    const sessionData = await GetSession();
+    const userId = sessionData.ID_usuario;
+    try {
+        const comunitys = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/GroupByUser/${userId}`);
+        for (const comunity of comunitys) {
+            const profilephoto = comunity.Url_fotocomunidad;
+            
+            const article = `
+                <article class="comunity"  data-id="${comunity.ID_comunidad}" >
+                    <div class="profile-photo">
+                        <img src="../../UsersUploads/${profilephoto}" alt="Foto de la comunidad">
+                    </div>
+                    <div class="comunity-body">
+                        <h5>${comunity.Nombre_comunidad}</h5>
+                        <p class="caption">${comunity.Descripcion || 'Descripción no disponible'}</p>
+                    </div>
+                    <div class="seguir_comunidad">
+                            <button><i class="fas fa-user-plus"></i> Unirse</button>
+                        </div>
+                </article>
+            `;
+            document.querySelector('.comunity-item').insertAdjacentHTML('beforeend', article);
+        }
+         
+        // Agregar evento de clic para redirigir a `comunidad.html?id=ID_comunidad`
+        document.querySelectorAll('.comunity').forEach(article => {
+            article.addEventListener('click', function () {
+                const communityId = this.getAttribute('data-id');
+                if (communityId) {
+                    window.location.href = `../HTML/comunidad.html?id=${communityId}`;
+                }
+            });
+        });
+    } catch (error) {
+        console.error('Error al obtener las comunidades:', error);
+    }
+}
+
+
 // Inicializar  y cargar datos al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     updateUserName();
     fetchPosts();
+    loadChatList();
+    fetchcomunitys();
 });
 //escuchar el boton de publicar 
 document.getElementById('publicarBtn').addEventListener('click', event => {

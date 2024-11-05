@@ -152,7 +152,23 @@ public function GetEventsInGroup($ID_comunidad) {
     return $events;
 }
 
-
+public function getCommunitiesByUserId($userId) {
+    $query = "
+        SELECT c.*
+        FROM Comunidad c
+        INNER JOIN Pertenece p ON c.ID_comunidad = p.ID_comunidad
+        WHERE p.ID_usuario = ?";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $communities = [];
+    while ($row = $result->fetch_assoc()) {
+        $communities[] = $row;
+    }
+    $stmt->close();
+    return $communities;
+}
 
 
 }

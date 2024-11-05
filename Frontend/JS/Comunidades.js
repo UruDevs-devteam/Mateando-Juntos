@@ -1,4 +1,4 @@
-import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage, GetSession } from './shared_function.js';
+import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage, GetSession,loadChatList} from './shared_function.js';
 
 
 async function fetchcomunitys() {
@@ -42,6 +42,7 @@ async function fetchcomunitys() {
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchcomunitys();
+    loadChatList();
     
     // Obtener el modal
     const modal = document.getElementById("createCommunityModal");

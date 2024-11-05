@@ -128,3 +128,58 @@ export async function SeguidosSeguidores(userId) {
         console.error('Error al obtener seguidos o seguidores:', error);
     }
 }
+// pone lindo el tiempo 
+export function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const isSameDay = date.toDateString() === now.toDateString();
+    if (!isSameDay) {
+        return `${date.toLocaleDateString()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+    }
+    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+}
+
+//carga los chats
+export async function loadChatList() {
+    const sessionData = await GetSession();
+    const userId = sessionData.ID_usuario;
+
+    try {
+        const contacts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Chats/API_Chats.php/Chats/${userId}`);
+        const chatListContainer = document.getElementById('chat-list');
+        chatListContainer.innerHTML = ''; // Limpiar lista de chats
+
+        for (const contact of contacts) {
+            const UserName = contact.Nombre_usuario;
+            const profilePhoto = await getProfileImage(contact.ID_usuario);
+            const ultimoM = contact.UltimoMS;
+            const date = contact.Fecha;
+
+            const chatItem = document.createElement('div');
+            chatItem.className = 'chat-item';
+            chatItem.setAttribute('data-contact-id', contact.ID_usuario);
+            chatItem.innerHTML = `
+                 <article class="message">
+                    <div class="profile-photo">
+                        <img src="${profilePhoto}" alt="${UserName}'s profile" class="Foto_usuario">
+                    </div>
+                    <div class="message-body">
+                         <h5>${UserName}</h5>
+                         <p class="text-muted">${ultimoM || 'No hay mensajes aún'}</p>
+                        <p class="chat-timestamp">${formatTimestamp(new Date(date))}</p>
+                    </div>
+                  </article>
+     
+            `;
+            // Evento click para abrir el chat con el contacto seleccionado
+            chatItem.addEventListener('click', () => {
+                const contactId = contact.ID_usuario;
+                window.location.href = `chats.html?contactId=${contactId}`; // Redirige a la página de chats con el ID en la URL
+            })
+
+            chatListContainer.appendChild(chatItem); // Agregar el chat a la lista
+        }
+    } catch (error) {
+        console.error('Error al cargar la lista de chats:', error);
+    }
+}

@@ -1,4 +1,4 @@
-import { GetSession, fetchData, getProfileImage, getProfilename } from './shared_function.js'; 
+import { GetSession, fetchData, getProfileImage, getProfilename,formatTimestamp } from './shared_function.js'; 
 
 // Función para cargar lista de chats
 async function loadChatList() {
@@ -196,13 +196,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
-// Formatear timestamp
-function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const isSameDay = date.toDateString() === now.toDateString();
-    if (!isSameDay) {
-        return `${date.toLocaleDateString()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
-    }
-    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`; 
-}
+
