@@ -33,7 +33,7 @@ CREATE TABLE Comunidad (
     Fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ID_usuario_creador INT NOT NULL,
     Url_fotocomunidad Text,
-    FOREIGN KEY (ID_usuario_creador) REFERENCES usuario(ID_usuario)
+    FOREIGN KEY (ID_usuario_creador) REFERENCES Usuario(ID_usuario)
 );
 
 CREATE TABLE Idioma (
@@ -186,5 +186,5 @@ ALTER TABLE Perfil_usuario  MODIFY COLUMN Foto_perfil text;
 ALTER TABLE Comunidad MODIFY COLUMN Url_fotocomunidad text;
 
 
-
+select * from Comunidad_Evento;
 

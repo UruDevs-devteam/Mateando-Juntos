@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../CSS/style.css">
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="icon" type="image/png" href="../img/logo-removebg-preview.png">
     <title>MateandoJuntos - Comunidad</title>
@@ -106,7 +105,6 @@
                     <input type="file" id="fileInput" style="display:none;">
                 </div>
             </section>
-
             <!-- Foro de la comunidad -->
             <section class="community-forum">
                 <h2>Foro</h2>
@@ -144,21 +142,59 @@
                 </div>
             </div>
         </main>
+       <!---------------------------------------------ventana de evento  (EN ESTE SE MUESTRAun formulario para eventos)------------------------------------------------------------>
+       <div id="modalEvento" class="modal">
+        <div class="modal-contentEV">
+            <div class="header">
+                <h2>Crear Evento</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="crearEventoForm" action="../../Backend/PHP/Putevent.php" method="POST">
+                <div class="form-container">
+                    <div class="form-left">
+                        <label for="Titulo">Título:</label>
+                        <input type="text" name="Titulo" id="Titulo" required>
 
-        <!-- CONTENEDOR DERECHO -->
+                        <label for="Descripcion">Descripción:</label>
+                        <textarea name="Descripcion" id="Descripcion" required></textarea>
+                    </div>
+                    <div class="form-right">
+                        <label for="Fecha">Fecha:</label>
+                        <input type="date" name="Fecha" id="Fecha" required>
+                        <label for="Lugar">Lugar:</label>
+                        <input type="text" name="Lugar" id="Lugar" required>
+                        <label for="Start">Hora de inicio:</label>
+                        <input type="time" name="Start" id="Start" required>
+                        <label for="Fin">Hora de finalización:</label>
+                        <input type="time" name="Fin" id="Fin" required>
+                    </div>
+                </div>
+                <div class="map" id="map"></div>
+                <input type="hidden" name="Latitud" id="Latitud" required>
+                <input type="hidden" name="Longitud" id="Longitud" required>
+                <input type="hidden" name="Community-Id" id="Community-Id" required>
+                <button type="submit">Crear Evento</button>
+            </form>
+        </div>
+    </div>        <!-- CONTENEDOR DERECHO -->
         <aside class="right_bar_content">
             <section class="community-events">
                 <h2>Eventos de la Comunidad</h2>
-                <div class="events-list">
+                    <section class="eventos">
+                        <div class="evento-item">
+                            <!-- Aquí se mostrará cada evento -->
+                        </div>
+                    </section>
                     <!-- Aquí se pueden listar eventos específicos de esta comunidad -->
-                </div>
+
             </section>
         </aside>
     </div>
 
-
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script type="module" src="../JS/Comunidad.js"></script>
     <script src="../JS/like.js"></script>
+    <script src="../JS/Event.js"></script>
     <script type="module" src="../JS/coments.js"></script>
 
 

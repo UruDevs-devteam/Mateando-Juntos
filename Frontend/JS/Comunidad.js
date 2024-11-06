@@ -199,6 +199,7 @@ async function uploadPostCom(ID_post) {
 // Inicializar  y cargar datos al cargar la página
  document.addEventListener('DOMContentLoaded', async () => {
     const ID_comunidad = await getComuIdFromURL();
+    document.getElementById('Community-Id').value = ID_comunidad;
     updateComunityinfo(ID_comunidad);
     updateUserName();
     fetchPosts(ID_comunidad);

@@ -62,8 +62,12 @@ class Event
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("isssssdds", $ID_usuario, $Titulo, $Descripcion, $Fecha_encuentro, $Hora_inicio, $Hora_fin, $Latitud, $Longitud, $Lugar); // "issssss" indica las columnas
         $result = $stmt->execute();
+        $last_ID = $this->conex->insert_id;                // Obtener la última ID insertada
         $stmt->close();
-        return $result;
+        return [
+            "result" => $result,
+            "eventId" => $last_ID
+        ];
     }
     
 }

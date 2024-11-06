@@ -80,7 +80,7 @@ function setupModalEventHandlers() {
 async function getProfileImage(userId) {
     try {
         const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
-        return response?.Foto_perfil ? `data:image/jpeg;base64,${response.Foto_perfil}` : '../img/avatar_167770.png'; // Imagen del perfil o por defecto
+        return response?.Foto_perfil ? `../../UsersUploads/${response.Foto_perfil}` : '../img/avatar_167770.png'; // Imagen del perfil o por defecto
     } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
         return '../img/avatar_167770.png'; // Imagen por defecto en caso de error
