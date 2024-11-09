@@ -21,7 +21,7 @@ async function initProfileOtro() {
     if (userId) {
         // Obtener la imagen de perfil y otros datos
         const profilePhoto = await getProfileImage(userId);
-        const userProfile = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
+        const userProfile = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
 
         document.getElementById('FotoPerfil').src = profilePhoto;
         document.getElementById('Nombre-Usuario').innerText = userProfile.Nombre_usuario || 'Nombre no disponible';
@@ -39,9 +39,9 @@ async function addSeguidor(User_ID_Seguido, User_ID_Seguidor) {
         User_ID_Seguido: User_ID_Seguido,
         User_ID_Seguidor: User_ID_Seguidor
     };
-
+        console.log(data);
     try {
-        const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_Users/Api_Usuarios.php/Seguidor', {
+        const response = await fetchData('http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Seguidor', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -68,7 +68,7 @@ async function deleteSeguidor(User_ID_Seguido, User_ID_Seguidor) {
     };
 
     try {
-        const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_Users/Api_Usuarios.php/seguidor', {
+        const response = await fetchData('http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Seguidor', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -90,7 +90,7 @@ async function deleteSeguidor(User_ID_Seguido, User_ID_Seguidor) {
 // Función para obtener y mostrar los posts de otro usuario
 async function fetchPostsPerfil(userId, Nombreuser) {
     try {
-        const posts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Post/${userId}`);
+        const posts = await fetchData(`http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Post/${userId}`);
         const feedsSection = document.querySelector('.feeds');
         feedsSection.innerHTML = '';  // Limpiar contenido existente
 

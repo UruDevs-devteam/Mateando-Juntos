@@ -11,8 +11,8 @@ class Event
     public function GetEvents()
     {
         $query = " SELECT e.*, 
-                u.Nombre_usuario FROM Evento e JOIN 
-                Usuario u ON 
+                u.Nombre_usuario FROM evento e JOIN 
+                usuario u ON 
                 e.ID_usuario = u.ID_usuario
         ";             
         $result = mysqli_query($this->conex, $query);
@@ -26,7 +26,7 @@ class Event
 
     public function GetEventByID($Id)
     {
-        $query = "SELECT * FROM Evento WHERE ID_evento = ?";
+        $query = "SELECT * FROM evento WHERE ID_evento = ?";
         $stmt = $this->conex->prepare($query);     //prepara la consulta
         $stmt->bind_param("i", $Id); // "i" indica que $Id es un entero
         $stmt->execute();           
@@ -38,7 +38,7 @@ class Event
 
     public function DeleteEvent($data)
     {
-        $query = "DELETE FROM Evento WHERE ID_evento = ?";
+        $query = "DELETE FROM evento WHERE ID_evento = ?";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $data['Id']); // "i" indica que $id es un entero
         $result = $stmt->execute();
@@ -58,7 +58,7 @@ class Event
         $Latitud = $data['Latitud'];
         $Longitud =$data['Longitud'];
 
-        $query = "INSERT INTO Evento (ID_usuario, Titulo, Descripcion, Fecha_encuentro, Hora_inicio, Hora_fin, Latitud, Longitud, Lugar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO evento (ID_usuario, Titulo, Descripcion, Fecha_encuentro, Hora_inicio, Hora_fin, Latitud, Longitud, Lugar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("isssssdds", $ID_usuario, $Titulo, $Descripcion, $Fecha_encuentro, $Hora_inicio, $Hora_fin, $Latitud, $Longitud, $Lugar); // "issssss" indica las columnas
         $result = $stmt->execute();

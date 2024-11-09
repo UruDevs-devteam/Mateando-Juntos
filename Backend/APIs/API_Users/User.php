@@ -10,7 +10,7 @@ class User
 
     public function GetUsers()
     {
-        $query = "SELECT * FROM Usuario";
+        $query = "SELECT * FROM usuario";
         $result = mysqli_query($this->conex, $query); // ejecuta la consulta 
         $Users = [];                                // crea un array
         while ($row = mysqli_fetch_assoc($result)) { // Recorre los resultados y los añade al array
@@ -21,7 +21,7 @@ class User
 
     public function GetUserbyName($name)
     {
-        $query = "SELECT * FROM Usuario WHERE Nombre_usuario = ?";
+        $query = "SELECT * FROM usuario WHERE Nombre_usuario = ?";
         $stmt = $this->conex->prepare($query);     //prepara la consulta
         $stmt->bind_param("s", $name); // "i" indica que $Id es un entero
         $stmt->execute();
@@ -32,7 +32,7 @@ class User
     }
     public function GetUserbyID($Id)
     {
-        $query = "SELECT * FROM Usuario WHERE ID_usuario = ?";
+        $query = "SELECT * FROM usuario WHERE ID_usuario = ?";
         $stmt = $this->conex->prepare($query);     //prepara la consulta
         $stmt->bind_param("s", $Id); // "i" indica que $Id es un entero
         $stmt->execute();
@@ -45,7 +45,7 @@ class User
 
     public function DeleteUser($data)
     {
-        $query = "DELETE FROM Usuario WHERE ID_usuario = ?";
+        $query = "DELETE FROM usuario WHERE ID_usuario = ?";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $data['Id']); // "i" indica que $id es un entero
         $result = $stmt->execute();
@@ -60,7 +60,7 @@ class User
         $User_name = $data['Username'];
         $Email = $data['Email'];
         $hashed_password = password_hash($data['Pass'], CRYPT_BLOWFISH);    // Encripta la contraseña
-        $query = "INSERT INTO Usuario (Nombre, Nombre_usuario, Contrasena, Email) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO usuario (Nombre, Nombre_usuario, Contrasena, Email) VALUES (?, ?, ?, ?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("ssss", $Full_name, $User_name , $hashed_password, $Email); // "ssss" indica cuatro cadenas
         $result = $stmt->execute();
@@ -77,7 +77,7 @@ class User
     global $conex;
     $password = $data['Password'];
     $UserName = $data['UserName'];
-    $query = "SELECT Contrasena FROM Usuario WHERE Nombre_usuario = ?";// Consulta  para obtener la contraseña encriptada 
+    $query = "SELECT Contrasena FROM usuario WHERE Nombre_usuario = ?";// Consulta  para obtener la contraseña encriptada 
     $stmt = $conex->prepare($query);
     $stmt->bind_param("s", $UserName);
     $stmt->execute();

@@ -79,7 +79,7 @@ function setupModalEventHandlers() {
 // Obtener imagen de perfil
 async function getProfileImage(userId) {
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         return response?.Foto_perfil ? `../../UsersUploads/${response.Foto_perfil}` : '../img/avatar_167770.png'; // Imagen del perfil o por defecto
     } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
@@ -90,7 +90,7 @@ async function getProfileImage(userId) {
 // Obtener y mostrar eventos
 async function fetchEvents() {
     try {
-        const events = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Events');
+        const events = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Events');
         const eventsSection = document.querySelector('.eventos .evento-item');
         eventsSection.innerHTML = ''; // Limpiar contenido existente
 

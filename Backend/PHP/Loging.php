@@ -1,6 +1,6 @@
 <?php
 session_start();
-$BaseURL = 'http://localhost/Mateando-Juntos/Backend/APIs/API_Users/Api_Usuarios.php';
+$BaseURL = 'http://web/Backend/APIs/API_Users/API_Usuarios.php';
 
 if (isset($_POST["username"], $_POST["password"])) {
     $data = [

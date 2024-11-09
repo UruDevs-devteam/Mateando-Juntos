@@ -1,5 +1,5 @@
 <?php
-$BaseURL = 'http://localhost/Mateando-Juntos/Backend/APIs/API_Users/Api_Usuarios.php';
+$BaseURL = 'http://web/Backend/APIs/API_Users/API_Usuarios.php';
 
 if (isset($_POST["full_name"], $_POST["username"], $_POST["email"], $_POST["password"])) {
     $data = array(                                                                    // pasa los parametros a un array
@@ -14,10 +14,15 @@ if (isset($_POST["full_name"], $_POST["username"], $_POST["email"], $_POST["pass
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);                                  // manda el array con la info
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));    // Indica que es tipo JSON
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                  /// Devuelve el resultado de la transferencia como cadena en lugar de mostrarlo directamente
-    $result = curl_exec($ch);                                                        // manda la solicitud y devuelve el resultado
+    $result = curl_exec($ch); 
+    if (curl_errno($ch)) {
+        echo 'Error en cURL: ' . curl_error($ch);
+        exit();
+    }                                                       // manda la solicitud y devuelve el resultado
     curl_close($ch);                                                                 // cierra el curl
     $response = json_decode($result, true);                                         // decodifica el resultado JSON
-    if (isset($response['success']) && $response['success'] == true) {
+    var_dump($result); 
+    if (isset($response['success']) && $response['success'] == true) { // usa $response en lugar de $result
 
         echo '
         <script>
@@ -27,13 +32,8 @@ if (isset($_POST["full_name"], $_POST["username"], $_POST["email"], $_POST["pass
            ';   
         exit();
     } else {
-        echo '
-        <script>
-        alert("Error en registrar al usuario (error en la api)");
-        window.location = "../../Frontend/HTML/index.html";
-        </script>
-           ';                             
-        exit();
+        echo 'Respuesta de la API: ' . $result; 
+        print_r($data);
     }
 } else {
     echo '

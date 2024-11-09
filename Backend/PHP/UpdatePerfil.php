@@ -2,7 +2,7 @@
 session_start();
 $ID_usuario = $_SESSION['ID_usuario'];
 $username = $_SESSION['username'];
-$BaseURL = 'http://localhost/Mateando-Juntos/Backend/APIs/API_Users/Api_Usuarios.php';
+$BaseURL = 'http://172.17.0.1:8080/Backend/APIs/API_Users/API_Usuarios.php';
 
 if (isset($_FILES["profile_picture"]) && isset($_POST["username"]) && isset($_POST["bio"])) {
     // Leer el contenido de la imagen
@@ -33,8 +33,12 @@ if (isset($_FILES["profile_picture"]) && isset($_POST["username"]) && isset($_PO
         header("Location: ../../Frontend/HTML/home.html");
         exit();
     } else {
-        header("Location: ../../Frontend/HTML/Settings_user.html");
-        exit();
+        echo '
+        <script>
+        alert("no". $result);
+        window.location = "../../Frontend/HTML/Settings_user.html";
+        </script>
+           ';  
     }
 } else {
     header("Location: ../../Frontend/HTML/login.html");

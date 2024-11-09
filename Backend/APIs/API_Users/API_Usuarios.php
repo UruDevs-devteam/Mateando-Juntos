@@ -6,7 +6,6 @@ $User_obj = new User($conex); // creamos un objeto Usuario y le damos la conexio
 $Perfil_obj = new Perfil($conex); // creamos un objeto Perfil y le damos conexion a la bd
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
 $endpoint = $_SERVER['PATH_INFO'];    // la URL, pero toma la parte final, lo que no sea ruta
-header('Content-Type: application/json'); // para que la pagina sepa que se esta usando json
 
 switch ($method) {
     case 'GET':
@@ -85,7 +84,7 @@ switch ($method) {
         if ($endpoint == 'User') {
             $Resul = $User_obj->DeleteUser($data);
             echo json_encode(['success' => $Resul]);
-        } elseif($endpoint == '/seguidor'){
+        } elseif($endpoint == '/Seguidor'){
             $Result = $Perfil_obj->DeleteSeguidor($data);
             echo json_encode(['success' => $Result]);
         }else {

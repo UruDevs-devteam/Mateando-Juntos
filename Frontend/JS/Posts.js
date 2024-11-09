@@ -18,7 +18,7 @@ async function updateUserName() { // Actualizar el nombre de usuario en la etiqu
 //imagen de perfil
 async function getProfileImage(userId) {
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Foto_perfil) {
             // La imagen puede estar en formato base64
             return `../../UsersUploads/${response.Foto_perfil}`;
@@ -34,7 +34,7 @@ async function getProfileImage(userId) {
 // Obtener y mostrar los posts
 async function fetchPosts() {
     try {
-        const posts = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Posts');
+        const posts = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Posts');
         const feedsSection = document.querySelector('.feeds');
         feedsSection.innerHTML = '';  // Limpiar contenido existente
         for (const post of posts) {
@@ -106,7 +106,7 @@ async function publishPost() {
             ID_usuario: userData.ID_usuario
         };
 
-        const postResponse = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Post', {
+        const postResponse = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(postData)
@@ -141,7 +141,7 @@ async function uploadImage(postId) {
                     postId: postId
                 };
 
-                const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi', {
+                const response = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -170,7 +170,7 @@ async function fetchcomunitys() {
     const sessionData = await GetSession();
     const userId = sessionData.ID_usuario;
     try {
-        const comunitys = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/GroupByUser/${userId}`);
+        const comunitys = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/GroupByUser/${userId}`);
         for (const comunity of comunitys) {
             const profilephoto = comunity.Url_fotocomunidad;
             

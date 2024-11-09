@@ -25,8 +25,8 @@ class Perfil
         $query = "
     SELECT u.ID_usuario, u.Nombre, u.Nombre_usuario, u.Email, u.Fecha_creacion, 
            p.Tema, p.Foto_perfil, p.Biografia, p.Privado 
-    FROM Usuario u
-    LEFT JOIN Perfil_usuario p ON u.ID_usuario = p.ID_usuario
+    FROM usuario u
+    LEFT JOIN perfil_usuario p ON u.ID_usuario = p.ID_usuario
     WHERE u.ID_usuario = ?";
 
         $stmt = $this->conex->prepare($query);  // Prepara la consulta
@@ -40,7 +40,7 @@ class Perfil
 
     function AddPerfil($User_ID)
     {
-        $query = "INSERT INTO Perfil_usuario (ID_usuario) VALUES (?)";
+        $query = "INSERT INTO perfil_usuario (ID_usuario) VALUES (?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $User_ID); // "i" indica un entero
         $result = $stmt->execute();
@@ -49,7 +49,7 @@ class Perfil
     }
     function DeletPperfil($User_ID)
     {
-        $query = "DELETE FROM Perfil_usuario WHERE ID_usuario = ?"; //crea la consulta
+        $query = "DELETE FROM perfil_usuario WHERE ID_usuario = ?"; //crea la consulta
         $stmt = $this->conex->prepare($query);     //prepara la consulta
         $stmt->bind_param("i", $User_ID); // "i" indica que $User_ID es un entero
         $stmt->execute();
@@ -67,7 +67,7 @@ class Perfil
         $Biografia = $data['bio'];
 
         if (file_put_contents($filePath, base64_decode($imgContent)) !== false) {
-            $query = "UPDATE Perfil_usuario SET Foto_perfil = ?, Biografia = ? WHERE ID_usuario = ?";
+            $query = "UPDATE perfil_usuario SET Foto_perfil = ?, Biografia = ? WHERE ID_usuario = ?";
             $stmt = $this->conex->prepare($query);
             $stmt->bind_param("ssi", $fileName, $Biografia, $User_ID);
             $result = $stmt->execute();
@@ -83,7 +83,7 @@ class Perfil
         $User_ID_Seguido = $data['User_ID_Seguido'];
         $User_ID_Seguidor = $data['User_ID_Seguidor'];
 
-        $query = "INSERT INTO Seguir (Perfil_usuario_Seguido, Perfil_usuario_Seguidor) VALUES (?, ?)";
+        $query = "INSERT INTO seguir (Perfil_usuario_Seguido , Perfil_usuario_Seguidor) VALUES (?, ?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("ii", $User_ID_Seguido, $User_ID_Seguidor);
         $result = $stmt->execute();
@@ -95,7 +95,7 @@ class Perfil
         $User_ID_Seguido = $data['User_ID_Seguido'];
         $User_ID_Seguidor = $data['User_ID_Seguidor'];
 
-        $query = "DELETE FROM Seguir WHERE Perfil_usuario_Seguido = ? AND Perfil_usuario_Seguidor = ?";
+        $query = "DELETE FROM seguir WHERE Perfil_usuario_Seguido = ? AND Perfil_usuario_Seguidor = ?";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("ii", $User_ID_Seguido, $User_ID_Seguidor);
         $result = $stmt->execute();
@@ -105,7 +105,7 @@ class Perfil
 
     function GetSeguidos($UserID)
     {
-        $query = "SELECT Perfil_usuario_Seguido FROM Seguir WHERE Perfil_usuario_Seguidor = ? ";
+        $query = "SELECT perfil_usuario_Seguido FROM seguir WHERE Perfil_usuario_Seguidor = ? ";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $UserID);
         $stmt->execute();
@@ -119,7 +119,7 @@ class Perfil
     }
     function GetSeguidores($UserID)
     {
-        $query = "SELECT Perfil_usuario_Seguidor FROM Seguir WHERE Perfil_usuario_Seguido = ? ";
+        $query = "SELECT perfil_usuario_Seguidor FROM seguir WHERE Perfil_usuario_Seguido = ? ";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $UserID);
         $stmt->execute();

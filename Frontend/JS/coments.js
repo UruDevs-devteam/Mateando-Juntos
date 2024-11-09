@@ -46,7 +46,7 @@ async function loadComments(postID) {
 
     try {
         // Llamada a la API para obtener los comentarios del post
-        const comments = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Coments/${postID}`);
+        const comments = await fetchData(`http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Coments/${postID}`);
 
         // Generar el HTML para cada comentario
         for (const comment of comments)  {
@@ -79,7 +79,7 @@ async function submitComment(event) {
 
     try {
         // Enviar el comentario a la API mediante una solicitud POST
-        const response = await fetch('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Coment', {
+        const response = await fetch('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Coment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

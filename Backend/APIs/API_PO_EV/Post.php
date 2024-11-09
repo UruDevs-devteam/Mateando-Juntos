@@ -11,8 +11,8 @@ class Post
     public function GetPosts()
     {
         $query = "SELECT p.ID_post, p.Titulo, p.Descripcion, p.Fecha_creacion, u.Nombre_usuario, u.ID_usuario
-                  FROM Post p
-                  JOIN Usuario u ON p.ID_usuario = u.ID_usuario";
+                  FROM post p
+                  JOIN usuario u ON p.ID_usuario = u.ID_usuario";
         $result = mysqli_query($this->conex, $query);
         $Posts = [];
         while ($row = mysqli_fetch_assoc($result)) {
@@ -23,7 +23,7 @@ class Post
 
     public function GetPostByID($id)
 {
-    $query = "SELECT * FROM Post WHERE ID_usuario = ?";
+    $query = "SELECT * FROM post WHERE ID_usuario = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $id); // "i" indica que $id es un entero
     $stmt->execute();
@@ -39,7 +39,7 @@ class Post
 
     public function DeletePost($id)
     {
-        $query = "DELETE FROM Post WHERE ID_post = ?";
+        $query = "DELETE FROM post WHERE ID_post = ?";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("i", $id['Id']); // "i" indica que $id es un entero
         $result = $stmt->execute();
@@ -49,7 +49,7 @@ class Post
 
     public function AddPost($data)
     {
-        $query = "INSERT INTO Post (Titulo, Descripcion, ID_usuario) VALUES (?, ?, ?)";
+        $query = "INSERT INTO post (Titulo, Descripcion, ID_usuario) VALUES (?, ?, ?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("ssi", $data['Titulo'], $data['Descripcion'], $data['ID_usuario']); // "sss" indica que los tres parámetros son cadenas
         $result = $stmt->execute();
@@ -78,7 +78,7 @@ class Post
     // Decodificar la cadena base64 y guardar el archivo
     if (file_put_contents($filePath, base64_decode($base64String)) !== false) {
         // Si la imagen se guardó correctamente, inserta en la base de datos
-        $query = "INSERT INTO Post_multimedia (Src_mul, ID_post) VALUES (?, ?)";
+        $query = "INSERT INTO post_multimedia (Src_mul, ID_post) VALUES (?, ?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("si", $fileName, $data['postId']); // "si" para string e integer
         $result = $stmt->execute();
@@ -91,7 +91,7 @@ class Post
     }
     public function GetMulyiByID($id)
 {
-    $query = 'SELECT Src_mul FROM Post_multimedia WHERE ID_post = ?';
+    $query = 'SELECT Src_mul FROM post_multimedia WHERE ID_post = ?';
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $id); // "i" indica que $id es un entero
     $stmt->execute();
@@ -104,7 +104,7 @@ class Post
     return $images;
 }
 public function GetLikesbypost($id_post) {
-    $query = "SELECT COUNT(*) as like_count FROM Dar_megusta WHERE ID_post = ?";
+    $query = "SELECT COUNT(*) as like_count FROM dar_megusta WHERE ID_post = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $id_post);
     $stmt->execute();
@@ -114,7 +114,7 @@ public function GetLikesbypost($id_post) {
     return $like_count['like_count']; // Devuelve el conteo de likes
 }
 public function GetkUserLike($id_user, $id_post) {
-    $query = "SELECT * FROM Dar_megusta WHERE ID_usuario = ? AND ID_post = ?";
+    $query = "SELECT * FROM dar_megusta WHERE ID_usuario = ? AND ID_post = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ii", $id_user, $id_post);
     $stmt->execute();
@@ -127,7 +127,7 @@ public function AddLike($data){
     // Asegúrate de que los datos sean enteros
     $postId = (int)$data['ID_post'];
     $ID_usuario = (int)$data['ID_usuario'];
-    $query = "INSERT INTO Dar_megusta (ID_usuario, ID_post) VALUES (?, ?)";
+    $query = "INSERT INTO dar_megusta (ID_usuario, ID_post) VALUES (?, ?)";
     $stmt = $this->conex->prepare($query);
     if ($stmt === false) {
         error_log("Error en prepare: " . $this->conex->error);
@@ -142,7 +142,7 @@ public function AddLike($data){
 public function DeleteLike($data){
     $postId = (int)$data['ID_post'];
     $ID_usuario = (int)$data['ID_usuario'];
-    $query = "DELETE FROM Dar_megusta WHERE  ID_usuario = ? AND ID_post = ?";
+    $query = "DELETE FROM dar_megusta WHERE  ID_usuario = ? AND ID_post = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ii", $ID_usuario, $postId);
     $result = $stmt->execute();
@@ -153,8 +153,8 @@ public function DeleteLike($data){
 // Obtener comentarios por ID de post
 public function GetComentariosByPost($id_post) {
     $sql = "SELECT c.ID_comentario, c.Contenido, c.Fecha_creacion, u.ID_usuario, u.Nombre_usuario
-            FROM Comentarios c
-            JOIN Usuario u ON c.ID_usuario = u.ID_usuario
+            FROM comentarios c
+            JOIN usuario u ON c.ID_usuario = u.ID_usuario
             WHERE c.ID_post = ?
             ORDER BY c.Fecha_creacion DESC"; // Orden descendente por fecha de creación
     $stmt = $this->conex->prepare($sql);
@@ -166,7 +166,7 @@ public function GetComentariosByPost($id_post) {
 
 // Añadir un comentario
 public function AddComentario($data) {
-    $sql = "INSERT INTO Comentarios (Contenido, ID_usuario, ID_post) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO comentarios (Contenido, ID_usuario, ID_post) VALUES (?, ?, ?)";
     $stmt = $this->conex->prepare($sql);
     $stmt->bind_param("sii", $data['Contenido'], $data['ID_usuario'], $data['ID_post']);
     $result = $stmt->execute();
@@ -176,7 +176,7 @@ public function AddComentario($data) {
 
 // Eliminar un comentario
 public function DeleteComentario($id_comentario) {
-    $sql = "DELETE FROM Comentarios WHERE ID_comentario = ?";
+    $sql = "DELETE FROM comentarios WHERE ID_comentario = ?";
     $stmt = $this->conex->prepare($sql);
     $stmt->bind_param("i", $id_comentario);
     $result = $stmt->execute();

@@ -18,12 +18,12 @@ class Chats
       FROM (SELECT 
           IF(M.ID_usuario_envia = ?, M.ID_usuario_recibe, M.ID_usuario_envia) AS Contacto, 
           MAX(M.Fecha_envio) AS UltimaFecha
-        FROM Mensaje M
+        FROM mensaje M
         WHERE M.ID_usuario_envia = ? OR M.ID_usuario_recibe = ?
         GROUP BY Contacto
       ) AS UltimosMensajes
-      JOIN Mensaje M ON M.Fecha_envio = UltimosMensajes.UltimaFecha
-      JOIN Usuario U ON U.ID_usuario = UltimosMensajes.Contacto
+      JOIN mensaje M ON M.Fecha_envio = UltimosMensajes.UltimaFecha
+      JOIN usuario U ON U.ID_usuario = UltimosMensajes.Contacto
       ORDER BY M.Fecha_envio DESC";
 
         $stmt = $this->conex->prepare($query);
@@ -49,7 +49,7 @@ class Chats
     // Obtener mensajes entre dos usuarios
     public function getMessages($contacusertId,$userId )
     {
-        $query = "SELECT * FROM Mensaje  WHERE (ID_usuario_envia = ? AND ID_usuario_recibe = ?)
+        $query = "SELECT * FROM mensaje  WHERE (ID_usuario_envia = ? AND ID_usuario_recibe = ?)
               OR (ID_usuario_envia = ? AND ID_usuario_recibe = ?) 
               ORDER BY Fecha_envio ASC";
 
@@ -80,7 +80,7 @@ class Chats
         $senderId = $data['senderId'];
         $receiverId = $data['receiverId'];
         $content = $data['contenido'];
-        $query = "INSERT INTO Mensaje (Contenido, ID_usuario_envia, ID_usuario_recibe)   VALUES (?, ?, ?)";
+        $query = "INSERT INTO mensaje (Contenido, ID_usuario_envia, ID_usuario_recibe)   VALUES (?, ?, ?)";
         $stmt = $this->conex->prepare($query);
         $stmt->bind_param("sii", $content, $senderId, $receiverId);
         $result = $stmt->execute();
@@ -93,7 +93,7 @@ class Chats
     {
         $contacusertId = $data['contacusertId'];
         $userId = $data['userId'];
-        $query = "UPDATE Mensaje 
+        $query = "UPDATE mensaje 
               SET leeido = true 
               WHERE ID_usuario_envia = ? AND ID_usuario_recibe = ? AND leeido = false";
         $stmt = $this->conex->prepare($query);

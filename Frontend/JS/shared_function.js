@@ -1,8 +1,8 @@
 // ---------------------------------------- FUNCIONES COMPARTIDAS ----------------------------------------
 //obtiene la session 
-export async function GetSession(){
-    try {
-        const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
+export async function GetSession(){http:
+    try { 
+        const data = await fetchData('http://localhost:8080/Backend/PHP/getUserSession.php');
         return data;
     } catch (error) {
         console.error('Error al obtener el usuario de la sesión:', error);
@@ -23,7 +23,7 @@ export async function fetchData(url, options = {}) {
 //Imagenes para los posts
 export async function fetchImages(postId) {
     try {
-        const images = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi/${postId}`);
+        const images = await fetchData(`http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi/${postId}`);
         const photoContainer = document.getElementById(`post-${postId}-photo`);
 
         if (Array.isArray(images) && images.length > 0) {
@@ -42,7 +42,7 @@ export async function fetchImages(postId) {
 // Obtener la cantidad de likes de un post
 export async function getLikeCount(postId) {
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postId}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postId}`);
         console.log('Respuesta obtenida de la API para el post likes', postId, ':', response);
         return parseInt(response, 10) || 0; // Devuelve 0 si no hay likes o no es un número
     } catch (error) {
@@ -55,7 +55,7 @@ export async function getLikeCount(postId) {
 export async function getLikeIconClass(postId) {
     let userId;
     try {
-        const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
+        const data = await fetchData('http://localhost:8080/Backend/PHP/getUserSession.php');
         if (data.ID_usuario) {
             userId = data.ID_usuario;
         }
@@ -66,7 +66,7 @@ export async function getLikeIconClass(postId) {
 
     try {
         // Llama a la API para verificar si el usuario ha dado like al post
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/CheckLike/${userId}/${postId}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/CheckLike/${userId}/${postId}`);
         return response.hasLiked ? 'fa fa-heart' : 'uil uil-heart';
     } catch (error) {
         console.error('Error al obtener el estado de like:', error);
@@ -77,7 +77,7 @@ export async function getLikeIconClass(postId) {
 // Obtener la imagen de perfil del usuario
 export async function getProfileImage(userId) {
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Foto_perfil) {
             return `../../UsersUploads/${response.Foto_perfil}`;
         } else {
@@ -91,7 +91,7 @@ export async function getProfileImage(userId) {
 // Obtener el nombre de perfil del usuario
 export async function getProfilename(userId) {
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${userId}`);
         if (response && response.Nombre_usuario) {
             return response.Nombre_usuario;
         } else {
@@ -107,23 +107,24 @@ export async function getProfilename(userId) {
 export async function SeguidosSeguidores(userId) {
     try {
         // Obtener los usuarios que este usuario sigue (seguidos) y los que lo siguen (seguidores)
-        const seguidos = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Seguidos/${userId}`);
-        const seguidores = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Seguidores/${userId}`);
-
+        const seguidos = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Seguidos/${userId}`);
+        const seguidores = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Seguidores/${userId}`);
+    
         // Actualizar los contadores en el frontend
         document.getElementById('seguidos-count').innerText = seguidos.length;
         document.getElementById('seguidores-count').innerText = seguidores.length;
-
-        // Obtener los datos de la sesión para verificar si ya sigue a este usuario
+    
+        // Obtener los datos de la sesión para verificar si el usuario actual sigue al perfil que está viendo
         const sessionData = await GetSession();
         const currentUserId = sessionData.ID_usuario;
-        // Verificar si el usuario actual ya sigue al perfil que está viendo
-        const yaSiguiendo = seguidores.some(seg => seg.Perfil_usuario_Seguidor === currentUserId);
+    
+        // Verificar si el usuario actual ya sigue al perfil
+        const yaSiguiendo = seguidores.some(seg => seg.perfil_usuario_Seguidor === currentUserId);
+    
+        // Actualizar el texto del botón según el estado de seguimiento
         const seguirButton = document.getElementById('seguir-button');
-        if (yaSiguiendo) {
-            seguirButton.innerText = 'Dejar de seguir';
-        }
-
+        seguirButton.innerText = yaSiguiendo ? 'Dejar de seguir' : 'Seguir';
+    
     } catch (error) {
         console.error('Error al obtener seguidos o seguidores:', error);
     }
@@ -145,7 +146,7 @@ export async function loadChatList() {
     const userId = sessionData.ID_usuario;
 
     try {
-        const contacts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Chats/API_Chats.php/Chats/${userId}`);
+        const contacts = await fetchData(`http://localhost:8080/Backend/APIs/API_Chats/API_Chats.php/Chats/${userId}`);
         const chatListContainer = document.getElementById('chat-list');
         chatListContainer.innerHTML = ''; // Limpiar lista de chats
 

@@ -25,8 +25,8 @@ async function updateComunityinfo(comunityId) {
     const photo_comunity = document.getElementById('photo_comunity');
 
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/Group/${comunityId}`);
-        const membersCount = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/Users/${comunityId}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/Group/${comunityId}`);
+        const membersCount = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/Users/${comunityId}`);
         
         if (response) {
             comunityName.textContent = response.Nombre_comunidad || "Nombre no disponible";
@@ -44,7 +44,7 @@ async function updateComunityinfo(comunityId) {
 
 async function fetchPosts(comunityId) {
     try {
-        const posts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/Posts/${comunityId}`);
+        const posts = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/Posts/${comunityId}`);
         const feedsSection = document.querySelector('.feeds');
         feedsSection.innerHTML = '';  // Limpiar contenido existente
         for (const post of posts) {
@@ -113,7 +113,7 @@ async function publishPost() {
             ID_usuario: userData.ID_usuario
         };
 
-        const postResponse = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Post', {
+        const postResponse = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Post', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(postData)
@@ -150,7 +150,7 @@ async function uploadImage(postId) {
                     postId: postId
                 };
 
-                const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi', {
+                const response = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Multi', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -181,7 +181,7 @@ async function uploadPostCom(ID_post) {
             ID_comunidad: ID_comunidad,
             ID_post: ID_post
         };
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/AddPostToGroup`, {
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/AddPostToGroup`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)

@@ -22,7 +22,7 @@ async function sendLike(postID, userID) {
             ID_usuario: userID
         };
 
-        const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/like', {
+        const response = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/like', {
             method: method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(likedata)
@@ -42,7 +42,7 @@ async function sendLike(postID, userID) {
 // Función para actualizar el contador de likes
 async function updateLikes(postID) {
     try {
-        const likeCount = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postID}`);
+        const likeCount = await fetchData(`http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Like/${postID}`);
         
         const counter = document.querySelector(`button[data-post-id="${postID}"] + #counter`);
         if (counter) {
@@ -67,7 +67,7 @@ document.addEventListener('click', async function(event) {
         console.log('ID del post desde el botón de like:', postID); // Debugging line
 
         try {
-            const data = await fetchData('http://localhost/Mateando-Juntos/Backend/PHP/getUserSession.php');
+            const data = await fetchData('http://localhost:8080/Backend/PHP/getUserSession.php');
             
             if (data.ID_usuario) {
                 await sendLike(postID, data.ID_usuario);

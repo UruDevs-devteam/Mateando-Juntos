@@ -24,7 +24,7 @@ profileInput.addEventListener('change', function(event) {
 
 async function GetPerfilPhoto(UserID) {
     try {
-        const response = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${UserID}`);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Users/API_Usuarios.php/Perfil/${UserID}`);
         return {
             profilePhoto: response?.Foto_perfil ? `../../UsersUploads/${response.Foto_perfil}` : '../img/avatar_167770.png',
             biografia: response?.Biografia || '',
@@ -42,7 +42,7 @@ async function GetPerfilPhoto(UserID) {
 
 async function fetchPostsPerfil(UsuarioID, Nombreuser) {
     try {
-        const posts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php/Post/${UsuarioID}`);
+        const posts = await fetchData(`http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Post/${UsuarioID}`);
         const feedsSection = document.querySelector('.feeds');
         feedsSection.innerHTML = '';  // Limpiar contenido existente
 

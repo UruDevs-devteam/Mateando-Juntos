@@ -8,7 +8,7 @@ public  function __construct($cone){
     $this->conex = $cone;  
 }
 public function getGroups(){
-    $query = "SELECT * FROM Comunidad";
+    $query = "SELECT * FROM comunidad";
     $result = mysqli_query($this->conex, $query);
     $Groups = [];
     while ($row = mysqli_fetch_assoc($result)) { 
@@ -18,7 +18,7 @@ public function getGroups(){
 
 }
 public function getGroupByID($ID){
-    $query = "SELECT * FROM Comunidad WHERE ID_comunidad = ?";
+    $query = "SELECT * FROM comunidad WHERE ID_comunidad = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $ID);
     $stmt->execute();
@@ -28,7 +28,7 @@ public function getGroupByID($ID){
     return $group;
 }
 public function getGroupByName($name){
-    $query = "SELECT * FROM Comunidad WHERE Nombre_comunidad = ?";
+    $query = "SELECT * FROM comunidad WHERE Nombre_comunidad = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("s", $name);
     $stmt->execute();
@@ -38,7 +38,7 @@ public function getGroupByName($name){
     return $group;
 }
 public function GetUsers($ID){
-    $query = "SELECT COUNT(ID_usuario) AS total_users FROM Pertenece WHERE ID_comunidad = ?";
+    $query = "SELECT COUNT(ID_usuario) AS total_users FROM pertenece WHERE ID_comunidad = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $ID);
     $stmt->execute();
@@ -50,7 +50,7 @@ public function GetUsers($ID){
 }
 public function DeleteGroup($data)
 {
-    $query = "DELETE FROM Comunidad WHERE ID_comunidad = ?";
+    $query = "DELETE FROM comunidad WHERE ID_comunidad = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $data['Id']); 
     $result = $stmt->execute();
@@ -68,7 +68,7 @@ public function AddGroup($data){
     $Group_name = $data['communityName'];
     $Descrip = $data['communityDescription']; 
     $User_creator = $data['User_creator'];
-    $query = "INSERT INTO Comunidad (Nombre_comunidad, Descripcion, ID_usuario_creador, Url_fotocomunidad) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO comunidad (Nombre_comunidad, Descripcion, ID_usuario_creador, Url_fotocomunidad) VALUES (?, ?, ?, ?)";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ssis", $Group_name, $Descrip , $User_creator, $fileName);
     $result = $stmt->execute();
@@ -81,7 +81,7 @@ public function AddGroup($data){
      
 }
 public function AddUserToGroup($data) {
-    $query = "INSERT INTO Pertenece (ID_usuario, ID_comunidad) VALUES (?, ?)";
+    $query = "INSERT INTO pertenece (ID_usuario, ID_comunidad) VALUES (?, ?)";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ii", $data['ID_usuario'], $data['ID_comunidad']);
     $result = $stmt->execute();
@@ -91,7 +91,7 @@ public function AddUserToGroup($data) {
 
 
 public function DeleteUserFromGroup($data) {
-    $query = "DELETE FROM Pertenece WHERE ID_usuario = ? AND ID_comunidad = ?";
+    $query = "DELETE FROM pertenece WHERE ID_usuario = ? AND ID_comunidad = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ii", $data['ID_usuario'], $data['ID_comunidad']);
     $result = $stmt->execute();
@@ -100,7 +100,7 @@ public function DeleteUserFromGroup($data) {
 }
 
 public function AddPostToGroup($data) {
-    $query = "INSERT INTO Comunidad_Post (ID_comunidad, ID_post) VALUES (?, ?)";
+    $query = "INSERT INTO comunidad_post (ID_comunidad, ID_post) VALUES (?, ?)";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ii", $data['ID_comunidad'], $data['ID_post']);
     $result = $stmt->execute();
@@ -110,7 +110,7 @@ public function AddPostToGroup($data) {
 
 // Agregar un evento a una comunidad
 public function AddEventToGroup($data) {
-    $query = "INSERT INTO Comunidad_Evento (ID_comunidad, ID_evento) VALUES (?, ?)";
+    $query = "INSERT INTO comunidad_evento (ID_comunidad, ID_evento) VALUES (?, ?)";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("ii", $data['ID_comunidad'], $data['ID_evento']);
     $result = $stmt->execute();
@@ -121,9 +121,9 @@ public function AddEventToGroup($data) {
 // Obtener posts en una comunidad específica
 public function GetPostsInGroup($ID_comunidad) {
     $query = "SELECT p.*, u.Nombre AS Nombre_usuario 
-        FROM Post p 
-        INNER JOIN Comunidad_Post cp ON p.ID_post = cp.ID_post 
-        INNER JOIN Usuario u ON p.ID_usuario = u.ID_usuario 
+        FROM post p 
+        INNER JOIN comunidad_post cp ON p.ID_post = cp.ID_post 
+        INNER JOIN usuario u ON p.ID_usuario = u.ID_usuario 
         WHERE cp.ID_comunidad = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $ID_comunidad);
@@ -139,7 +139,7 @@ public function GetPostsInGroup($ID_comunidad) {
 
 // Obtener eventos en una comunidad específica
 public function GetEventsInGroup($ID_comunidad) {
-    $query = "SELECT * FROM Evento e INNER JOIN Comunidad_Evento ce ON e.ID_evento = ce.ID_evento WHERE ce.ID_comunidad = ?";
+    $query = "SELECT * FROM evento e INNER JOIN comunidad_evento ce ON e.ID_evento = ce.ID_evento WHERE ce.ID_comunidad = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $ID_comunidad);
     $stmt->execute();
@@ -155,8 +155,8 @@ public function GetEventsInGroup($ID_comunidad) {
 public function getCommunitiesByUserId($userId) {
     $query = "
         SELECT c.*
-        FROM Comunidad c
-        INNER JOIN Pertenece p ON c.ID_comunidad = p.ID_comunidad
+        FROM comunidad c
+        INNER JOIN pertenece p ON c.ID_comunidad = p.ID_comunidad
         WHERE p.ID_usuario = ?";
     $stmt = $this->conex->prepare($query);
     $stmt->bind_param("i", $userId);

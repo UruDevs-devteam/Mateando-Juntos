@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # MySQL Master
+  mysql_master:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlezequiel1_
+      MYSQL_DATABASE: Mateando_Juntos
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_master_data:/var/lib/mysql
+    networks:
+      - backend
+    env_file:
+      - .env.development  # Asumiendo que tienes este archivo con las credenciales
+
+  # PHP & Apache
+  web:
+    build:
+      context: .  # Apunta al directorio actual donde está el Dockerfile
+      dockerfile: Dockerfile
+    volumes:
+      - ./Backend:/var/www/html/Backend  # Código PHP en Backend
+      - ./Frontend:/var/www/html/Frontend  # Código HTML y frontend en Frontend
+      - ./UsersUploads:/var/www/html/UsersUploads  # Volumen para imágenes subidas
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+      - frontend
+
+volumes:
+  mysql_master_data:
+
+networks:
+  backend:
+  frontend:

@@ -3,7 +3,7 @@ import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage
 
 async function fetchcomunitys() {
     try {
-        const comunitys = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/Groups');
+        const comunitys = await fetchData('http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/Groups');
         for (const comunity of comunitys) {
             const profilephoto = comunity.Url_fotocomunidad;
             

@@ -5,7 +5,7 @@ async function loadChatList() {
     const sessionData = await GetSession();
     const userId = sessionData.ID_usuario;
     try {
-        const contacts = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Chats/API_Chats.php/Chats/${userId}`);
+        const contacts = await fetchData(`http://localhost:8080/Backend/APIs/API_Chats/API_Chats.php/Chats/${userId}`);
         const chatListContainer = document.getElementById('chat-list');
         chatListContainer.innerHTML = ''; // Limpiar lista de chats
 
@@ -62,7 +62,7 @@ async function sendMessage(userId) {
     };
 
     try {
-        const response = await fetchData('http://localhost/Mateando-Juntos/Backend/APIs/API_Chats/API_Chats.php/Mensaje', {
+        const response = await fetchData('http://localhost:8080/Backend/APIs/API_Chats/API_Chats.php/Mensaje', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
@@ -131,7 +131,7 @@ async function loadMessages(ContactId) {
     const userId = sessionData.ID_usuario;
 
     try {
-        const messages = await fetchData(`http://localhost/Mateando-Juntos/Backend/APIs/API_Chats/API_Chats.php/Mensajes/${ContactId}/${userId}`);
+        const messages = await fetchData(`http://localhost:8080/Backend/APIs/API_Chats/API_Chats.php/Mensajes/${ContactId}/${userId}`);
         const fragment = document.createDocumentFragment(); // Para optimizar la inserción
         messages.forEach(message => {
             const messageElement = document.createElement('div');

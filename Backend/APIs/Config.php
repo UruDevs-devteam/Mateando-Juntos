@@ -1,8 +1,9 @@
 <?php
-$Nombre_Host = 'localhost';
+$Nombre_Host = 'mysql_master';  // Nombre del servicio de MySQL en docker-compose.yml
 $Nombre_Usuario = 'root';
-$contra = '';
-$Basde_datos = 'Mateando_Juntos';
+$contra = '';    // Contraseña definida en docker-compose.yml
+$Base_de_datos = 'Mateando_Juntos';
 
-$conex = mysqli_connect($Nombre_Host, $Nombre_Usuario, $contra, $Basde_datos);
+$conex = mysqli_connect($Nombre_Host, $Nombre_Usuario, $contra, $Base_de_datos);
+
 
