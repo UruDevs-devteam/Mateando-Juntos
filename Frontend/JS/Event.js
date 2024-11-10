@@ -2,13 +2,38 @@
 let map;    // mapa
 let marker; // Marcador
 
+
 async function fetchData(url, options = {}) {
     try {
-        const response = await fetch(url, options);
+        // Obtener el token JWT del almacenamiento local
+        const token = localStorage.getItem('jwtToken');
+
+        // Asegurarse de que si hay un token, lo incluimos en los encabezados
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token ? `Bearer ${token}` : ''
+        };
+
+        // Si se pasan opciones, las fusionamos con los encabezados
+        const requestOptions = {
+            ...options,
+            headers: {
+                ...headers,
+                ...options.headers
+            }
+        };
+
+        const response = await fetch(url, requestOptions);
+
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
         return await response.json();
     } catch (error) {
         console.error('Error en la solicitud de red:', error);
-        throw error; // Lanza error para manejo externo
+        throw error;
     }
 }
 
@@ -64,6 +89,8 @@ function setupModalEventHandlers() {
     document.getElementById("Evento").addEventListener("click", function(event) {
         event.preventDefault();
         modal.style.display = "flex"; // Mostrar modal
+        const token = localStorage.getItem('jwtToken');  // Obtener el token de localStorage
+        document.getElementById('token').value = token;
 
         // Redibujar el mapa después de un retraso
         setTimeout(() => map.invalidateSize(), 300);

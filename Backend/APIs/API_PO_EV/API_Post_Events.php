@@ -1,14 +1,29 @@
 <?php
+use \Firebase\JWT\JWT;
+require '/var/www/html/vendor/autoload.php';
 require_once "../Config.php";
 require_once "Post.php";
 require_once "Event.php";
-
+$SecretKey = getenv('JWT_SECRET_KEY');
 $Post_obj = new Post($conex); // creamos un objeto Post y le damos la conexion a la BD
 $Event_obj = new Event($conex);// creamos un objeto Evento y le damos la conexion a la BD
-
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
 $endpoint = $_SERVER['PATH_INFO'];    // la URL, pero toma la parte final, lo que no sea ruta
 header('Content-Type: application/json'); // para que  la pagina sepa que se esta usando json
+// Endpoints que no requieren verificación de token
+$endpointsPublicos = [];
+
+if (!in_array($endpoint, $endpointsPublicos)) {
+    // Obtener el token del encabezado Authorization
+    $headers = getallheaders();
+    if (!isset($headers['Authorization'])) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Token no proporcionado']);
+        exit();
+    }
+    $token = str_replace('Bearer ', '', $headers['Authorization']);
+    $userData = verificarToken($token); // Si el token es válido, devuelve el payload
+}
 
 switch ($method) {
     case 'GET': //select
@@ -195,5 +210,19 @@ function Valid_Data_Comentario($data)
         return false;
     } else {
         return true;
+    }
+}
+
+
+// Función para verificar el token JWT
+function verificarToken($token) {
+    global $SecretKey;
+    try {
+        $decoded = JWT::decode($token, $SecretKey, ['HS256']);
+        return (array) $decoded;  // Retorna el contenido del token si es válido
+    } catch (Exception $e) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Token inválido o expirado']);
+        exit();
     }
 }

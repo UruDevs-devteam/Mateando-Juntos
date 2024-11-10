@@ -1,19 +1,46 @@
 // ---------------------------------------- FUNCIONES COMPARTIDAS ----------------------------------------
 //obtiene la session 
-export async function GetSession(){http:
-    try { 
-        const data = await fetchData('http://localhost:8080/Backend/PHP/getUserSession.php');
-        return data;
-    } catch (error) {
-        console.error('Error al obtener el usuario de la sesión:', error);
-        return;
+async function getAuthToken() {
+    return localStorage.getItem('jwtToken');
+}
+export async function GetSession(){ 
+     const sessionData = localStorage.getItem('sessionData');
+    if (sessionData) {
+        return JSON.parse(sessionData); // Devuelve los datos parseados de localStorage si existen
     }
+    console.error('No hay usuario logueado');
+    return null; // Retorna null si no hay datos
+
 }
 
 // Función para hacer llamados a la API
 export async function fetchData(url, options = {}) {
     try {
-        const response = await fetch(url, options);
+        // Obtener el token JWT del almacenamiento local
+        const token = await getAuthToken();
+
+        // Asegurarse de que si hay un token, lo incluimos en los encabezados
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token ? `Bearer ${token}` : ''
+        };
+
+        // Si se pasan opciones, las fusionamos con los encabezados
+        const requestOptions = {
+            ...options,
+            headers: {
+                ...headers,
+                ...options.headers
+            }
+        };
+
+        const response = await fetch(url, requestOptions);
+
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
         return await response.json();
     } catch (error) {
         console.error('Error en la solicitud de red:', error);
@@ -55,7 +82,7 @@ export async function getLikeCount(postId) {
 export async function getLikeIconClass(postId) {
     let userId;
     try {
-        const data = await fetchData('http://localhost:8080/Backend/PHP/getUserSession.php');
+        const data = await GetSession();
         if (data.ID_usuario) {
             userId = data.ID_usuario;
         }
@@ -70,6 +97,7 @@ export async function getLikeIconClass(postId) {
         return response.hasLiked ? 'fa fa-heart' : 'uil uil-heart';
     } catch (error) {
         console.error('Error al obtener el estado de like:', error);
+        console.error("userId and postId:",userId,",",postId);
         return 'uil-heart'; // Clase por defecto en caso de error
     }
 }

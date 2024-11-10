@@ -54,6 +54,7 @@ async function addSeguidor(User_ID_Seguido, User_ID_Seguidor) {
             const seguidoresCount = parseInt(seguidoresElement.innerText, 10);
             seguidoresElement.innerText = seguidoresCount + 1; // Incrementar el contador
         } else {
+            console.log(response);
             console.error('Error al seguir al usuario:', response.error); // Asegúrate de que 'error' exista en la respuesta
         }
     } catch (error) {
@@ -147,7 +148,7 @@ async function fetchPostsPerfil(userId, Nombreuser) {
 }
 document.getElementById('seguir-button').addEventListener('click', async () => {
     const sessionData = await GetSession();
-    const userIdSeguidor = sessionData.ID_usuario; // Este debería ser el usuario al que estás siguiendo
+    const userIdSeguidor = sessionData.ID_usuario; 
     const userIdSeguido = getUserIdFromURL(); // Este debería ser el seguidor
     const seguirButton = document.getElementById('seguir-button');
     if (seguirButton.innerText === 'Seguir') {

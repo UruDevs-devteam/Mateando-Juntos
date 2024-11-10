@@ -1,4 +1,7 @@
 <?php
+use \Firebase\JWT\JWT;
+require '/var/www/html/vendor/autoload.php';
+$SecretKey = getenv('JWT_SECRET_KEY');
 require_once "../Config.php";
 require_once "User.php";
 require_once "Perfil.php";
@@ -6,6 +9,20 @@ $User_obj = new User($conex); // creamos un objeto Usuario y le damos la conexio
 $Perfil_obj = new Perfil($conex); // creamos un objeto Perfil y le damos conexion a la bd
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
 $endpoint = $_SERVER['PATH_INFO'];    // la URL, pero toma la parte final, lo que no sea ruta
+// Endpoints que no requieren verificación de token
+$endpointsPublicos = ['/User/Verify', '/Usuario','/Perfil'];
+
+if (!in_array($endpoint, $endpointsPublicos)) {
+    // Obtener el token del encabezado Authorization
+    $headers = getallheaders();
+    if (!isset($headers['Authorization'])) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Token no proporcionado']);
+        exit();
+    }
+    $token = str_replace('Bearer ', '', $headers['Authorization']);
+    $userData = verificarToken($token); // Si el token es válido, devuelve el payload
+}
 
 switch ($method) {
     case 'GET':
@@ -55,10 +72,22 @@ switch ($method) {
         } elseif ($endpoint == '/User/Verify') {                  // verifica si el usuario y la contraseña son correctas.
             $Resul = $User_obj->VerifyUser($data);
             if ($Resul) {
-                $Usuario = $User_obj->GetUserbyName($data['UserName']);  // Obtiene los datos del usuario usando el nombre de usuario
+                $Usuario = $User_obj->GetUserbyName($data['UserName']);
+
+                // Generar el token JWT
+                $tokenPayload = [
+                    'id' => $Usuario['ID_usuario'],
+                    'username' => $Usuario['Nombre_usuario'],
+                    'exp' => time() + 3600 // Expiración de 1 hora
+                ];
+                $jwt = JWT::encode($tokenPayload, $SecretKey, 'HS256');
+
+                // Responder con el token JWT
                 echo json_encode([
                     'success' => $Resul,
-                    'ID_usuario' => $Usuario['ID_usuario'] ]);   // Devuelve el ID del usuario junto con el éxito
+                    'ID_usuario' => $Usuario['ID_usuario'],
+                    'token' => $jwt
+                ]);
             } else {
                 echo json_encode(['success' => $Resul]);
             }
@@ -131,5 +160,16 @@ function Validar_Data_Perfil ($data){
 }
 
 }
-
+// Función para verificar el token JWT
+function verificarToken($token) {
+    global $SecretKey;
+    try {
+        $decoded = JWT::decode($token, $SecretKey, ['HS256']);
+        return (array) $decoded;  // Retorna el contenido del token si es válido
+    } catch (Exception $e) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Token inválido o expirado']);
+        exit();
+    }
+}
 

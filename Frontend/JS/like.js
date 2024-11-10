@@ -1,6 +1,30 @@
 async function fetchData(url, options = {}) {
     try {
-        const response = await fetch(url, options);
+        // Obtener el token JWT del almacenamiento local
+        const token = localStorage.getItem('jwtToken');
+
+        // Asegurarse de que si hay un token, lo incluimos en los encabezados
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token ? `Bearer ${token}` : ''
+        };
+
+        // Si se pasan opciones, las fusionamos con los encabezados
+        const requestOptions = {
+            ...options,
+            headers: {
+                ...headers,
+                ...options.headers
+            }
+        };
+
+        const response = await fetch(url, requestOptions);
+
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
         return await response.json();
     } catch (error) {
         console.error('Error en la solicitud de red:', error);
@@ -67,7 +91,7 @@ document.addEventListener('click', async function(event) {
         console.log('ID del post desde el botón de like:', postID); // Debugging line
 
         try {
-            const data = await fetchData('http://localhost:8080/Backend/PHP/getUserSession.php');
+            const data =   JSON.parse(localStorage.getItem('sessionData'));
             
             if (data.ID_usuario) {
                 await sendLike(postID, data.ID_usuario);

@@ -232,13 +232,13 @@ async function joinCommunity(userId, communityId) {
     };
     console.log(data);
     try {
-        const response = await fetch('http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php/UserG', {
+        const response = await fetchData('http:///localhost:8080/Backend/APIs/API_Groups/API_Groups.php/UserG', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
 
-        if (response.ok) {
+        if (response) {
             console.log("Unido a la comunidad con éxito");
         } else {
             console.warn("No se pudo unir a la comunidad");

@@ -1,6 +1,6 @@
 <?php
-$BaseURL = 'http://localhost/Mateando-Juntos/Backend/APIs/API_PO_EV/API_Post_Events.php';
-$BaseURL2 = 'http://localhost/Mateando-Juntos/Backend/APIs/API_Groups/API_Groups.php';
+$BaseURL = 'http://web/Backend/APIs/API_PO_EV/API_Post_Events.php';
+$BaseURL2 = 'http://web/Backend/APIs/API_Groups/API_Groups.php';
 session_start();
 
 if (
@@ -8,6 +8,7 @@ if (
     !empty($_POST["Titulo"]) && !empty($_POST["Descripcion"]) && !empty($_POST["Lugar"]) && !empty($_POST["Fecha"]) &&
     !empty($_POST["Start"]) && !empty($_POST["Fin"]) && !empty($_POST["Latitud"]) && !empty($_POST["Longitud"])
 ) {
+    $token = $_POST["token"];
     $data = array(
         'ID_usuario' => $_SESSION['ID_usuario'],
         'Titulo' => $_POST["Titulo"],
@@ -24,7 +25,7 @@ if (
     $ch = curl_init($BaseURL . '/Event');
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(   'Content-Type: application/json',"Authorization: Bearer $token"));    // Indica que es tipo JSON
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close($ch);
@@ -42,7 +43,7 @@ if (
             $ch = curl_init($BaseURL2 . '/AddEventToGroup');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(   'Content-Type: application/json',"Authorization: Bearer $token"));    // Indica que es tipo JSON
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);
             curl_close($ch);

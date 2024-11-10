@@ -79,7 +79,7 @@ async function submitComment(event) {
 
     try {
         // Enviar el comentario a la API mediante una solicitud POST
-        const response = await fetch('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Coment', {
+        const response = await fetchData('http://localhost:8080/Backend/APIs/API_PO_EV/API_Post_Events.php/Coment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -87,9 +87,9 @@ async function submitComment(event) {
             body: JSON.stringify({ ID_post: postID, ID_usuario: userID, Contenido: content })
         });
 
-        const result = await response.json();
+        ;
 
-        if (result.success) {
+        if (response.success) {
             // Obtener la imagen de perfil del usuario
             const profileImage = await getProfileImage(userID);
             const userdata = await GetSession(userID);
@@ -106,7 +106,7 @@ async function submitComment(event) {
             document.getElementById("Coments-seccion").insertAdjacentHTML('beforeend', newComment);
             document.getElementById("commentText").value = ''; // Limpiar el campo de comentario
         } else {
-            console.error('Error al guardar el comentario:', result.error);
+            console.error('Error al guardar el comentario:', response.error);
         }
     } catch (error) {
         console.error('Error al enviar el comentario:', error);

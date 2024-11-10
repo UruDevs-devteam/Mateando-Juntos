@@ -13,9 +13,16 @@ if (ini_get("session.use_cookies")) {
         $params["secure"], $params["httponly"]
     );
 }
-  echo '
-  <script>
-  alert("Sesion cerrada");
-  window.location = "../../Frontend/HTML/index.html";
-  </script>
-     ';     
+echo '
+<script>
+    // Eliminar el token del localStorage
+    localStorage.removeItem("jwtToken");
+
+    // Mostrar mensaje de sesión cerrada
+    alert("Sesión cerrada");
+
+    // Redirigir a la página de inicio
+    window.location.href = "../../Frontend/HTML/index.html";
+</script>
+';
+exit();

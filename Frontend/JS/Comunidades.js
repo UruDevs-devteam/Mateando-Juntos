@@ -1,4 +1,4 @@
-import { fetchData, fetchImages, getLikeCount, getLikeIconClass, getProfileImage, GetSession,loadChatList} from './shared_function.js';
+import { fetchData,loadChatList} from './shared_function.js';
 
 
 async function fetchcomunitys() {
@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Abrir el modal
     btn.onclick = function() {
+        const token = localStorage.getItem('jwtToken');  // Obtener el token de localStorage
+        document.getElementById('token').value = token;
         modal.style.display = "block";
     }
 

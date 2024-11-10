@@ -30,6 +30,8 @@ services:
     networks:
       - backend
       - frontend
+    env_file:
+      - .env.development  # Asumiendo que tienes este archivo con las credenciales
 
 volumes:
   mysql_master_data:
