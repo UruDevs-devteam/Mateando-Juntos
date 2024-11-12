@@ -52,7 +52,10 @@ switch ($method) {
             $id = $matches[1];
             $events = $Group_obj->getCommunitiesByUserId($id);
             echo json_encode($events);
-        } else {
+        }elseif ($endpoint == '/TopLikedPosts') { // Nuevo endpoint para posts populares
+            $topLikedPosts = $Group_obj->getTopLikedPosts();
+            echo json_encode($topLikedPosts);
+        }  else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
         }

@@ -1,4 +1,4 @@
-import { fetchData,loadChatList} from './shared_function.js';
+import { fetchData,loadChatList,getLikeCount,getLikeIconClass,getProfileImage,fetchImages} from './shared_function.js';
 
 
 async function fetchcomunitys() {
@@ -38,12 +38,68 @@ async function fetchcomunitys() {
     }
 }
 
+async function fetchPosts() {
+    try {
+        const posts = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/TopLikedPosts`);
+        const feedsSection = document.querySelector('.feeds');
+        console.log("api",posts);
+        feedsSection.innerHTML = '';  // Limpiar contenido existente
+        for (const post of posts) {
+            const postDate = new Date(post.Fecha_creacion);
+            const formattedDate = `${postDate.toLocaleDateString()} ${postDate.toLocaleTimeString()}`;
+            const likeCount = await getLikeCount(Number(post.ID_post));
+            const likeclass = await getLikeIconClass(Number(post.ID_post));
+            const ProfileImage = await getProfileImage(post.ID_usuario);
+            const article = `
+                <article class="feed">
+                    <div class="head">
+                        <div class="user">
+                            <div class="profile-photo">
+                                <img src="${ProfileImage}" alt="Profile Photo">
+                            </div>
+                            <div class="info">
+                               <h3><a href="Perfil_Otro.html?userId=${post.ID_usuario}">${post.Nombre_usuario || 'Nombre no disponible'}</a></h3>
+                                <small>${formattedDate}</small>
+                            </div>
+                        </div>
+                        <span class="edit"><i class="uil uil-ellipsis-h"></i></span>
+                    </div>
+
+                    <div class="photo" id="post-${post.ID_post}-photo"></div>
+
+                    <div class="action-buttons">
+                        <div class="interaction-buttons">
+                            <button class="button-icon like-button" data-post-id="${post.ID_post}">
+                                <i class="${likeclass}" id="likeButton-${post.ID_post}"></i>
+                            </button>
+                            <text id="counter">${likeCount}</text>
+                            <button class="button-icon coment" data-post-id="${post.ID_post}">
+                                <i class="uil uil-comment-dots" id="coment-${post.ID_post}"></i>
+                             </button>
+                            <button class="button-icon"><i class="uil uil-share-alt"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="caption">
+                        <p> ${post.Descripcion || 'Descripción no disponible'}</p>
+                    </div>
+                </article>
+            `;
+            feedsSection.insertAdjacentHTML('beforeend', article);
+
+            // Cargar imágenes relacionadas con el post
+            await fetchImages(post.ID_post);
+        }
+    } catch (error) {
+        console.error('Error al obtener los posts:', error);
+    }
+}
 
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchcomunitys();
     loadChatList();
-    
+    fetchPosts();
     // Obtener el modal
     const modal = document.getElementById("createCommunityModal");
     const btn = document.getElementById("openModal");

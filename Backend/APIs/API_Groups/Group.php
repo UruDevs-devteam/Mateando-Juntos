@@ -170,5 +170,24 @@ public function getCommunitiesByUserId($userId) {
     return $communities;
 }
 
+public function getTopLikedPosts() {
+    $query = "
+ SELECT p.ID_post, p.ID_usuario, p.Titulo, p.Descripcion, p.Fecha_creacion, u.Nombre AS Nombre_usuario, COUNT(dm.ID_usuario) AS total_likes
+FROM post p
+LEFT JOIN dar_megusta dm ON p.ID_post = dm.ID_post
+INNER JOIN usuario u ON p.ID_usuario = u.ID_usuario
+GROUP BY p.ID_post
+ORDER BY total_likes DESC
+LIMIT 10;
+
+    ";
+
+    $result = mysqli_query($this->conex, $query);
+    $posts = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $posts[] = $row;
+    }
+    return $posts;
+}
 
 }

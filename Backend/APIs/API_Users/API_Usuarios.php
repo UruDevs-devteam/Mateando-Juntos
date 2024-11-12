@@ -78,7 +78,7 @@ switch ($method) {
                 $tokenPayload = [
                     'id' => $Usuario['ID_usuario'],
                     'username' => $Usuario['Nombre_usuario'],
-                    'exp' => time() + 3600 // Expiración de 1 hora
+                    'exp' => time() + 43200 // Expiración de 1 hora
                 ];
                 $jwt = JWT::encode($tokenPayload, $SecretKey, 'HS256');
 

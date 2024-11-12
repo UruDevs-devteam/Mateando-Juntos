@@ -166,6 +166,8 @@ header {
     top: 0;
     /* Ajustar la posición superior */
     height: max-content;
+    overflow-y: auto;   /* Permite desplazamiento vertical */
+    overflow-x: hidden;
 }
 
 .center_bar_content {
@@ -1248,3 +1250,65 @@ header {
     }
 }
 
+.right_bar_content .feeds .feed {
+    width: 100%; /* Asegura que el post ocupe todo el ancho disponible */
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: 3vh;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    box-sizing: border-box; /* Asegura que el padding no haga que el elemento se desborde */
+}
+
+.right_bar_content .feed i:hover {
+    cursor: pointer;
+}
+
+.right_bar_content .feed .head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right_bar_content .feed .user {
+    display: flex;
+    gap: 1rem;
+}
+
+.right_bar_content .feed .user .info h3 {
+    color: #2c2c2c;
+    font-weight: 600;
+}
+
+.right_bar_content .feed .user .info h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.right_bar_content .feed .user .info h3 a:hover {
+    color: #2c2c2c;
+}
+
+.right_bar_content .feed .user .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right_bar_content .feed .user .info small {
+    color: #555;
+    margin-left: 4rem;
+}
+
+.right_bar_content .feed .photo {
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+    border-radius: 2rem;
+    overflow: hidden;
+    margin: 2rem 0;
+}
+
+.right_bar_content .feed .photo img {
+    width: 100%; /* Hace que la imagen se ajuste al ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: cover; /* Recorta la imagen si es necesario para cubrir el área */
+}
