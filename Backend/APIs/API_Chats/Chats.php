@@ -90,21 +90,18 @@ class Chats
 
     // Marcar mensajes como leídos
     public function markAsRead($data)
-    {
-        $contacusertId = $data['contacusertId'];
-        $userId = $data['userId'];
-        $query = "UPDATE mensaje 
-              SET leeido = true 
-              WHERE ID_usuario_envia = ? AND ID_usuario_recibe = ? AND leeido = false";
-        $stmt = $this->conex->prepare($query);
-        $stmt->bind_param("ii", $contacusertId, $userId);
-        if ($stmt->execute()) {
-            $stmt->close();
-            return ['status' => 'success', 'message' => 'Mensajes marcados como leídos.'];
-        } else {
-            $stmt->close();
-            return ['status' => 'error', 'message' => 'Error al marcar los mensajes como leídos.'];
-        }
-    }
+{
+    $contacusertId = $data['contactId'];
+    $userId = $data['userId'];
+    $query = "UPDATE mensaje 
+              SET leeido = 1 
+              WHERE ID_usuario_envia = ? AND ID_usuario_recibe = ? AND leeido = 0";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("ii", $contacusertId, $userId);
+    $result = $stmt->execute();
+     $stmt->close();
+        return $result;
+}
+
 
 }

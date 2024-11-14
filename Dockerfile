@@ -32,10 +32,16 @@ RUN cd /var/www/html && composer install
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
+# Crear la carpeta de uploads si no existe y dar permisos
+RUN mkdir -p /var/www/html/UsersUploads && \
+    chown -R www-data:www-data /var/www/html/UsersUploads && \
+    chmod -R 755 /var/www/html/UsersUploads
+
 # Configurar Apache para permitir .htaccess y redirección
 RUN echo '<Directory /var/www/html>' >> /etc/apache2/apache2.conf
 RUN echo '    AllowOverride All' >> /etc/apache2/apache2.conf
 RUN echo '</Directory>' >> /etc/apache2/apache2.conf
+
 
 # Exponer el puerto 80 para acceso web
 EXPOSE 80

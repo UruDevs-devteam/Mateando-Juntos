@@ -5,8 +5,8 @@ services:
   mysql_master:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: mysqlezequiel1_
-      MYSQL_DATABASE: Mateando_Juntos
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3306:3306"
     volumes:
@@ -16,6 +16,37 @@ services:
       - backend
     env_file:
       - .env.development  # Archivo de entorno con las credenciales
+
+  # MySQL Slave (Replica)
+  mysql_slave:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_REPLICATION_MODE: slave
+      MYSQL_MASTER_HOST: mysql_master
+      MYSQL_MASTER_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
+    depends_on:
+      - mysql_master
+    networks:
+      - backend
+    env_file:
+      - .env.development  # Usando el archivo .env para cargar variables
+
+  # Respaldo de MySQL
+  mysql_backup:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command: ["sh", "-c", "mysqldump -h mysql_master -u root -p${MYSQL_ROOT_PASSWORD} Mateando_Juntos > /backups/backup.sql"]
+    volumes:
+      - mysql_backup_data:/backups
+    networks:
+      - backend
+    depends_on:
+      - mysql_master
+    restart: "always"  # Para ejecutar el respaldo periódicamente, puedes configurar un cronjob dentro del contenedor.
 
   # PHP & Apache
   web:
@@ -32,10 +63,34 @@ services:
       - backend
       - frontend
     env_file:
-      - .env.development  # Archivo de entorno con las credenciales
+      - .env.development  # Usando el archivo .env para cargar variables
+    depends_on:
+      - mysql_master  # Asegúrate de que MySQL esté listo antes de iniciar el servicio web
+
+  # Monitoreo: Prometheus + Grafana
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - backend
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+    restart: always
 
 volumes:
   mysql_master_data:
+  mysql_backup_data:
 
 networks:
   backend:

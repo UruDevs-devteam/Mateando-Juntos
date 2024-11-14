@@ -129,6 +129,7 @@ async function loadMessages(ContactId) {
     messagesContainer.innerHTML = ''; // Limpiar mensajes existentes
     const sessionData = await GetSession();
     const userId = sessionData.ID_usuario;
+    UpdateSeen(userId,ContactId);
 
     try {
         const messages = await fetchData(`http://localhost:8080/Backend/APIs/API_Chats/API_Chats.php/Mensajes/${ContactId}/${userId}`);
@@ -139,6 +140,7 @@ async function loadMessages(ContactId) {
             messageElement.innerHTML = `
                 <p>${message.Contenido}</p>
                 <span class="timestamp">${formatTimestamp(message.Fecha_envio)}</span>
+                ${message.leeido ? '<span class="read-status">Leído</span>' : ''}
             `;
             fragment.appendChild(messageElement);
         });
@@ -151,7 +153,31 @@ async function loadMessages(ContactId) {
         console.error('Error al cargar mensajes:', error);
     }
 }
+//actualizar visto 
+async function UpdateSeen (userId,ContactId){
+    const data = {
+        userId: userId,
+        contactId: ContactId
+    };
+    console.log(data);
+    try {
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Chats/API_Chats.php/MarcarLeidos`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
 
+        console.log(response);
+        // Verificar el estado de la respuesta
+        if (!response) {
+            console.error('Error al marcar los mensajes como leídos:', response);
+        }
+    } catch (error) {
+        console.error('Error al enviar la solicitud para marcar los mensajes como leídos:', error);
+    }
+}
 // Actualizar último mensaje en la vista de chatitem
 function updateLastMessage(contactId, lastMessage) {
     const chatItems = document.querySelectorAll('.chat-item');

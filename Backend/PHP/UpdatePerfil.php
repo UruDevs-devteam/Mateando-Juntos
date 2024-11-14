@@ -36,7 +36,7 @@ if (isset($_FILES["profile_picture"]) && isset($_POST["username"]) && isset($_PO
         echo '
         <script>
         alert("no". $result);
-        window.location = "../../Frontend/HTML/Settings_user.html";
+        
         </script>
            ';  
     }

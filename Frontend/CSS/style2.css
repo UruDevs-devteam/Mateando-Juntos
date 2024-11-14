@@ -813,7 +813,12 @@ header {
 
 
 
-
+.read-status {
+    font-size: 0.8em;
+    color: #888;
+    display: block;
+    margin-top: 5px;
+}
 
 
 

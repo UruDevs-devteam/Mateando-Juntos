@@ -32,8 +32,12 @@ if (isset($_POST["full_name"], $_POST["username"], $_POST["email"], $_POST["pass
            ';   
         exit();
     } else {
-        echo 'Respuesta de la API: ' . $result; 
-        print_r($data);
+        echo '
+        <script>
+        alert("Usuario o correo ya registrados");
+        window.location = "../../Frontend/HTML/index.html";
+        </script>
+           ';  
     }
 } else {
     echo '
