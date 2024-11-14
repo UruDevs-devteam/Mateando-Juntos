@@ -204,6 +204,7 @@ async function uploadPostCom(ID_post) {
     updateUserName();
     fetchPosts(ID_comunidad);
     loadChatList();
+    await checkFollowStatus();
 });
 //escuchar el boton de publicar 
 document.getElementById('publicarBtn').addEventListener('click', event => {
@@ -221,30 +222,92 @@ document.getElementById('joinButton').addEventListener('click', async event => {
     const communityId = await getComuIdFromURL();
     const userdata = await GetSession(); // Reemplaza con tu método para obtener el ID del usuario
     const userId = userdata.ID_usuario
-    joinCommunity(userId, communityId);
+    cambiarJoinClass(userId, communityId);
 });
 
-// Función para enviar la solicitud de unirse a la comunidad
-async function joinCommunity(userId, communityId) {
-    const data = {
-        ID_usuario: userId,
-        ID_comunidad: communityId
-    };
-    console.log(data);
-    try {
-        const response = await fetchData('http:///localhost:8080/Backend/APIs/API_Groups/API_Groups.php/UserG', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
 
-        if (response) {
-            console.log("Unido a la comunidad con éxito");
+
+async function cambiarJoinClass(){
+    const joinButton = document.getElementById('joinButton');
+    const communityId = await getComuIdFromURL();
+    const userData = await GetSession();
+    const userId = userData.ID_usuario;
+
+    if (!userId) {
+        console.warn("Usuario no autenticado");
+        return;
+    }
+
+    try {
+        let method, message;
+
+        // Verifica si el usuario ya sigue la comunidad
+        if (joinButton.classList.contains('following')) {
+            // Si ya sigue, realiza la solicitud para dejar de seguir (DELETE)
+            method = 'DELETE';
+            message = "Has dejado de seguir la comunidad";
+           
         } else {
-            console.warn("No se pudo unir a la comunidad");
+            // Si no sigue, realiza la solicitud para seguir (POST)
+            method = 'POST';
+            message = "Unido a la comunidad con éxito";
+        }
+            console.log(method,userId,communityId);
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/UserG`, {
+            method: method,
+            body: JSON.stringify({
+                ID_usuario: userId,
+                ID_comunidad: communityId
+            })
+        });
+        console.log(response);
+        if (response) {
+            // Cambia el estado visual del botón basado en la respuesta
+            if (method === 'POST') {
+                joinButton.classList.add('following');
+                joinButton.innerHTML = '<i class="fas fa-check"></i> Siguiendo';
+            } else {
+                joinButton.classList.remove('following');
+                joinButton.innerHTML = '<i class="fas fa-user-plus"></i> Unirse';
+            }
+            updateComunityinfo(communityId);
+            console.log(message);
+        } else {
+            console.warn("No se pudo completar la acción en la comunidad");
         }
     } catch (error) {
-        console.error('Error al unirse a la comunidad:', error);
+        console.error('Error al modificar el estado de la comunidad:', error);
     }
 }
 
+// Verificar estado de seguimiento al cargar la página
+async function checkFollowStatus() {
+    const joinButton = document.getElementById('joinButton');
+    const communityId = await getComuIdFromURL();
+    const userData = await GetSession();
+    const userId = userData.ID_usuario;
+    console.log(userId,communityId);
+    if (!userId) {
+        console.warn("Usuario no autenticado");
+        return;
+    }
+
+    try {
+        // Realizar solicitud al backend para verificar si el usuario ya sigue la comunidad
+        const response = await fetchData(`http://localhost:8080/Backend/APIs/API_Groups/API_Groups.php/CheckUser/${userId}/${communityId}`);
+        if (response && response.isMember) {
+            console.log("si");
+            // Si el usuario ya sigue la comunidad, actualiza el botón
+            joinButton.classList.add('following');
+            joinButton.innerHTML = '<i class="fas fa-check"></i> Miembro';
+        } else {
+            console.log("no");
+            // Si el usuario no sigue la comunidad, deja el botón como "Unirse"
+            joinButton.classList.remove('following');
+            joinButton.innerHTML = '<i class="fas fa-user-plus"></i> Unirse';
+        }
+    } catch (error) {
+        
+        console.error('Error al verificar el estado de seguimiento:', error);
+    }
+}

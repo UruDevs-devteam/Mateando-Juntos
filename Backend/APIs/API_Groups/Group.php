@@ -93,8 +93,21 @@ public function AddUserToGroup($data) {
 public function DeleteUserFromGroup($data) {
     $query = "DELETE FROM pertenece WHERE ID_usuario = ? AND ID_comunidad = ?";
     $stmt = $this->conex->prepare($query);
-    $stmt->bind_param("ii", $data['ID_usuario'], $data['ID_comunidad']);
+    
+    if ($stmt === false) {
+        throw new Exception("Error en la preparación de la consulta: " . $this->conex->error);
+    }
+    
+    $bind_result = $stmt->bind_param("ii", $data['ID_usuario'], $data['ID_comunidad']);
+    if ($bind_result === false) {
+        throw new Exception("Error al vincular los parámetros: " . $this->conex->error);
+    }
+    
     $result = $stmt->execute();
+    if ($result === false) {
+        throw new Exception("Error al ejecutar la consulta: " . $this->conex->error);
+    }
+    
     $stmt->close();
     return $result;
 }
@@ -188,6 +201,16 @@ LIMIT 10;
         $posts[] = $row;
     }
     return $posts;
+}
+public function CheckUserInCommunity($userID, $communityID) {
+    $query = "SELECT COUNT(*) as count FROM pertenece WHERE ID_usuario = ? AND ID_comunidad = ?";
+    $stmt = $this->conex->prepare($query);
+    $stmt->bind_param("ii", $userID, $communityID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+    $stmt->close();
+    return $data['count'] > 0; // Retorna true si el usuario pertenece a la comunidad
 }
 
 }

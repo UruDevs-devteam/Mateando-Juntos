@@ -184,7 +184,7 @@ async function fetchcomunitys() {
                         <p class="caption">${comunity.Descripcion || 'Descripción no disponible'}</p>
                     </div>
                     <div class="seguir_comunidad">
-                            <button><i class="fas fa-user-plus"></i> Unirse</button>
+                            <button><i class="fas fa-check"></i> Miembro</button>
                         </div>
                 </article>
             `;

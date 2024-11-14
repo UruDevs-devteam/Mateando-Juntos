@@ -26,8 +26,7 @@ RUN echo "{\"require\": {\"firebase/php-jwt\": \"^5.5\"}}" > /var/www/html/compo
 # Ejecutar composer install para instalar las dependencias dentro del contenedor
 RUN cd /var/www/html && composer install
 
-# Copiar todo el código fuente del proyecto al contenedor
-COPY . /var/www/html/
+
 
 # Configurar permisos para Apache y habilitar .htaccess
 RUN chown -R www-data:www-data /var/www/html \

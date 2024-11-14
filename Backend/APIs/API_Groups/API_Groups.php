@@ -1,8 +1,12 @@
 <?php
+
 use \Firebase\JWT\JWT;
 require '/var/www/html/vendor/autoload.php';
 require_once "../Config.php";
 require_once "Group.php";
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $SecretKey = getenv('JWT_SECRET_KEY');
 $Group_obj = new Group($conex); // creamos un objeto Group y le damos la conexion a la BD
 $method = $_SERVER['REQUEST_METHOD']; // el metodo http que recibe, default es GET
@@ -52,10 +56,15 @@ switch ($method) {
             $id = $matches[1];
             $events = $Group_obj->getCommunitiesByUserId($id);
             echo json_encode($events);
-        }elseif ($endpoint == '/TopLikedPosts') { // Nuevo endpoint para posts populares
+        } elseif ($endpoint == '/TopLikedPosts') { // Nuevo endpoint para posts populares
             $topLikedPosts = $Group_obj->getTopLikedPosts();
             echo json_encode($topLikedPosts);
-        }  else {
+        } elseif (preg_match('/^\/CheckUser\/(\d+)\/(\d+)$/', $endpoint, $matches)) { // Nuevo endpoint para posts populares
+            $id_user = $matches[1];
+            $id_community = $matches[2];
+            $Chek = $Group_obj->CheckUserInCommunity($id_user, $id_community);
+            echo json_encode(['isMember' => $Chek]);
+        } else {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint no valido']);
         }
@@ -92,13 +101,15 @@ switch ($method) {
             if (Valid_Data_EventGroup($data)) {
                 $Resul = $Group_obj->AddEventToGroup($data);
                 echo json_encode(['success' => $Resul]);
-            }  else {
-            http_response_code(404);
-            echo json_encode(['error' => 'Endpoint no valido']);
-        }}
+            } else {
+                http_response_code(404);
+                echo json_encode(['error' => 'Endpoint no valido']);
+            }
+        }
         break;
 
     case 'DELETE':
+        $data = json_decode(file_get_contents('php://input'), true);
         if ($endpoint == '/Group') {
             $Resul = $Group_obj->DeleteGroup($data);
             echo json_encode(['success' => $Resul]);
@@ -155,21 +166,24 @@ function Valid_Data_User($data)
     }
 }
 
-function Valid_Data_PostGroup($data) {
+function Valid_Data_PostGroup($data)
+{
     return !(empty($data) ||
         !isset($data['ID_comunidad']) || empty($data['ID_comunidad']) ||
         !isset($data['ID_post']) || empty($data['ID_post']));
 }
 
 // Validar datos para agregar evento a grupo
-function Valid_Data_EventGroup($data) {
+function Valid_Data_EventGroup($data)
+{
     return !(empty($data) ||
         !isset($data['ID_comunidad']) || empty($data['ID_comunidad']) ||
         !isset($data['ID_evento']) || empty($data['ID_evento']));
 }
 
 // Función para verificar el token JWT
-function verificarToken($token) {
+function verificarToken($token)
+{
     global $SecretKey;
     try {
         $decoded = JWT::decode($token, $SecretKey, ['HS256']);
