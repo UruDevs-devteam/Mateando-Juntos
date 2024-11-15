@@ -128,7 +128,7 @@ async function fetchPostsPerfil(userId, Nombreuser) {
                             <button class="button-icon coment" data-post-id="${post.ID_post}">
                                 <i class="uil uil-comment-dots" id="coment-${post.ID_post}"></i>
                              </button>
-                            <button class="button-icon"><i class="uil uil-share-alt"></i></button>
+                           
                         </div>
                     </div>
 

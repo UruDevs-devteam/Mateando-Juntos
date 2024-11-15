@@ -111,7 +111,7 @@ CREATE TABLE `comentarios` (
   KEY `ID_post` (`ID_post`),
   CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`),
   CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID_post`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +120,7 @@ CREATE TABLE `comentarios` (
 
 LOCK TABLES `comentarios` WRITE;
 /*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
-INSERT INTO `comentarios` VALUES (1,1,1,'frit coment','2024-11-10 21:22:21'),(2,1,2,'rambla ','2024-11-10 21:23:44');
+INSERT INTO `comentarios` VALUES (1,3,1,'que lindos ','2024-11-15 02:47:35');
 /*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +141,7 @@ CREATE TABLE `comunidad` (
   PRIMARY KEY (`ID_comunidad`),
   KEY `ID_usuario_creador` (`ID_usuario_creador`),
   CONSTRAINT `comunidad_ibfk_1` FOREIGN KEY (`ID_usuario_creador`) REFERENCES `usuario` (`ID_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +150,7 @@ CREATE TABLE `comunidad` (
 
 LOCK TABLES `comunidad` WRITE;
 /*!40000 ALTER TABLE `comunidad` DISABLE KEYS */;
-INSERT INTO `comunidad` VALUES (1,'Rambla ','Mates Rambla ','2024-11-10 21:23:27',1,'6731244fc78c6.jpg'),(2,'Artigas ','fuera bicho ','2024-11-12 02:11:37',1,'6732b959657b8.jpg');
+INSERT INTO `comunidad` VALUES (1,'Mates Rambla','Mates en la Rambla.','2024-11-15 02:44:34',1,'6736b59257c64.jpg');
 /*!40000 ALTER TABLE `comunidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +203,6 @@ CREATE TABLE `comunidad_post` (
 
 LOCK TABLES `comunidad_post` WRITE;
 /*!40000 ALTER TABLE `comunidad_post` DISABLE KEYS */;
-INSERT INTO `comunidad_post` VALUES (1,2),(2,3);
 /*!40000 ALTER TABLE `comunidad_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +255,7 @@ CREATE TABLE `dar_megusta` (
 
 LOCK TABLES `dar_megusta` WRITE;
 /*!40000 ALTER TABLE `dar_megusta` DISABLE KEYS */;
-INSERT INTO `dar_megusta` VALUES (2,1),(1,2);
+INSERT INTO `dar_megusta` VALUES (1,1),(3,1),(2,2);
 /*!40000 ALTER TABLE `dar_megusta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +343,7 @@ CREATE TABLE `evento` (
 
 LOCK TABLES `evento` WRITE;
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
-INSERT INTO `evento` VALUES (1,1,'mates ','mates rambla ','2024-11-10 21:23:03','2024-11-17','18:26:00','18:26:00',-34.91458861,-56.17652840,'Palermo, Montevideo, 11114, Uruguay');
+INSERT INTO `evento` VALUES (1,1,'MATES ','Vamos a matear el sabado!!','2024-11-15 02:43:45','2024-11-16','16:00:00','19:45:00',-34.92024058,-56.17216712,'Puesta del Sol, Ciclovia de la Rambla, Parque Rodó, Montevideo, 11303, Uruguay');
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,7 +389,7 @@ CREATE TABLE `mensaje` (
   KEY `ID_usuario_recibe` (`ID_usuario_recibe`),
   CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`ID_usuario_envia`) REFERENCES `usuario` (`ID_usuario`),
   CONSTRAINT `mensaje_ibfk_2` FOREIGN KEY (`ID_usuario_recibe`) REFERENCES `usuario` (`ID_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -399,7 +398,7 @@ CREATE TABLE `mensaje` (
 
 LOCK TABLES `mensaje` WRITE;
 /*!40000 ALTER TABLE `mensaje` DISABLE KEYS */;
-INSERT INTO `mensaje` VALUES (1,'gola d','2024-11-10 21:25:00',2,1,0),(2,'hola amor','2024-11-12 11:47:12',1,2,0);
+INSERT INTO `mensaje` VALUES (1,'Hola!!','2024-11-15 02:47:44',3,1,0);
 /*!40000 ALTER TABLE `mensaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,7 +445,7 @@ CREATE TABLE `perfil_usuario` (
   PRIMARY KEY (`ID_perfil`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `perfil_usuario_ibfk_1` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,7 +454,7 @@ CREATE TABLE `perfil_usuario` (
 
 LOCK TABLES `perfil_usuario` WRITE;
 /*!40000 ALTER TABLE `perfil_usuario` DISABLE KEYS */;
-INSERT INTO `perfil_usuario` VALUES (1,1,'673123ce89abe.jpg','no drama',0,1),(2,1,'6731248f620c5.jpg','si ',0,2);
+INSERT INTO `perfil_usuario` VALUES (1,1,'6736b4ee5d021.jpg','HOLA!, como estan?',0,1),(2,1,'6736b5db6f15a.jpg','La mejor yerba ',0,2),(3,1,'6736b63218c19.jpg','Me gusta el mate ',0,3);
 /*!40000 ALTER TABLE `perfil_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -482,7 +481,7 @@ CREATE TABLE `pertenece` (
 
 LOCK TABLES `pertenece` WRITE;
 /*!40000 ALTER TABLE `pertenece` DISABLE KEYS */;
-INSERT INTO `pertenece` VALUES (1,1),(2,1);
+INSERT INTO `pertenece` VALUES (1,1);
 /*!40000 ALTER TABLE `pertenece` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,7 +501,7 @@ CREATE TABLE `post` (
   PRIMARY KEY (`ID_post`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -511,7 +510,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'s','                        frist post ','2024-11-10 21:22:10',1),(2,'s','                        mates sss rambla ','2024-11-10 21:23:37',1),(3,'s','                        aka ','2024-11-12 02:12:13',1);
+INSERT INTO `post` VALUES (1,'s','                        mis  mates ','2024-11-15 02:42:25',1),(2,'s','                        Cual es tu preferida ?','2024-11-15 02:46:05',2);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -538,7 +537,7 @@ CREATE TABLE `post_multimedia` (
 
 LOCK TABLES `post_multimedia` WRITE;
 /*!40000 ALTER TABLE `post_multimedia` DISABLE KEYS */;
-INSERT INTO `post_multimedia` VALUES (1,'67312403a91b1.jpg',1),(2,'6732b97eb433e.jpg',3);
+INSERT INTO `post_multimedia` VALUES (1,'6736b5125faaf.jpg',1),(2,'6736b5ef20d43.jpg',2);
 /*!40000 ALTER TABLE `post_multimedia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,7 +564,7 @@ CREATE TABLE `seguir` (
 
 LOCK TABLES `seguir` WRITE;
 /*!40000 ALTER TABLE `seguir` DISABLE KEYS */;
-INSERT INTO `seguir` VALUES (1,2);
+INSERT INTO `seguir` VALUES (1,3);
 /*!40000 ALTER TABLE `seguir` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -585,7 +584,7 @@ CREATE TABLE `usuario` (
   `Fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID_usuario`),
   UNIQUE KEY `Nombre_usuario` (`Nombre_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -594,7 +593,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'eze','eze','$2y$10$f5FatseJHNV9lWJmq3/9yuFIxn0GxOrI26wdyDdn9xevYP.7.vzVu','dfg@gmail.com','2024-11-10 21:20:27'),(2,'analia','ana','$2y$10$V4W8Hta7vtwu/UucCf3DUO/1nE.d0z6yHnp6h.IB2UBRPD7BbMeHu','dfag@gmail.com','2024-11-10 21:24:05');
+INSERT INTO `usuario` VALUES (1,'eze','eze','$2y$10$ba0G2l5oQl/dOW9s7Y8T3.jJNt.AVjHupMPFcr9KNn25u5sMWqmou','dfg@gmail.com','2024-11-15 02:35:40'),(2,'Canarias ','Canarias ','$2y$10$OKEjjZVMXC4N3zKbRee4n.83/9t6r5FAExFpxOctVgkcdUVSAMUea','dcanafg@gmail.com','2024-11-15 02:45:15'),(3,'martita ','Marta ','$2y$10$eGQPDTvvwLp5POqXUZbos.Sqcccm8nl2FxwsFccPmjoDtAGXT5mja','dMafg@gmail.com','2024-11-15 02:46:36');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -607,4 +606,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-12 12:16:03
+-- Dump completed on 2024-11-15  4:10:00
